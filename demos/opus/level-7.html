@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CYBR — Pink Cybertruck</title>
+<style>
+/* ==========================================================================
+   CYBR — built in the design language of teenage.engineering.
+   The page is a 980px poster that scales with the viewport.
+   Every dimension is calc(N * var(--px)), where N is the value at 980.
+   ========================================================================== */
+:root{
+  --client-width:100vw;
+
+  /* the two units that generate the entire page */
+  --px:calc(0.0010204081632653062 * var(--client-width));  /* 1px at 980  */
+  --bh:calc(0.010204081632653062  * var(--client-width));  /* 10px baseline */
+
+  /* grid: 12 x 65 + 11 x 10 + 2 x 45 = 980 */
+  --mw:calc(45 * var(--px));
+  --gw:calc(10 * var(--px));
+
+  /* ink */
+  --white:#fff;
+  --off:#f5f5f5;
+  --black:#0f0e12;
+  --g100:#e5e5e5;
+  --g300:#b2b2b2;
+  --g700:#7f7f7f;
+  --g900:#4d4d4d;
+  --accent:#ff3d8a;
+
+  /* paint (set by the swatches) */
+  --paint-hi:#ffa8cf;
+  --paint-mid:#ff3d8a;
+  --paint-lo:#a81e56;
+
+  /* type — two cuts, two weights, nothing heavier than 300 */
+  --te-20:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --te-40:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --thin:100;
+  --light:300;
+
+  --fs-10:calc(9  * var(--px));  --lh-10:calc(1 * var(--bh));
+  --fs-15:calc(13 * var(--px));  --lh-15:calc(1.5 * var(--bh));
+  --fs-20:calc(18 * var(--px));  --lh-20:calc(2 * var(--bh));
+  --fs-25:calc(23 * var(--px));  --lh-25:calc(3 * var(--bh));
+  --fs-30:calc(27 * var(--px));  --lh-30:calc(3 * var(--bh));
+  --fs-40:calc(36 * var(--px));  --lh-40:calc(4 * var(--bh));
+  --tracking:calc(var(--px) * -0.5);
+
+  /* space */
+  --xs:calc(5 * var(--px));
+  --sm:calc(10 * var(--px));
+  --md:calc(15 * var(--px));
+  --lg:calc(22.5 * var(--px));
+  --xl:calc(45 * var(--px));
+
+  /* chrome */
+  --header-h:calc(80 * var(--px));
+  --hair:0.75px;
+  --rule:var(--g300);
+}
+
+/* Mobile does not reflow. It re-scales: the same poster, bigger fractions. */
+@media (max-width:768px){
+  :root{
+    --fs-10:calc(18 * var(--px)); --fs-15:calc(26 * var(--px));
+    --fs-20:calc(34 * var(--px)); --fs-25:calc(44 * var(--px));
+    --fs-30:calc(52 * var(--px)); --fs-40:calc(68 * var(--px));
+    --lh-10:calc(2 * var(--bh));  --lh-15:calc(3 * var(--bh));
+    --lh-20:calc(4 * var(--bh));  --lh-25:calc(6 * var(--bh));
+    --lh-30:calc(6 * var(--bh));  --lh-40:calc(8 * var(--bh));
+    --header-h:auto;
+  }
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  background:var(--white);color:var(--black);
+  font-family:var(--te-20);font-weight:var(--thin);
+  font-size:var(--fs-20);line-height:var(--lh-20);
+  letter-spacing:var(--tracking);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+li{list-style:none}
+img,video{max-width:100%;display:block}
+
+/* type roles */
+.eyebrow{font-size:var(--fs-10);line-height:var(--lh-10);text-transform:uppercase;letter-spacing:.09em;color:var(--g700)}
+.h2{font-family:var(--te-40);font-weight:var(--light);font-size:var(--fs-30);line-height:var(--lh-30)}
+.h3{font-family:var(--te-40);font-weight:var(--light);font-size:var(--fs-25);line-height:var(--lh-25)}
+.sm{font-size:var(--fs-15);line-height:var(--lh-15)}
+.xs{font-size:var(--fs-10);line-height:var(--lh-10)}
+.body{max-width:60ch;color:var(--g900)}
+.accent{color:var(--accent)}
+
+section{border-top:var(--hair) solid var(--rule);padding:var(--xl) 0;scroll-margin-top:var(--header-h)}
+.wrap{padding-inline:var(--mw)}
+.head{margin-bottom:var(--lg)}
+
+/* buttons — rectangles. no radius, no shadow, no transition. */
+.btn{
+  display:inline-flex;align-items:center;min-height:48px;
+  padding:var(--sm) var(--lg);
+  font-size:var(--fs-15);line-height:var(--lh-15);
+  border:var(--hair) solid var(--black);border-radius:0;
+  background:var(--black);color:var(--off);
+}
+.btn.ghost{background:transparent;color:var(--black)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--white)}
+
+/* ============ 01 · NAV — icon-led groups, hairline rule, flat ============ */
+.nav{
+  position:sticky;top:0;z-index:1000;background:var(--white);
+  border-bottom:var(--hair) solid var(--rule);
+  min-height:var(--header-h);
+  display:flex;align-items:flex-start;gap:var(--xl);
+  padding:var(--md) var(--mw);
+}
+.nav .mark{font-size:var(--fs-25);line-height:var(--lh-20);font-weight:var(--thin);letter-spacing:.18em}
+.nav .mark b{font-weight:var(--thin);color:var(--accent)}
+.nav .grp{display:flex;gap:var(--sm)}
+.nav .grp ul{font-size:var(--fs-15);line-height:var(--lh-15)}
+.nav .grp a:hover{color:var(--accent)}
+.nav .glyph{width:calc(34 * var(--px));height:calc(34 * var(--px));flex:none}
+.nav .sp{margin-left:auto}
+.nav .cart{
+  border:var(--hair) solid var(--black);padding:var(--xs) var(--sm);
+  font-size:var(--fs-15);line-height:var(--lh-15);align-self:flex-start;
+}
+.nav .cart:hover{background:var(--black);color:var(--off)}
+@media (max-width:768px){.nav{flex-wrap:wrap;gap:var(--md)}.nav .sp{display:none}}
+
+/* ============ 02 · HERO — the type IS the poster ============ */
+.hero{padding:var(--xl) var(--mw) var(--lg)}
+.hero h1{
+  font-family:var(--te-40);font-weight:var(--light);
+  font-size:calc(116 * var(--px));
+  line-height:calc(11 * var(--bh));
+  letter-spacing:calc(var(--px) * -2.5);
+  text-transform:uppercase;
+  word-break:keep-all;
+}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{margin-top:var(--lg);max-width:38ch;font-size:var(--fs-20);line-height:var(--lh-20);color:var(--g900)}
+
+/* the stage: truck on flat grey, no gradient background, no glow */
+.stage{margin-top:var(--lg);background:var(--off);border:var(--hair) solid var(--rule);padding:var(--md)}
+.stage svg{width:100%;height:auto}
+
+/* spec strip — labels grey, values in the large cut */
+.strip{
+  margin-top:0;display:grid;grid-template-columns:repeat(4,1fr);
+  border:var(--hair) solid var(--rule);border-top:0;
+}
+.strip div{padding:var(--md);border-right:var(--hair) solid var(--rule)}
+.strip div:last-child{border-right:0}
+.strip dt{font-size:var(--fs-10);line-height:var(--lh-10);text-transform:uppercase;letter-spacing:.09em;color:var(--g700)}
+.strip dd{font-family:var(--te-40);font-weight:var(--light);font-size:var(--fs-25);line-height:var(--lh-25);margin-top:var(--xs)}
+@media (max-width:768px){.strip{grid-template-columns:repeat(2,1fr)}.strip div:nth-child(2){border-right:0}}
+
+.cta{margin-top:var(--lg);display:flex;gap:var(--sm);flex-wrap:wrap}
+
+/* ============ 03 · PAINT — swatches as pills, the one round thing ============ */
+.paint{display:grid;grid-template-columns:calc(215 * var(--px)) 1fr;gap:var(--xl)}
+.sw{display:flex;gap:var(--sm);margin-top:var(--md)}
+.sw button{
+  width:calc(44 * var(--px));height:calc(44 * var(--px));
+  border-radius:9999px;border:var(--hair) solid var(--g300);
+  cursor:pointer;padding:0;background:var(--c);
+}
+.sw button[aria-pressed="true"]{box-shadow:none;border:calc(3 * var(--px)) solid var(--black)}
+.paint .name{margin-top:var(--md);font-family:var(--te-40);font-weight:var(--light);font-size:var(--fs-30);line-height:var(--lh-30)}
+.paint .chip{font-size:var(--fs-10);text-transform:uppercase;letter-spacing:.09em;color:var(--g700)}
+@media (max-width:768px){.paint{grid-template-columns:1fr;gap:var(--md)}}
+
+/* ============ 04 · TRIMS — hairline-divided tiles that touch ============ */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);border-left:var(--hair) solid var(--rule)}
+.tile{
+  border-right:var(--hair) solid var(--rule);
+  border-block:var(--hair) solid var(--rule);
+  padding:var(--lg);background:var(--white);
+}
+.tile:hover{background:var(--off)}
+.tile .badge{
+  display:inline-block;font-size:var(--fs-10);line-height:var(--lh-10);
+  text-transform:uppercase;letter-spacing:.09em;
+  background:var(--accent);color:var(--white);
+  padding:calc(4 * var(--px)) var(--sm);border-radius:9999px;
+}
+.tile h3{margin-top:var(--sm)}
+.tile p{margin-top:var(--xs)}
+.tile .price{margin-top:var(--md);font-family:var(--te-40);font-weight:var(--light);font-size:var(--fs-25);line-height:var(--lh-25)}
+@media (max-width:768px){.tiles{grid-template-columns:1fr}}
+
+/* ============ 05 · SPEC TABLE — the product is data ============ */
+.spec{width:100%;border-collapse:collapse;font-size:var(--fs-15);line-height:var(--lh-15)}
+.spec td{padding:var(--sm) 0;border-bottom:var(--hair) solid var(--rule)}
+.spec td:first-child{color:var(--g700)}
+.spec td:last-child{text-align:right;font-family:var(--te-40);font-weight:var(--light)}
+
+/* ============ 06 · FILM — content, not decoration. click to play. ============ */
+.film{border:var(--hair) solid var(--rule);background:var(--off)}
+.film video{width:100%;height:auto}
+
+/* ============ 07 · MARQUEE — the only motion on the page ============ */
+.mrq{overflow:hidden;white-space:nowrap;border-block:var(--hair) solid var(--black);padding:var(--sm) 0}
+.mrq span{
+  display:inline-block;padding-right:calc(40 * var(--px));
+  font-size:var(--fs-25);line-height:var(--lh-25);text-transform:uppercase;
+  animation:mrq 12s linear infinite;
+}
+@keyframes mrq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.mrq span{animation:none}}
+
+/* ============ BAND — inversion is the whole effect ============ */
+.band{background:var(--black);color:var(--off);text-align:center}
+.band .btn{background:var(--off);color:var(--black);border-color:var(--off)}
+.band .btn:hover{background:var(--accent);border-color:var(--accent);color:var(--white)}
+
+/* ============ FOOTER ============ */
+footer{border-top:var(--hair) solid var(--rule);padding:var(--xl) var(--mw) var(--lg)}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gw);font-size:var(--fs-15);line-height:var(--lh-15)}
+.cols h4{font-size:var(--fs-10);text-transform:uppercase;letter-spacing:.09em;color:var(--g700);font-weight:var(--thin);margin-bottom:var(--sm)}
+.cols a:hover{color:var(--accent)}
+.bigmark{
+  font-family:var(--te-40);font-weight:var(--light);
+  font-size:calc(150 * var(--px));line-height:.85;
+  letter-spacing:calc(var(--px) * -3);
+  text-transform:uppercase;margin-top:var(--xl);
+}
+.legal{margin-top:var(--lg);display:flex;gap:var(--md);flex-wrap:wrap;font-size:var(--fs-10);line-height:var(--lh-10);color:var(--g700)}
+@media (max-width:768px){.cols{grid-template-columns:repeat(2,1fr);gap:var(--md)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ 01 · NAV ═══════════════════════════════════════════════════ -->
+<header class="nav">
+  <a class="mark" href="#">CYBR<b>.</b></a>
+
+  <div class="grp">
+    <svg class="glyph" viewBox="0 0 34 34" aria-hidden="true">
+      <polygon points="1,22 11,8 33,16 33,26 1,26" fill="#0f0e12"/>
+    </svg>
+    <ul>
+      <li><a href="#paint">paint</a></li>
+      <li><a href="#trims">trims</a></li>
+      <li><a href="#specs">specs</a></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <svg class="glyph" viewBox="0 0 34 34" aria-hidden="true">
+      <rect x="2" y="2" width="30" height="30" fill="none" stroke="#0f0e12" stroke-width="3"/>
+      <rect x="11" y="11" width="12" height="12" fill="#0f0e12"/>
+    </svg>
+    <ul>
+      <li><a href="#film">film</a></li>
+      <li><a href="#reserve">reserve</a></li>
+    </ul>
+  </div>
+
+  <span class="sp"></span>
+  <a class="cart" href="#reserve">reserve — $250</a>
+</header>
+
+<!-- ═══ 02 · HERO — the type is the image ══════════════════════════ -->
+<main class="hero">
+  <h1>Built for Mars.<br>Painted for <em>Miami.</em></h1>
+  <p class="lede">The same 30X cold-rolled stainless exoskeleton. The same armor glass. Now in four pinks that were never meant to leave the paint lab.</p>
+
+  <div class="stage">
+    <svg viewBox="0 0 1200 500" role="img" aria-labelledby="t-title t-desc">
+      <title id="t-title">Pink Cybertruck, side profile</title>
+      <desc id="t-desc">A Cybertruck in the selected paint, shown from the side with its faceted stainless exoskeleton, wedge roofline and angular wheel arches.</desc>
+      <defs>
+        <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--paint-hi)"/>
+          <stop offset="55%" stop-color="var(--paint-mid)"/>
+          <stop offset="100%" stop-color="var(--paint-lo)"/>
+        </linearGradient>
+        <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--paint-hi)"/>
+          <stop offset="100%" stop-color="var(--paint-mid)"/>
+        </linearGradient>
+        <linearGradient id="gBed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--paint-mid)"/>
+          <stop offset="100%" stop-color="var(--paint-lo)"/>
+        </linearGradient>
+        <linearGradient id="gGlass" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#3A4048"/>
+          <stop offset="45%" stop-color="#171A20"/>
+          <stop offset="100%" stop-color="#0B0D10"/>
+        </linearGradient>
+        <linearGradient id="gLight" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--paint-hi)"/>
+          <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+      </defs>
+
+      <polygon fill="url(#gBody)" points="45,252 348,146 366,208 784,208 800,150 1155,208 1155,362 45,362"/>
+      <polygon fill="url(#gRoof)" points="348,146 470,80 1155,208 800,150"/>
+      <polygon fill="url(#gBed)"  points="812,190 1155,212 1155,362 812,362"/>
+      <polygon fill="url(#gGlass)" points="360,150 470,88 790,155 776,206 372,206"/>
+      <polygon fill="#0B0D10" points="565,108 580,111 580,206 565,206"/>
+
+      <g stroke="#000" stroke-opacity="0.28" stroke-width="1.5">
+        <line x1="366" y1="208" x2="366" y2="362"/>
+        <line x1="580" y1="208" x2="580" y2="362"/>
+        <line x1="784" y1="208" x2="784" y2="362"/>
+        <line x1="812" y1="190" x2="812" y2="362"/>
+      </g>
+      <line x1="45" y1="252" x2="470" y2="80" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.85"/>
+      <line x1="470" y1="80" x2="1155" y2="208" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.7"/>
+
+      <polygon fill="#15181D" points="60,340 1140,340 1140,362 60,362"/>
+      <rect x="45" y="246" width="22" height="6" fill="url(#gLight)"/>
+      <rect x="1108" y="216" width="47" height="7" fill="#E23B4B"/>
+
+      <polygon fill="#0F1216" points="162,362 192,268 308,268 338,362"/>
+      <polygon fill="#0F1216" points="862,362 892,268 1008,268 1038,362"/>
+
+      <g>
+        <circle cx="250" cy="354" r="78" fill="#2A2F37"/>
+        <circle cx="250" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+        <circle cx="250" cy="354" r="51" fill="#151920"/>
+        <circle cx="250" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+        <g fill="#3D4450">
+          <polygon points="250,309 263,330 237,330"/>
+          <polygon points="250,399 237,378 263,378"/>
+          <polygon points="205,354 226,341 226,367"/>
+          <polygon points="295,354 274,367 274,341"/>
+        </g>
+        <circle cx="250" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+      </g>
+      <g>
+        <circle cx="950" cy="354" r="78" fill="#2A2F37"/>
+        <circle cx="950" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+        <circle cx="950" cy="354" r="51" fill="#151920"/>
+        <circle cx="950" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+        <g fill="#3D4450">
+          <polygon points="950,309 963,330 937,330"/>
+          <polygon points="950,399 937,378 963,378"/>
+          <polygon points="905,354 926,341 926,367"/>
+          <polygon points="995,354 974,367 974,341"/>
+        </g>
+        <circle cx="950" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <dl class="strip">
+    <div><dt>0—60 mph</dt><dd>2.6 s</dd></div>
+    <div><dt>Range</dt><dd>340 mi</dd></div>
+    <div><dt>Towing</dt><dd>11,000 lb</dd></div>
+    <div><dt>From</dt><dd class="accent">$84,900</dd></div>
+  </dl>
+
+  <div class="cta">
+    <a class="btn" href="#reserve">Reserve for $250</a>
+    <a class="btn ghost" href="#specs">See the geometry</a>
+  </div>
+</main>
+
+<!-- ═══ 03 · PAINT ════════════════════════════════════════════════ -->
+<section id="paint">
+  <div class="wrap paint">
+    <div>
+      <p class="eyebrow">01 — Paint</p>
+      <h2 class="h2">Four pinks.</h2>
+    </div>
+    <div>
+      <p class="body sm">Stainless does not take paint. So it isn't paint — it's a cold-applied polymer skin, cured onto the exoskeleton and cut at the fold lines. Pick one. It ships that way.</p>
+      <div class="sw" role="group" aria-label="Paint">
+        <button aria-pressed="true"  aria-label="Flamingo"     style="--c:#ff3d8a" data-hi="#ffa8cf" data-mid="#ff3d8a" data-lo="#a81e56" data-name="Flamingo"     data-code="PNK—01"></button>
+        <button aria-pressed="false" aria-label="Blush Chrome" style="--c:#ffb3d4" data-hi="#ffe3ee" data-mid="#ffb3d4" data-lo="#c9819f" data-name="Blush Chrome" data-code="PNK—02"></button>
+        <button aria-pressed="false" aria-label="Oxide Rose"   style="--c:#a8195a" data-hi="#de5794" data-mid="#a8195a" data-lo="#5e0e33" data-name="Oxide Rose"   data-code="PNK—03"></button>
+        <button aria-pressed="false" aria-label="Dust Mauve"   style="--c:#c9bac2" data-hi="#ece3e7" data-mid="#c9bac2" data-lo="#8d8087" data-name="Dust Mauve"   data-code="PNK—04"></button>
+      </div>
+      <p class="name" id="paintName">Flamingo</p>
+      <p class="chip" id="paintCode">PNK—01 · non-metallic · lab cure</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 · TRIMS ════════════════════════════════════════════════ -->
+<section id="trims">
+  <div class="wrap head">
+    <p class="eyebrow">02 — Trims</p>
+    <h2 class="h2">Three ways to own one.</h2>
+  </div>
+  <div class="tiles">
+    <article class="tile">
+      <span class="badge">RWD</span>
+      <h3 class="h3">Single Motor</h3>
+      <p class="body sm">One motor, rear drive, 250 miles. The honest one. Flamingo or Blush Chrome only.</p>
+      <p class="price">$62,900</p>
+    </article>
+    <article class="tile">
+      <span class="badge">AWD</span>
+      <h3 class="h3">Dual Motor</h3>
+      <p class="body sm">Two motors, 340 miles, 2.6 seconds. Every paint. The one most people mean.</p>
+      <p class="price">$84,900</p>
+    </article>
+    <article class="tile">
+      <span class="badge">Beast</span>
+      <h3 class="h3">Tri Motor</h3>
+      <p class="body sm">Three motors, 11,000 lb of tow, and a rear-axle steer that hides the wheelbase.</p>
+      <p class="price">$104,900</p>
+    </article>
+  </div>
+</section>
+
+<!-- ═══ 05 · SPEC TABLE ═══════════════════════════════════════════ -->
+<section id="specs">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">03 — Specification</p>
+      <h2 class="h2">The whole truck, on one page.</h2>
+    </div>
+    <table class="spec">
+      <tbody>
+        <tr><td>Exoskeleton</td><td>30X cold-rolled stainless, 1.4 mm</td></tr>
+        <tr><td>Glass</td><td>Tempered armor, 9 mm laminate</td></tr>
+        <tr><td>Drive</td><td>Dual motor, all-wheel</td></tr>
+        <tr><td>0—60 mph</td><td>2.6 s</td></tr>
+        <tr><td>Range (EPA est.)</td><td>340 mi</td></tr>
+        <tr><td>Towing</td><td>11,000 lb</td></tr>
+        <tr><td>Payload</td><td>2,500 lb</td></tr>
+        <tr><td>Bed</td><td>6 ft, sealed, powered cover</td></tr>
+        <tr><td>Ground clearance</td><td>16 in, adaptive air</td></tr>
+        <tr><td>Charge</td><td>800 V — 128 mi in 15 min</td></tr>
+        <tr><td>Paint</td><td>Four, cold-applied polymer</td></tr>
+        <tr><td>Wheels</td><td>20″ Cyber / 22″ Core</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ 06 · FILM ═════════════════════════════════════════════════ -->
+<section id="film">
+  <div class="wrap head">
+    <p class="eyebrow">04 — Film</p>
+    <h2 class="h2">Ninety seconds, no music.</h2>
+  </div>
+  <div class="wrap">
+    <div class="film">
+      <video controls playsinline preload="metadata">
+        <source src="pink-cybertruck-video-by-openart.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 07 · MARQUEE — the only motion on the page ════════════════ -->
+<div class="mrq" aria-hidden="true">
+  <span>Stainless doesn't rust &nbsp;·&nbsp; Pink doesn't apologize &nbsp;·&nbsp; Stainless doesn't rust &nbsp;·&nbsp; Pink doesn't apologize &nbsp;·&nbsp; Stainless doesn't rust &nbsp;·&nbsp; Pink doesn't apologize &nbsp;·&nbsp;</span>
+</div>
+
+<!-- ═══ BAND ══════════════════════════════════════════════════════ -->
+<section class="band" id="reserve">
+  <div class="wrap">
+    <h2 class="h2">$250 holds one. Refundable.</h2>
+    <p class="sm" style="color:var(--g300);margin-top:var(--sm)">Deliveries begin Q1. You pick the paint at build lock.</p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn" href="#">Reserve now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <div class="cols">
+    <p class="sm">A truck, in pink,<br>with nothing else added.</p>
+    <div>
+      <h4>Vehicle</h4>
+      <ul class="sm">
+        <li><a href="#paint">Paint</a></li>
+        <li><a href="#trims">Trims</a></li>
+        <li><a href="#specs">Specs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Own</h4>
+      <ul class="sm">
+        <li><a href="#reserve">Reserve</a></li>
+        <li><a href="#">Financing</a></li>
+        <li><a href="#">Trade-in</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul class="sm">
+        <li><a href="#">Service</a></li>
+        <li><a href="#">Charging</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bigmark">CYBR</div>
+
+  <div class="legal">
+    <span>© 2026 CYBR</span><span>Privacy</span><span>Terms</span>
+    <span>Range and figures are estimates. Not a real vehicle.</span>
+  </div>
+</footer>
+
+<script>
+  // The paint selector. The only script on the page.
+  const root = document.documentElement;
+  const name = document.getElementById('paintName');
+  const code = document.getElementById('paintCode');
+  document.querySelectorAll('.sw button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.sw button').forEach(o => o.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      root.style.setProperty('--paint-hi',  b.dataset.hi);
+      root.style.setProperty('--paint-mid', b.dataset.mid);
+      root.style.setProperty('--paint-lo',  b.dataset.lo);
+      name.textContent = b.dataset.name;
+      code.textContent = b.dataset.code + ' · non-metallic · lab cure';
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+# Talk skeleton — "Leveling Up Website Quality in Claude Code" (Round 2: Pink Cybertruck)
+
+60-minute session. Format carried from round 1: **~40 min slides · ~15 min live demos (3 pivots) · ~5 min Q&A.** Present from the web deck (`/slides/`); this file is the speaker-notes skeleton. All `⟨TBD⟩` slots are now filled from the actual run (docs/run-log.md + assets/metrics.js, run of 2026-07-12/13 UTC); `🔴` marks live-demo pivots.
+
+## Pre-flight (talk day)
+
+- Open in background tabs: deployed site home, `/compare/?level=1`, `/compare/?level=7` (warms fonts + any CDN imports).
+- Confirm wifi; volume muted (the L5 video is silent anyway).
+
+## Act 1 — Setup (5 min, ~5 slides)
+
+1. **Title** — Seven Levels, Round 2: one product, seven techniques, two models.
+2. **Why this talk** — most Claude-built sites look generic not because the model can't, but because it's "Mozart with no piano": no references, no skills, no data. Credit Jack Roberts' video.
+3. **Round 1 recap (one slide)** — yellow iPhone, headline numbers (Fable $102/~96 min, Opus $36/~61 min), link. Round 2's question: **does the ladder replicate on a different product?**
+4. **The experiment** — pink Cybertruck, identical prompts run twice (Fable 5 / Opus 4.8), verbatim checksummed outputs, per-level metrics. **New this round: the experiment ran itself** — one orchestrator session drove all 14 level-sessions headlessly (`claude -p`).
+5. **Ground rules** — named output files, keep-N-1-untouched, one variable per level, scripted follow-ups only. Disclosed deviations (a)–(f) on one line.
+
+## Act 2 — The climb (30 min, ~15 slides: technique + result per level)
+
+Per level: one technique slide, one result slide (screenshot pair + cost/time strip + one observed divergence).
+
+- **L1 Grab and go** — 🔴 **DEMO 1 (~3 min):** `/compare/?level=1`, scroll both panes. The generic baseline. **The convergence beat arrived at level 1 this round: both models independently titled their page "PINKTRUCK — The Cybertruck, but Pink" — the identical `<title>` string.** Headlines diverged: Fable "The Cybertruck. But Pink." (pale-rose light theme, frosted-glass nav); Opus "Think Pink" (dark neon magenta/steel, plus a six-swatch live repaint gimmick nobody asked for).
+- **L2 References** — show the reference screenshot beside both results. "References beat adjectives." Fable re-dressed in 2m11s flat (4 turns): neutral cards, hairline borders, named colorways (Studio Blush, Satin Rose, Desert Mauve, Midnight Rosé). Opus spent 8m49s and 44 API calls — it opened a browser and self-verified the hero fit the fold. **And the round-1 overwrite bug did NOT recur** — the up-front "keep level-1 untouched" line worked; checksums prove it.
+- **L3 Design skills** — power-design + ui-ux-pro-max; file size 2.4× (Fable, 46.8 KB) and 2.9× (Opus, 50.7 KB) = the design system arriving, replicating round 1's doubling. Self-QA beat: **Fable's QA pass caught a real progressive-enhancement bug** (scroll-reveal styles now gated behind a JS-added class so content survives JS failure). Opus invented a fictional **"CYBR"** brand with a footer disclaimer — remember that name, it comes back at L7.
+- **L4 UI snipping** — the DottedSurface (three.js dot-wave) — **new component this round**. Watch beat paid off: **Opus caught the source's 0–255 vertex-color bug** ("three.js reads color buffers as 0–1, so those dots were silently clamped to pure white — I used proper 0–1 values") — the round-2 echo of round 1's balloons-js memory-leak find. Dependency choice: both went CDN, but **Opus deliberately picked the classic three.js build over ESM** so the file still works when double-clicked from disk (`file://` blocks module scripts); Fable used a CDN import and added a `prefers-reduced-motion` static frame. **Both models kept the source's full-viewport `fixed inset-0` wrapper** — exactly what the prompt file predicted — and both needed the one scripted rescope follow-up.
+- **L5 AI video** — 🔴 **DEMO 2 (~4 min):** `/compare/?level=5`, the product film. OpenArt workflow slide (Nano Banana → Kling/Seedance, same start/end frame). Cheapest level ($3.43 / $2.23, ~3 min each) — the leverage is in the asset. Round-1 echo: **Opus generated a poster frame unprompted again** (base64-inlined this time, plus a film.png on disk).
+- **L6 Firecrawl** — tesla.com brand research; scrape came back clean for both (no fallback needed). Research beats invention: **Opus matched Tesla's exact dark `rgb(23,26,32)`** and verified 0 console errors; **Fable's Playwright pass caught a real layout bug** (hero CTAs wrapping because flex auto-margins defeated stretch) and shipped a page that "reads convincingly like a tesla.com product page". Bonus beat: Opus took a full-page screenshot, saw blank mid-page sections, and correctly diagnosed its own reveal-observer as the cause rather than "fixing" working code.
+- **L7 Design extraction** — 🔴 **DEMO 3 (~4 min):** `/compare/?level=7`. teenage.engineering's design language translated onto a truck. **Convergence check:** round 1's Lume/LUMA name-twinning didn't repeat — instead the convergence moved down a layer: both models shipped ~22 KB lowercase, type-led pages in teenage.engineering's voice (Fable: unbranded "pink cybertruck — the beautiful truck."; Opus: "CYBR — Built for Mars. Painted for Miami.", **reusing the brand it invented at L3** — cross-level brand persistence nobody asked for). Both delivered an extraction *kit* first (brief + tokens + structure.css + scaffold) and needed the scripted "where's the website?" follow-up — and Fable had written its kit to `~/Desktop`.
+- **The whole climb** (money slide) — L1 vs L7 side by side. Pause here.
+
+## Act 3 — What the A/B and the rerun taught us (8 min, ~5 slides)
+
+1. **Fable vs Opus, round 2** — round 1's patterns partially replicated, partially flipped. Held: Fable's self-QA instinct (real bugs found and fixed at L3 and L6), Opus's scaffolding instinct (poster frame, hero.png, kit directories, CDN classic builds). Flipped: **this round Opus self-verified in a browser at almost every level** (44–56 API calls per level vs Fable's 2–47) — the "Fable verifies, Opus one-shots" story from round 1 did not survive the rerun. New pattern: Opus showed **brand persistence** (CYBR invented at L3, reused at L7); Fable stayed product-literal.
+2. **Cost & time chart** — grouped bars per level, both models (data inline in the deck script; no total rows). Headline: Fable $37.41 / ~43 min of machine time across the ladder; Opus $24.62 / ~50 min. Round 2 ran ~2.7× cheaper than round 1 for Fable ($102 → $37) on the same ladder — cheaper prompts-per-level (headless one-shot sessions, no interactive drift) and no overwrite-recovery tax.
+3. **Replication verdict** — same ladder, different product: **the ladder held.** Monotonic quality climb, L3 file-size jump replicated, L7 design-language convergence replicated (in voice, not in brand name), L4's "models keep the fixed-viewport wrapper" prediction hit both models. What didn't replicate: the round-1 verification asymmetry (both models verify now), and the overwrite incident (prevented by design this round).
+4. **The orchestrated run** — the meta-story: an agent ran a 14-session experiment on two other agents, logged it, checksummed it, and built this deck. Stats: 14 level-sessions + 4 scripted follow-up resumes, ~1h45m of pipeline wall-clock (23:32–02:08 UTC minus one ~50-min human pause), zero recovery prompts, zero clobbered files. Interventions needed: one human resume (a permissions pause on the orchestrator side, not the experiment), and one environment fix at preflight (Firecrawl CLI wasn't authenticated — found the key in ~/.zshrc). Every follow-up sent was one of the pre-scripted ones, fired on its stated condition.
+5. **Verdict** — "The ladder is the lever; the model is the multiplier." **Held** — and round 2 adds: the orchestrator is the flywheel. Both models climbed from the same generic PINKTRUCK baseline to distinct, credible design-language pages; the technique ladder did the lifting, the model chose the style of the climb.
+
+## Act 4 — Takeaways (7 min, ~4 slides) + Q&A
+
+1. **Meta-lessons** — References > adjectives. Skills > instructions. Research > invention. Verification > hope. (+ new: Orchestration > babysitting.)
+2. **Tricks & gotchas** — named outputs, keep-untouched up front (it worked: no overwrite this round), one live session per dir, log-as-you-go. Round-2 incidents worth telling: the stale-frame screenshot artifact bit *again* (this time it hit the orchestrator's own browser pane while verifying L4 — Playwright settled it, same as round 1); Fable wrote its L7 kit to `~/Desktop` instead of the working dir; preflight caught an unauthenticated Firecrawl CLI before it could stall L6.
+3. **Try it yourself** — repo + live site + prompt pack, one link (clickable in the deck).
+4. **Q&A** — seeded: "Which level is the best ROI?" — **L5 by cost-per-wow ($2.23–$3.43, ~3 min, and it's the level people gasp at); L2 by cost-per-quality-point if you only take one step** · "Why did the two models converge/diverge?" (identical L1 titles; divergent styles; convergent L7 voice) · "How much babysitting did the orchestrator need?" (one resume, zero improvised prompts).
+
+## Notes for the deck build
+
+Deck conventions carry from round 1 (see publish-plan): self-contained single HTML, `#/N` deep links, metrics duplicated inline in the chart script, pink accent this round — deck uses the site's pink accent family (see assets/site.css), check WCAG contrast. Verify small-viewport table fit.

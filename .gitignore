@@ -1,0 +1,8 @@
+.DS_Store
+# raw working dirs for the two runs; canonical copies land in demos/ post-run
+fable-trials/
+opus-trials/
+node_modules/
+.vercel
+.firecrawl/
+.playwright-mcp/

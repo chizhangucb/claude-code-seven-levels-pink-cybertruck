@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{BRAND}}</title>
+<style>
+/* ============================================================
+   design language: teenage.engineering (extracted 2026-07-12)
+   translation, not a copy — all copy slots are {{PLACEHOLDERS}}
+   ============================================================ */
+
+/* -- tokens: verbatim from source CSS ------------------------ */
+:root{
+  --client-width:100vw;
+  --base-design-width:980;
+
+  --white:#fff;
+  --te-white:#f5f5f5;
+  --te-black:#0f0e12;
+  --te-grey-100:#e5e5e5;
+  --te-grey-200:#ccc;
+  --te-grey-300:#b2b2b2;
+  --te-grey-600:#767676;
+  --te-grey-900:#4d4d4d;
+  --te-grey-1000:#272727;
+  --te-orange:#f05a24;
+  --te-blue:#0071bb;
+  --te-green:#006837;
+  --te-red:#b81d13;
+  --te-yellow:#fab413;
+  --theme-body-bc:#fff;
+
+  /* your accent — swap for source orange if you prefer */
+  --accent:#f05a24;
+
+  --fw-thin:100;
+  --fw-light:300;
+
+  --fs-10:calc(.00918367 * var(--client-width));
+  --fs-15:calc(.0132653 * var(--client-width));
+  --fs-20:calc(.0183673 * var(--client-width));
+  --fs-25:calc(.0234694 * var(--client-width));
+  --fs-30:calc(.027551 * var(--client-width));
+  --fs-40:calc(.0367347 * var(--client-width));
+  --lh-10:calc(.0102041 * var(--client-width));
+  --lh-15:calc(.0153061 * var(--client-width));
+  --lh-20:calc(.0204082 * var(--client-width));
+  --lh-25:calc(.0306122 * var(--client-width));
+  --lh-30:calc(.0306122 * var(--client-width));
+  --lh-40:calc(.0408163 * var(--client-width));
+
+  --space-xs:calc(.00510204 * var(--client-width));
+  --space-sm:calc(.0102041 * var(--client-width));
+  --space-md:calc(.0153061 * var(--client-width));
+  --space-lg:calc(.0229592 * var(--client-width));
+  --space-xl:calc(.0459184 * var(--client-width));
+  --block-margin:var(--space-xl);
+
+  --header-height:calc(.0816327 * var(--client-width));
+  --button-height-md:calc(.0510204 * var(--client-width));
+  --btn-px:calc(.00816327 * var(--client-width));
+  --btn-min-click-area:48px;
+  --border-width:.75px;
+  --round:9999px;
+  --z-navigation:1000;
+
+  /* source fonts are proprietary (te-20/te-40, Univers cuts).
+     nearest system translation: thin Helvetica. if you license
+     Univers Next Thin/Light, set it first in these stacks. */
+  --te-20:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --te-40:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* -- base: the whole page scales with the viewport ----------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{
+  font-family:var(--te-20);
+  font-size:1.63265vw;               /* 16px at the 980px design width */
+  font-weight:var(--fw-light);
+  background-color:var(--theme-body-bc);
+  color:var(--te-black);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizelegibility;
+}
+body{line-height:1.5;text-transform:lowercase}
+a{color:inherit;text-decoration:none}
+p a,.link{text-decoration:underline}
+img,video{max-width:100%;display:block}
+
+/* -- type utilities (source's fs/lh pairs, baseline-locked) -- */
+.fs-10{font-size:var(--fs-10);line-height:var(--lh-10)}
+.fs-15{font-size:var(--fs-15);line-height:var(--lh-15)}
+.fs-20{font-size:var(--fs-20);line-height:var(--lh-20)}
+.fs-25{font-size:var(--fs-25);line-height:var(--lh-25)}
+.fs-30{font-family:var(--te-40);font-size:var(--fs-30);line-height:var(--lh-30);font-weight:var(--fw-light);letter-spacing:-.01em}
+.fs-40{font-family:var(--te-40);font-size:var(--fs-40);line-height:var(--lh-40);font-weight:var(--fw-light);letter-spacing:-.015em}
+.thin{font-weight:var(--fw-thin)}
+.muted{color:var(--te-grey-600)}
+.accent{color:var(--accent)}
+
+/* -- primitives ---------------------------------------------- */
+.hairline{border-bottom:var(--border-width) solid var(--te-black)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:var(--btn-min-click-area);height:var(--button-height-md);
+  padding:0 calc(var(--btn-px) * 3);
+  font:inherit;font-size:var(--fs-15);
+  background:var(--te-black);color:var(--te-white);
+  border:var(--border-width) solid var(--te-black);border-radius:0;
+  cursor:pointer;transition:background-color .2s ease-in;
+}
+.btn:hover{background:var(--accent);border-color:var(--accent)}
+.btn--ghost{background:transparent;color:var(--te-black)}
+.btn--ghost:hover{background:var(--te-black);color:var(--te-white)}
+.btn--light{background:var(--te-white);color:var(--te-black);border-color:var(--te-white)}
+.arrow-link{font-size:var(--fs-15);border-bottom:var(--border-width) solid currentColor}
+.arrow-link:after{content:" \2192"}
+.badge{
+  display:inline-block;padding:.1em .6em;
+  font-size:var(--fs-10);letter-spacing:.05em;
+  background:var(--accent);color:var(--white);
+}
+
+/* -- layout ---------------------------------------------------
+   every section is one viewport tall; content vertically centered.
+   the page reads as discrete screens, like spreads in a manual. */
+section,header.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:var(--space-xl) var(--space-lg);
+}
+.grid-12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--space-sm)}
+
+/* -- 01 nav --------------------------------------------------- */
+.nav{
+  position:sticky;top:0;z-index:var(--z-navigation);
+  height:var(--header-height);min-height:48px;
+  display:flex;align-items:center;gap:var(--space-lg);
+  padding:0 var(--space-lg);
+  background:color-mix(in srgb,var(--theme-body-bc) 85%,transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:var(--border-width) solid var(--te-grey-100);
+}
+.nav__mark{width:1.25em;height:1.25em;background:var(--accent);border-radius:var(--round)}
+.nav__brand{font-size:var(--fs-15)}
+.nav__links{display:flex;gap:var(--space-md);margin:0 auto;list-style:none}
+.nav__links a{font-size:var(--fs-15);padding:.25em .75em;border-radius:var(--round);transition:background-color .2s ease-in}
+.nav__links a:hover{background:var(--te-grey-100)}
+
+/* -- 02 hero -------------------------------------------------- */
+.hero{align-items:flex-start;text-align:left}
+.hero h1{
+  font-family:var(--te-40);font-weight:var(--fw-thin);
+  font-size:calc(.09 * var(--client-width));
+  line-height:calc(.095 * var(--client-width));
+  letter-spacing:-.02em;max-width:12ch;
+}
+.hero h1 .cursor{display:inline-block;width:.08em;height:.9em;background:var(--accent);animation:blink 1s steps(1) infinite;vertical-align:baseline}
+@keyframes blink{50%{opacity:0}}
+.hero p{font-size:var(--fs-20);line-height:var(--lh-25);max-width:38ch;margin-top:var(--space-md)}
+.hero__ctas{display:flex;gap:var(--space-sm);margin-top:var(--space-lg)}
+.hero__play{margin-top:var(--space-md);font-size:var(--fs-15)}
+.hero__play .glyph{display:inline-flex;width:2em;height:2em;border:var(--border-width) solid var(--te-black);border-radius:var(--round);align-items:center;justify-content:center;margin-right:.5em}
+
+/* -- 03 use-cases carousel ------------------------------------ */
+.cases__head{display:flex;align-items:end;justify-content:space-between;margin-bottom:var(--space-lg)}
+.eyebrow{font-size:var(--fs-10);letter-spacing:.1em;color:var(--te-grey-600)}
+.cases__nav button{width:48px;height:48px;border:var(--border-width) solid var(--te-black);background:transparent;border-radius:var(--round);cursor:pointer;font-size:1em;transition:background-color .2s ease-in}
+.cases__nav button:hover{background:var(--te-grey-100)}
+.rail{display:flex;gap:var(--space-sm);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--space-sm)}
+.card{
+  flex:0 0 380px;scroll-snap-align:start;
+  border:var(--border-width) solid var(--te-grey-200);border-radius:0;
+  padding:var(--space-sm);background:var(--te-white);
+}
+.card__media{aspect-ratio:16/10;background:var(--te-grey-100);margin-bottom:var(--space-sm)}
+.card h3{font-size:var(--fs-20);line-height:var(--lh-20);font-weight:var(--fw-light);margin:var(--space-xs) 0}
+.card p{font-size:var(--fs-15);line-height:var(--lh-15);color:var(--te-grey-900);margin-bottom:var(--space-sm)}
+
+/* -- 04 two-column showpiece ---------------------------------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo__card{
+  position:relative;overflow:hidden;padding:var(--space-xl) var(--space-lg);
+  background:var(--te-white);border:var(--border-width) solid var(--te-grey-200);
+  min-height:70vh;display:flex;flex-direction:column;justify-content:center;gap:var(--space-sm);
+}
+.duo__card h2{font-family:var(--te-40);font-weight:var(--fw-thin);font-size:56px;line-height:1.05;max-width:26ch;letter-spacing:-.015em}
+.duo__card .swatch{position:absolute;inset:auto calc(-1 * var(--space-xl)) calc(-1 * var(--space-xl)) auto;width:45%;aspect-ratio:1;border-radius:var(--round);background:radial-gradient(circle at 30% 30%,var(--accent),transparent 70%);opacity:.25;animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-8%,-10%) scale(1.15)}}
+
+/* -- 05 journal slider ---------------------------------------- */
+.journal .card{flex-basis:320px}
+.journal .meta{font-size:var(--fs-10);color:var(--te-grey-600)}
+
+/* -- 06 dark cta band ------------------------------------------ */
+.cta-band{background:var(--te-grey-1000);color:var(--te-white);align-items:center;text-align:center}
+.cta-band h2{font-family:var(--te-40);font-weight:var(--fw-thin);font-size:var(--fs-40);line-height:var(--lh-40)}
+.cta-band .btn{margin-top:var(--space-lg)}
+
+/* -- 07 footer -------------------------------------------------- */
+footer{padding:var(--space-xl) var(--space-lg) var(--space-lg);border-top:var(--border-width) solid var(--te-grey-100)}
+.footer__cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-lg);font-size:var(--fs-15)}
+.footer__cols ul{list-style:none}
+.footer__cols li{padding:.35em 0;border-bottom:var(--border-width) solid var(--te-grey-100)}
+.footer__wordmark{
+  font-family:var(--te-40);font-weight:var(--fw-thin);
+  font-size:calc(.12 * var(--client-width));line-height:.85;
+  letter-spacing:-.02em;margin:var(--space-xl) 0 var(--space-lg);
+}
+.footer__legal{display:flex;gap:var(--space-md);font-size:var(--fs-10);color:var(--te-grey-600)}
+
+/* -- mobile ------------------------------------------------------ */
+@media (max-width:767px){
+  html{font-size:16px}
+  :root{--client-width:980px}       /* freeze the ratio system at design width */
+  section,header.hero{min-height:auto}
+  .hero h1{font-size:56px;line-height:1.05}
+  .duo{grid-template-columns:1fr}
+  .duo__card h2{font-size:40px}
+  .footer__cols{grid-template-columns:1fr 1fr}
+  .nav__links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 01 · nav -->
+<nav class="nav">
+  <span class="nav__mark" aria-hidden="true"></span>
+  <span class="nav__brand">{{BRAND}}</span>
+  <ul class="nav__links">
+    <li><a href="#">{{NAV_1}}</a></li>
+    <li><a href="#">{{NAV_2}}</a></li>
+    <li><a href="#">{{NAV_3}}</a></li>
+    <li><a href="#">{{NAV_4}}</a></li>
+    <li><a href="#">{{NAV_5}}</a></li>
+  </ul>
+  <a class="btn" href="#">{{NAV_CTA}}</a>
+</nav>
+
+<!-- 02 · hero -->
+<header class="hero">
+  <h1><span data-typed>{{HERO_HEADLINE}}</span><span class="cursor"></span></h1>
+  <p>{{HERO_LEDE}}</p>
+  <div class="hero__ctas">
+    <a class="btn" href="#">{{HERO_CTA_PRIMARY}}</a>
+    <a class="btn btn--ghost" href="#">{{HERO_CTA_SECONDARY}}</a>
+  </div>
+  <a class="hero__play" href="#"><span class="glyph">&#9654;</span>play intro</a>
+</header>
+
+<!-- 03 · use-cases -->
+<section class="cases">
+  <div class="cases__head">
+    <div>
+      <div class="eyebrow">{{USE_EYEBROW}}</div>
+      <h2 class="fs-30">{{USE_HEADLINE}}</h2>
+    </div>
+    <div class="cases__nav">
+      <button aria-label="previous">&#8592;</button>
+      <button aria-label="next">&#8594;</button>
+    </div>
+  </div>
+  <div class="rail">
+    <!-- repeat ×5 -->
+    <article class="card">
+      <div class="card__media"></div>
+      <span class="badge">{{CARD_BADGE}}</span>
+      <h3>{{CARD_ROLE}}</h3>
+      <p>{{CARD_BODY}}</p>
+      <a class="arrow-link" href="#">view case</a>
+    </article>
+  </div>
+</section>
+
+<!-- 04 · two-column showpiece -->
+<section>
+  <div class="duo">
+    <div class="duo__card">
+      <div class="swatch" aria-hidden="true"></div>
+      <span class="badge">{{CARD1_BADGE}}</span>
+      <h2>{{CARD1_HEADLINE}}</h2>
+      <p>{{CARD1_LEDE}}</p>
+      <div class="hero__ctas">
+        <a class="btn" href="#">{{CARD1_CTA1}}</a>
+        <a class="btn btn--ghost" href="#">{{CARD1_CTA2}}</a>
+      </div>
+    </div>
+    <div class="duo__card">
+      <div class="swatch" aria-hidden="true"></div>
+      <span class="badge">{{CARD2_BADGE}}</span>
+      <h2>{{CARD2_HEADLINE}}</h2>
+      <p>{{CARD2_LEDE}}</p>
+      <div class="hero__ctas">
+        <a class="btn" href="#">{{CARD2_CTA1}}</a>
+        <a class="btn btn--ghost" href="#">{{CARD2_CTA2}}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · journal slider -->
+<section class="journal">
+  <div class="cases__head">
+    <h2 class="fs-30">{{BLOG_HEADLINE}}</h2>
+    <div class="cases__nav">
+      <button aria-label="previous">&#8592;</button>
+      <button aria-label="next">&#8594;</button>
+    </div>
+  </div>
+  <div class="rail">
+    <!-- repeat ×6 -->
+    <article class="card">
+      <div class="card__media"></div>
+      <div class="meta">{{POST_DATE}} · {{POST_CATEGORY}}</div>
+      <h3>{{POST_TITLE}}</h3>
+      <a class="arrow-link" href="#">read</a>
+    </article>
+  </div>
+</section>
+
+<!-- 06 · dark cta band -->
+<section class="cta-band">
+  <h2><span data-typed>{{DL_HEADLINE}}</span><span class="cursor"></span></h2>
+  <a class="btn btn--light" href="#">{{DL_CTA}}</a>
+</section>
+
+<!-- 07 · footer -->
+<footer>
+  <div class="footer__cols">
+    <div class="fs-15">{{FOOTER_TAGLINE}}</div>
+    <ul><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li></ul>
+    <ul><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li></ul>
+    <ul><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li><li>{{FOOT_LINK}}</li></ul>
+  </div>
+  <div class="footer__wordmark">{{BRAND}}</div>
+  <div class="footer__legal">
+    <span class="nav__mark" style="width:1em;height:1em"></span>
+    <span>&copy; {{BRAND}}</span><a href="#">privacy</a><a href="#">terms</a>
+  </div>
+</footer>
+
+<script>
+/* typed-letter effect — word-safe (never breaks mid-word on wrap) */
+document.querySelectorAll("[data-typed]").forEach(el=>{
+  const words=el.textContent.split(" ");el.textContent="";
+  const spans=words.map(w=>{const s=document.createElement("span");
+    s.style.whiteSpace="nowrap";s.dataset.word=w;s.textContent="";return s});
+  spans.forEach((s,i)=>{el.appendChild(s);if(i<spans.length-1)el.appendChild(document.createTextNode(" "))});
+  let wi=0,ci=0;
+  new IntersectionObserver((e,o)=>{if(!e[0].isIntersecting)return;o.disconnect();
+    (function tick(){if(wi>=spans.length)return;
+      spans[wi].textContent=spans[wi].dataset.word.slice(0,++ci);
+      if(ci>=spans[wi].dataset.word.length){wi++;ci=0}
+      setTimeout(tick,55)})();
+  },{threshold:.4}).observe(el);
+});
+</script>
+</body>
+</html>

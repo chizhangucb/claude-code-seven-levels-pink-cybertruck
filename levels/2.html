@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 2 — Screenshots &amp; references · Seven Levels, Round 2</title>
+<meta name="description" content="Seven levels of building beautiful websites with Claude Code — round 2: one pink Cybertruck, the same seven-level ladder, Fable 5 and Opus 4.8 side by side.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23ff4fa3%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650;9..144,560italic&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body><nav class="site-nav"><div class="wrap">
+<a class="brand" href="/"><span class="dot"></span>Seven Levels</a>
+<div class="nav-levels"><a href="/levels/1.html">1</a><a href="/levels/2.html" aria-current="page">2</a><a href="/levels/3.html">3</a><a href="/levels/4.html">4</a><a href="/levels/5.html">5</a><a href="/levels/6.html">6</a><a href="/levels/7.html">7</a></div>
+<a class="nav-link" href="/compare/">Fable 5 vs Opus 4.8</a>
+<a class="nav-link" href="/slides/">Slides</a>
+<a class="nav-link" href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck">GitHub</a>
+</div></nav>
+<header class="level-head"><div class="wrap">
+<p class="kicker">Level 2 of 7</p>
+<h1>Screenshots &amp; references</h1>
+<p class="thesis">Show, don&#x27;t tell. One reference image transfers visual intent almost losslessly — paragraphs of adjectives can&#x27;t.</p>
+</div></header>
+<main class="level-body"><div class="wrap" style="display:grid;gap:44px">
+<section class="prose"><h2>The technique</h2><p>Grab a design you love from godly.website, Land-book, Awwwards, or Dribbble, and attach the screenshot. The model reads structure, spacing, palette, and mood straight off the pixels.</p><p>Round 1 needed a follow-up here to make the nav clickable. This round it sat loaded and unused — both models shipped functional nav anchors on the first pass, and Opus even self-checked its page in a browser.</p></section>
+<section><h2 class="section-title">The prompts that did it</h2><details class="prompt"><summary>Restyle toward the reference</summary>
+<blockquote>hey there, I would like you to update the website using this image as a reference style (only this one) for how i would likeThe website you look @reference-for-pink-cybertruck-web.png
+
+keep pink-cybertruck-web-level-1.html untouched. name the file as pink-cybertruck-web-level-2.html</blockquote>
+<p class="outcome">Both models restyled the level-1 page toward the reference screenshot. Level 1 was checksum-verified untouched in both runs — the keep-untouched rule now rides up front, and round 1&#x27;s overwrite (Opus clobbered level 1 here last time) did <strong>not</strong> recur. The scripted &#x27;make the nav clickable&#x27; follow-up was never needed: both models&#x27; anchors worked.</p>
+</details></section>
+<section class="demo-block" data-level="2">
+<h2 class="section-title">Live result</h2>
+<div class="demo-toolbar">
+<div class="seg" role="group" aria-label="Model">
+<button data-model="fable" aria-pressed="true">Fable 5</button>
+<button data-model="opus" aria-pressed="false">Opus 4.8</button>
+</div>
+<a class="demo-open" href="/demos/fable/level-2.html" target="_blank" rel="noopener">Open full screen ↗</a>
+</div>
+<div class="demo-frame">
+<button class="demo-cover" aria-label="Load the live level 2 demo">
+<img src="/assets/thumbs/fable-2.png" alt="">
+<span class="play"><span>▶ Load live demo</span></span>
+</button>
+</div>
+</section>
+
+<section><h2 class="section-title">Cost &amp; time</h2><div data-metrics-level="2"></div></section>
+
+<section><h2 class="section-title">What changed vs level 1</h2>
+<div class="delta">
+<figure><img src="/assets/thumbs/fable-1.png" alt="Level 1 result" loading="lazy"><figcaption>Level 1 — Grab and go</figcaption></figure>
+<figure><img src="/assets/thumbs/fable-2.png" alt="Level 2 result" loading="lazy"><figcaption>Level 2 — Screenshots &amp; references</figcaption></figure>
+</div>
+<ul class="delta-notes"><li>Layout stops being generic — it inherits the reference's structure and rhythm.</li><li>The palette and type treatment shift decisively toward the reference.</li><li>Round 1's lesson, applied: the save-as rule now leads the prompt — and the overwrite didn't recur.</li></ul>
+</section>
+<section class="prose"><h2>What this level taught</h2><ul class="delta-notes"><li>An image speaks a thousand words — literally true for design prompting.</li><li>State file rules up front; prevention beats the recovery follow-up.</li><li>Staged follow-ups can go unused — both models made the nav functional without being asked twice.</li></ul>
+<p style="margin-top:14px"><a href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck/blob/main/docs/prompt-log/level-2.md">Full prompt log for this level →</a></p></section>
+</div></main>
+<div class="wrap"><div class="pager"><a class="prev" href="/levels/1.html"><div class="dir">← Level 1</div><div class="title">Grab and go</div></a><a class="next" href="/levels/3.html"><div class="dir">Level 3 →</div><div class="title">Design skills</div></a></div></div>
+<footer class="site-footer"><div class="wrap">
+<span>Built with Claude Code — the site, the slides, and all fourteen demos.</span>
+<span>Based on <a href="https://www.youtube.com/watch?v=AFRL9dtUHeI">“7 Levels of Building Claude Code Websites”</a> by Jack Roberts.</span>
+<span>Round 1 — the yellow iPhone — lives at <a href="https://github.com/chizhangucb/claude-code-seven-levels-building-website">claude-code-seven-levels-building-website</a>.</span>
+</div></footer>
+<script src="/assets/metrics.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>

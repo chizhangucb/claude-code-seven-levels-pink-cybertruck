@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PINKTRUCK — The Cybertruck, but Pink</title>
+<style>
+  :root{
+    /* studio palette, pulled from the reference shot */
+    --studio-1:#f2f2f3;
+    --studio-2:#e6e6e8;
+    --studio-3:#d9d9dc;
+    --paper:#fbfbfc;
+    --ink:#17171a;
+    --ink-2:#3d3d44;
+    --muted:#86868b;
+    --hair:rgba(23,23,26,.10);
+
+    --pink:#ff5fa8;
+    --pink-deep:#d9317f;
+    --pink-dark:#8f1a52;
+    --pink-light:#ffa8cf;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink-2);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 40px;
+    background:rgba(251,251,252,.72);
+    backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid var(--hair);
+  }
+  .logo{
+    font-weight:600;letter-spacing:.34em;font-size:13px;
+    color:var(--ink);text-transform:uppercase;
+  }
+  .logo span{color:var(--pink-deep)}
+  .nav-links{display:flex;gap:34px;list-style:none}
+  .nav-links a{
+    color:var(--muted);text-decoration:none;font-size:13px;
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{
+    background:var(--ink);color:#fff;border-radius:999px;
+    padding:9px 20px;font-size:13px;text-decoration:none;
+    transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--pink-deep)}
+
+  /* ---------- hero: the studio ---------- */
+  header{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;position:relative;overflow:hidden;
+    padding:112px 24px 40px;
+    /* seamless cyclorama: soft vignette, no hard horizon */
+    background:
+      radial-gradient(120% 80% at 50% 32%, #fafafb 0%, var(--studio-1) 42%, var(--studio-2) 72%, var(--studio-3) 100%);
+  }
+  .eyebrow{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:20px;
+  }
+  h1{
+    font-size:clamp(2.4rem,6vw,4.8rem);
+    line-height:1.02;font-weight:600;letter-spacing:-.035em;
+    color:var(--ink);
+  }
+  h1 em{font-style:normal;color:var(--pink-deep)}
+  .sub{
+    margin:22px auto 0;max-width:480px;
+    font-size:17px;color:var(--muted);
+  }
+  .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+  .btn{
+    padding:14px 30px;font-size:14px;border-radius:999px;
+    text-decoration:none;font-weight:500;transition:.22s;display:inline-block;
+  }
+  .btn-primary{background:var(--pink-deep);color:#fff}
+  .btn-primary:hover{background:var(--pink-dark);transform:translateY(-1px)}
+  .btn-ghost{border:1px solid rgba(23,23,26,.18);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink);background:rgba(23,23,26,.03)}
+
+  /* ---------- the truck, shot like the reference ---------- */
+  .stage{
+    width:100%;max-width:1060px;margin:18px auto 0;position:relative;
+    height:clamp(220px,38vh,360px);
+  }
+  .stage svg{width:100%;height:100%;display:block}
+  /* soft contact shadow pooling under the vehicle */
+  .contact-shadow{
+    position:absolute;left:14%;right:14%;bottom:12%;height:8%;
+    background:radial-gradient(ellipse at 50% 50%, rgba(30,28,34,.34), rgba(30,28,34,.12) 45%, transparent 72%);
+    filter:blur(18px);
+    z-index:0;
+  }
+  .stage svg{position:relative;z-index:1}
+
+  /* ---------- sections ---------- */
+  section{padding:130px 0;scroll-margin-top:78px}
+  .label{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--pink-deep);margin-bottom:16px;
+  }
+  h2{
+    font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.12;font-weight:600;
+    color:var(--ink);letter-spacing:-.025em;margin-bottom:16px;
+  }
+  .lead{max-width:560px;color:var(--muted);font-size:17px}
+
+  /* specs — quiet rows, no boxes */
+  #specs{background:var(--studio-1);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .specs{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:48px 24px;margin-top:64px;
+  }
+  .spec .n{
+    font-size:clamp(2.1rem,3.6vw,3rem);font-weight:600;color:var(--ink);
+    letter-spacing:-.03em;line-height:1;
+  }
+  .spec .n small{font-size:.4em;color:var(--muted);margin-left:5px;font-weight:400;letter-spacing:0}
+  .spec .k{margin-top:12px;font-size:13px;color:var(--muted)}
+
+  /* features — flat cards on paper */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:64px}
+  .card{
+    background:#fff;border:1px solid var(--hair);border-radius:18px;
+    padding:34px 30px;transition:.28s;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(23,23,26,.07);border-color:rgba(23,23,26,.16)}
+  .card .icon{
+    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+    background:rgba(255,95,168,.12);color:var(--pink-deep);
+    font-size:17px;margin-bottom:22px;
+  }
+  .card h3{color:var(--ink);font-size:17px;margin-bottom:8px;font-weight:600;letter-spacing:-.01em}
+  .card p{color:var(--muted);font-size:15px}
+
+  /* colorway — a second studio plate */
+  .color-row{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;margin-top:56px}
+  .color-panel{
+    aspect-ratio:16/10;display:grid;place-items:center;overflow:hidden;
+    border-radius:22px;border:1px solid var(--hair);
+    background:radial-gradient(120% 80% at 50% 34%, #fafafb 0%, var(--studio-1) 45%, var(--studio-3) 100%);
+    position:relative;
+  }
+  .color-panel svg{width:88%;height:auto;position:relative;z-index:1}
+  .color-panel::after{
+    content:"";position:absolute;left:14%;right:14%;bottom:16%;height:34px;
+    background:radial-gradient(ellipse at 50% 50%, rgba(30,28,34,.30), transparent 70%);
+    filter:blur(14px);
+  }
+  .swatches{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+  .sw{
+    width:44px;height:44px;border-radius:50%;cursor:pointer;
+    border:2px solid transparent;box-shadow:0 0 0 1px var(--hair) inset;
+    transition:.2s;
+  }
+  .sw:hover{transform:scale(1.08)}
+  .sw.active{border-color:var(--ink)}
+  .sw-name{margin-top:18px;font-size:14px;color:var(--ink);min-height:20px}
+
+  /* cta band */
+  .band{background:var(--studio-1);border-top:1px solid var(--hair);text-align:center}
+  .band .lead{margin:0 auto 30px}
+
+  footer{
+    padding:44px 0;display:flex;justify-content:space-between;
+    align-items:center;gap:16px;flex-wrap:wrap;
+    font-size:13px;color:var(--muted);
+  }
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:880px){
+    .nav-links{display:none}
+    .color-row{grid-template-columns:1fr;gap:40px}
+    section{padding:90px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Pink<span>truck</span></div>
+  <ul class="nav-links">
+    <li><a href="#design">Design</a></li>
+    <li><a href="#specs">Specs</a></li>
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Reserve</a>
+</nav>
+
+<header>
+  <div class="eyebrow">Stainless · Bulletproof · Unapologetic</div>
+  <h1>Think <em>Pink</em></h1>
+  <p class="sub">The exoskeleton was never meant to be grey. 6,500 lbs of angular attitude, dipped in the loudest color physics allows.</p>
+  <div class="btns">
+    <a href="#order" class="btn btn-primary">Reserve for $250</a>
+    <a href="#design" class="btn btn-ghost">Explore the truck</a>
+  </div>
+
+  <div class="stage">
+    <div class="contact-shadow"></div>
+    <svg viewBox="0 0 1000 340" xmlns="http://www.w3.org/2000/svg" aria-label="Pink Cybertruck">
+      <defs>
+        <!-- glossy studio paint: bright top reflection, mid body, darker shadow side -->
+        <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffd0e6"/>
+          <stop offset="18%" stop-color="#ff9dcb"/>
+          <stop offset="52%" stop-color="#ff5fa8"/>
+          <stop offset="100%" stop-color="#c92a74"/>
+        </linearGradient>
+        <linearGradient id="paint-lower" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#d9317f"/>
+          <stop offset="100%" stop-color="#8f1a52"/>
+        </linearGradient>
+        <linearGradient id="hood" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffe4f1"/>
+          <stop offset="60%" stop-color="#ffa8cf"/>
+          <stop offset="100%" stop-color="#ff77b8"/>
+        </linearGradient>
+        <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4a4750"/>
+          <stop offset="100%" stop-color="#1c1a21"/>
+        </linearGradient>
+        <linearGradient id="tyre" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3a373d"/>
+          <stop offset="100%" stop-color="#17161a"/>
+        </linearGradient>
+        <radialGradient id="rim" cx="35%" cy="30%">
+          <stop offset="0%" stop-color="#e9e9ec"/>
+          <stop offset="70%" stop-color="#9d9da4"/>
+          <stop offset="100%" stop-color="#6a6a71"/>
+        </radialGradient>
+      </defs>
+
+      <!-- body: the wedge -->
+      <polygon points="70,232 195,232 275,158 620,92 930,186 930,232 70,232" fill="url(#paint)"/>
+      <!-- upper hood facet catching the studio softbox -->
+      <polygon points="275,158 620,92 640,101 292,166" fill="url(#hood)" opacity=".95"/>
+      <!-- specular sweep along the shoulder line -->
+      <polygon points="292,166 640,101 640,108 292,173" fill="#fff" opacity=".55"/>
+      <!-- rocker / lower shadow band -->
+      <polygon points="168,232 834,232 834,254 168,254" fill="url(#paint-lower)"/>
+      <!-- glasshouse -->
+      <polygon points="296,157 618,102 770,146 770,157 296,157" fill="url(#glass)"/>
+      <polygon points="310,152 600,104 606,107 316,154" fill="#fff" opacity=".18"/>
+      <!-- door split + bed line -->
+      <line x1="520" y1="126" x2="520" y2="157" stroke="#1c1a21" stroke-width="1.5" opacity=".45"/>
+      <line x1="770" y1="157" x2="926" y2="188" stroke="#fff" stroke-width="1.5" opacity=".45"/>
+      <!-- light bar (front) -->
+      <rect x="74" y="190" width="20" height="6" rx="3" fill="#fff"/>
+      <rect x="920" y="200" width="10" height="7" rx="2" fill="#ff5fa8"/>
+      <!-- wheel arches -->
+      <polygon points="168,256 210,204 288,204 330,256" fill="#1c1a21"/>
+      <polygon points="672,256 714,204 792,204 834,256" fill="#1c1a21"/>
+      <!-- wheels -->
+      <circle cx="249" cy="248" r="48" fill="url(#tyre)"/>
+      <circle cx="753" cy="248" r="48" fill="url(#tyre)"/>
+      <circle cx="249" cy="248" r="26" fill="url(#rim)"/>
+      <circle cx="753" cy="248" r="26" fill="url(#rim)"/>
+      <circle cx="249" cy="248" r="8" fill="#5c5c63"/>
+      <circle cx="753" cy="248" r="8" fill="#5c5c63"/>
+    </svg>
+  </div>
+</header>
+
+<section id="design" class="wrap reveal">
+  <div class="label">Design</div>
+  <h2>An origami brick that happens to slap</h2>
+  <p class="lead">Ultra-hard 30X cold-rolled stainless steel. Armor glass. Zero curves, zero apologies — and the one finish nobody saw coming.</p>
+
+  <div class="features">
+    <div class="card">
+      <div class="icon">◈</div>
+      <h3>Hyper Magenta paint</h3>
+      <p>Seven layers of candy magenta over a chrome base. It shifts from bubblegum to deep fuchsia as you walk around it.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>Tri-motor drive</h3>
+      <p>0–60 in 2.6 seconds while towing 11,000 lbs. The color is loud. The drivetrain is louder — and it makes no sound at all.</p>
+    </div>
+    <div class="card">
+      <div class="icon">◐</div>
+      <h3>Underglow, factory</h3>
+      <p>Magenta lighting under the rocker panels. Legal in exactly the states where it should be.</p>
+    </div>
+    <div class="card">
+      <div class="icon">▣</div>
+      <h3>Still bulletproof</h3>
+      <p>The pink does not compromise the exoskeleton. Class 4 impact rated. Pretty outside, feral underneath.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⬡</div>
+      <h3>500 miles of range</h3>
+      <p>Long-range pack with 250 kW charging. LA to Vegas on a single charge, arriving matched to the skyline.</p>
+    </div>
+    <div class="card">
+      <div class="icon">☰</div>
+      <h3>The vault bed</h3>
+      <p>6.5 feet of lockable, powered tonneau storage. Lined in matte blush. Yes, we thought about that too.</p>
+    </div>
+  </div>
+</section>
+
+<section id="specs" class="reveal">
+  <div class="wrap">
+    <div class="label">Specs</div>
+    <h2>Loud on paper too</h2>
+    <div class="specs">
+      <div class="spec"><div class="n">2.6<small>sec</small></div><div class="k">0–60 mph</div></div>
+      <div class="spec"><div class="n">845<small>hp</small></div><div class="k">Peak output</div></div>
+      <div class="spec"><div class="n">500<small>mi</small></div><div class="k">Estimated range</div></div>
+      <div class="spec"><div class="n">11k<small>lb</small></div><div class="k">Towing</div></div>
+      <div class="spec"><div class="n">130<small>mph</small></div><div class="k">Top speed</div></div>
+      <div class="spec"><div class="n">1<small>color</small></div><div class="k">That matters</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="colors" class="wrap reveal">
+  <div class="label">Colors</div>
+  <h2>Pick your pink</h2>
+  <div class="color-row">
+    <div class="color-panel">
+      <svg viewBox="0 0 1000 340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sel-paint" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".55" id="sel-hi"/>
+            <stop offset="55%" stop-color="#ff5fa8" id="sel-mid"/>
+            <stop offset="100%" stop-color="#000" stop-opacity=".28" id="sel-lo"/>
+          </linearGradient>
+        </defs>
+        <polygon points="70,232 195,232 275,158 620,92 930,186 930,232 70,232" fill="#ff5fa8" id="swatch-body"/>
+        <polygon points="70,232 195,232 275,158 620,92 930,186 930,232 70,232" fill="url(#sel-paint)" style="mix-blend-mode:overlay" pointer-events="none"/>
+        <polygon points="168,232 834,232 834,252 168,252" fill="#ff5fa8" id="swatch-rocker"/>
+        <polygon points="168,232 834,232 834,252 168,252" fill="#000" opacity=".45"/>
+        <polygon points="296,157 618,102 770,146 770,157 296,157" fill="url(#glass)"/>
+        <polygon points="168,256 210,204 288,204 330,256" fill="#1c1a21"/>
+        <polygon points="672,256 714,204 792,204 834,256" fill="#1c1a21"/>
+        <circle cx="249" cy="248" r="48" fill="url(#tyre)"/>
+        <circle cx="753" cy="248" r="48" fill="url(#tyre)"/>
+        <circle cx="249" cy="248" r="26" fill="url(#rim)"/>
+        <circle cx="753" cy="248" r="26" fill="url(#rim)"/>
+      </svg>
+    </div>
+    <div>
+      <p class="lead">Six finishes. All of them pink. Anyone who calls that a limitation has never been passed by a magenta exoskeleton doing 2.6 to sixty.</p>
+      <div class="swatches" id="swatches">
+        <div class="sw active" style="background:#ff5fa8" data-name="Hyper Magenta"></div>
+        <div class="sw" style="background:#ffa8cf" data-name="Bubblegum Chrome"></div>
+        <div class="sw" style="background:#e6006e" data-name="Vice Fuchsia"></div>
+        <div class="sw" style="background:#ffcfe2" data-name="Blush Matte"></div>
+        <div class="sw" style="background:#c2185b" data-name="Deep Rose Steel"></div>
+        <div class="sw" style="background:#ff6f7d" data-name="Sunset Coral"></div>
+      </div>
+      <div class="sw-name" id="sw-name">Hyper Magenta</div>
+    </div>
+  </div>
+</section>
+
+<section id="order" class="band reveal">
+  <div class="wrap">
+    <div class="label">Reserve</div>
+    <h2>Be unmissable</h2>
+    <p class="lead">$250, fully refundable. First deliveries next spring. Grey is still available — for other people.</p>
+    <div class="btns">
+      <a href="#" class="btn btn-primary">Reserve yours</a>
+      <a href="#design" class="btn btn-ghost">Book a test drive</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div>© 2026 Pinktruck — not affiliated with anyone litigious</div>
+    <div>Built loud · Driven louder</div>
+  </footer>
+</div>
+
+<script>
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const body = document.getElementById('swatch-body');
+  const rocker = document.getElementById('swatch-rocker');
+  const nameEl = document.getElementById('sw-name');
+  document.querySelectorAll('#swatches .sw').forEach(sw=>{
+    sw.addEventListener('click', ()=>{
+      document.querySelectorAll('#swatches .sw').forEach(s=>s.classList.remove('active'));
+      sw.classList.add('active');
+      body.setAttribute('fill', sw.style.backgroundColor);
+      rocker.setAttribute('fill', sw.style.backgroundColor);
+      nameEl.textContent = sw.dataset.name;
+    });
+  });
+</script>
+</body>
+</html>

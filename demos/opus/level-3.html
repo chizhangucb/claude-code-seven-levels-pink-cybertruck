@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en" data-paint="flamingo" data-wheels="cyber">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pink Cybertruck — Exoskeleton in Rose | CYBR</title>
+<meta name="description" content="The Cybertruck, reissued in four pinks. Stainless exoskeleton, 340-mile range, 0–60 in 2.6s. Configure your paint and reserve for $250.">
+<meta name="theme-color" content="#14161A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Pink Cybertruck — Exoskeleton in Rose">
+<meta property="og:description" content="Stainless exoskeleton, reissued in four pinks. Configure and reserve.">
+<meta property="og:image" content="https://cybr.example/og-pink-cybertruck-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314161A'/%3E%3Cpath d='M3 22 L15 9 L29 13 L29 22 Z' fill='%23FF3D8A'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap">
+
+<script>
+  // Set theme before first paint — no flash.
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('cybr-theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   TOKENS — semantic, OKLCH, one set of names re-themed for light
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Type scale: base 16, ratio 1.25, fluid via clamp */
+  --step--1: clamp(0.82rem, 0.80rem + 0.10vw, 0.875rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.22vw, 1.125rem);
+  --step-1:  clamp(1.25rem, 1.17rem + 0.38vw, 1.5rem);
+  --step-2:  clamp(1.5rem, 1.33rem + 0.85vw, 2rem);
+  --step-3:  clamp(2rem, 1.66rem + 1.70vw, 3rem);
+  --step-4:  clamp(2.75rem, 1.86rem + 4.45vw, 5.5rem);
+
+  /* 8-point spacing */
+  --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --sp-5: 48px; --sp-6: 64px; --sp-7: 96px; --sp-8: 128px;
+  --section-y: clamp(64px, 4rem + 6vw, 128px);
+
+  --radius: 4px;          /* Tesla's precision radius — sharp, not playful */
+  --radius-lg: 12px;
+  --chamfer: 14px;        /* Cybertruck geometry: cut corners, never round them */
+
+  --dur: 330ms;           /* Tesla's universal 0.33s */
+  --dur-fast: 180ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shell: 1320px;
+}
+
+:root[data-theme="dark"] {
+  --bg:        oklch(0.19 0.008 265);   /* carbon */
+  --bg-deep:   oklch(0.14 0.008 265);
+  --surface:   oklch(0.24 0.009 265);
+  --fg:        oklch(0.97 0.002 265);
+  --fg-muted:  oklch(0.72 0.010 265);
+  --border:    oklch(0.34 0.010 265);
+  --border-soft: oklch(0.28 0.010 265);
+  --accent:    oklch(0.68 0.222 356);   /* hot pink — the only chromatic color */
+  --accent-hi: oklch(0.75 0.190 356);
+  --on-accent: oklch(0.16 0.030 356);
+  --scrim:     oklch(0.14 0.008 265 / 0.72);
+  --glass:     oklch(0.19 0.008 265 / 0.78);
+  --grid-line: oklch(1 0 0 / 0.035);
+}
+
+:root[data-theme="light"] {
+  --bg:        oklch(1 0 0);
+  --bg-deep:   oklch(0.97 0.002 265);
+  --surface:   oklch(0.975 0.002 265);
+  --fg:        oklch(0.20 0.008 265);
+  --fg-muted:  oklch(0.48 0.010 265);
+  --border:    oklch(0.89 0.005 265);
+  --border-soft: oklch(0.93 0.004 265);
+  --accent:    oklch(0.55 0.235 356);   /* darkened for 4.5:1 on white */
+  --accent-hi: oklch(0.48 0.230 356);
+  --on-accent: oklch(1 0 0);
+  --scrim:     oklch(0.20 0.008 265 / 0.55);
+  --glass:     oklch(1 0 0 / 0.82);
+  --grid-line: oklch(0 0 0 / 0.04);
+}
+
+/* Paint chips — drive the SVG's gradients. One source of truth per color. */
+:root[data-paint="flamingo"]  { --paint-hi:#FFA8CF; --paint-mid:#FF3D8A; --paint-lo:#A81E56; --paint-name:"Flamingo"; }
+:root[data-paint="blush"]     { --paint-hi:#FFE3EE; --paint-mid:#FFB3D4; --paint-lo:#C9819F; --paint-name:"Blush Chrome"; }
+:root[data-paint="magenta"]   { --paint-hi:#DE5794; --paint-mid:#A8195A; --paint-lo:#560B31; --paint-name:"Magenta Void"; }
+:root[data-paint="saltrose"]  { --paint-hi:#EFE8EC; --paint-mid:#C9BAC2; --paint-lo:#867881; --paint-name:"Salt Flat Rose"; }
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+h1, h2, h3, .display {
+  font-family: "Space Grotesk", -apple-system, sans-serif;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 5vw, 56px);
+}
+
+.prose { max-width: 62ch; }
+
+/* Focus — ≥2px, ≥3:1, never removed */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute; left: var(--sp-2); top: -100px; z-index: 100;
+  background: var(--accent); color: var(--on-accent);
+  padding: 12px 20px; border-radius: var(--radius); font-weight: 500;
+  transition: top var(--dur-fast) var(--ease);
+}
+.skip-link:focus { top: var(--sp-2); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Angular geometry — the Cybertruck's whole thesis is the cut corner */
+.chamfer {
+  clip-path: polygon(var(--chamfer) 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%, 0 var(--chamfer));
+}
+
+/* ── Buttons: 5 states, ≥44px, one primary per view ──────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 28px;
+  font-family: "Space Grotesk", sans-serif; font-size: 0.9375rem; font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent; border-radius: var(--radius);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.btn--primary { background: var(--accent); color: var(--on-accent); }
+.btn--primary:hover { background: var(--accent-hi); }
+.btn--primary:active { transform: translateY(1px); }
+.btn--ghost {
+  background: transparent; color: var(--fg); border-color: var(--border);
+}
+.btn--ghost:hover { border-color: var(--fg); background: var(--surface); }
+.btn--ghost:active { transform: translateY(1px); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn--wide { width: 100%; }
+@media (prefers-reduced-motion: reduce) { .btn:active { transform: none; } }
+
+.eyebrow {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: var(--step--1); font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent);
+}
+.eyebrow--muted { color: var(--fg-muted); }
+
+/* ── Header ───────────────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.site-header__inner {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 68px;
+}
+.wordmark {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700;
+  font-size: 1.0625rem; letter-spacing: 0.34em;
+  color: var(--fg); text-decoration: none; margin-right: auto;
+  padding: 6px 2px;
+}
+.wordmark span { color: var(--accent); }
+
+.site-nav { display: none; gap: 4px; }
+@media (min-width: 1024px) { .site-nav { display: flex; } }
+.site-nav a {
+  color: var(--fg); text-decoration: none;
+  font-size: 0.9375rem; font-weight: 500;
+  padding: 10px 16px; border-radius: var(--radius);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.site-nav a:hover { background: var(--surface); color: var(--accent); }
+
+.icon-btn {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.icon-btn:hover { border-color: var(--fg); background: var(--surface); }
+.icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+:root[data-theme="dark"] .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+:root[data-theme="light"] .icon-sun { display: none; }
+:root[data-theme="light"] .icon-moon { display: block; }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding-block: clamp(40px, 3rem + 3vw, 72px) clamp(48px, 3rem + 4vw, 88px);
+  background:
+    linear-gradient(180deg, transparent, var(--bg-deep)),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 88px),
+    var(--bg);
+  overflow: hidden;
+}
+/* Pink horizon glow — the only light source in the room */
+.hero::after {
+  content: ""; position: absolute; inset: auto 0 -30% 0; height: 70%;
+  background: radial-gradient(60% 100% at 50% 100%, var(--accent), transparent 70%);
+  opacity: 0.16; pointer-events: none;
+}
+:root[data-theme="light"] .hero::after { opacity: 0.10; }
+
+.hero__grid { display: grid; gap: var(--sp-5); position: relative; z-index: 1; }
+@media (min-width: 1024px) {
+  .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; gap: var(--sp-6); }
+}
+
+.hero h1 {
+  font-size: var(--step-4);
+  margin-block: var(--sp-2) var(--sp-3);
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero__lede { color: var(--fg-muted); max-width: 46ch; margin-bottom: var(--sp-4); }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.hero__proof {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-4);
+  margin-top: var(--sp-5); padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-soft);
+}
+.proof__n {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700;
+  font-size: var(--step-1); font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.proof__l { font-size: var(--step--1); color: var(--fg-muted); }
+
+/* ── The truck ────────────────────────────────────────────── */
+.stage { position: relative; }
+.stage__svg {
+  width: 100%; height: auto; aspect-ratio: 1200 / 500;  /* reserve space — CLS 0 */
+  filter: drop-shadow(0 40px 60px oklch(0 0 0 / 0.45));
+}
+:root[data-theme="light"] .stage__svg { filter: drop-shadow(0 30px 44px oklch(0 0 0 / 0.16)); }
+.stage__svg .paint-body,
+.stage__svg .paint-roof,
+.stage__svg .paint-panel { transition: fill var(--dur) var(--ease); }
+.stage__floor {
+  position: absolute; left: 6%; right: 6%; bottom: 4%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+/* ── Configurator ─────────────────────────────────────────── */
+.config {
+  margin-top: var(--sp-4); padding: var(--sp-3);
+  background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  display: grid; gap: var(--sp-3);
+}
+@media (min-width: 640px) { .config { grid-template-columns: 1fr 1fr; } }
+
+.config__label {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-1);
+  font-size: var(--step--1); margin-bottom: 12px;
+}
+.config__label b { font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-muted); }
+.config__value { font-family: "Space Grotesk", sans-serif; font-weight: 500; color: var(--fg); }
+
+.swatches { display: flex; gap: 12px; }
+.swatch {
+  width: 44px; height: 44px; padding: 0;
+  border: 1px solid var(--border); border-radius: 50%;
+  cursor: pointer; position: relative;
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur) var(--ease);
+}
+.swatch:hover { transform: scale(1.06); border-color: var(--fg); }
+.swatch[aria-pressed="true"] { border-color: var(--fg); }
+/* Selection is a ring AND a check — never hue alone */
+.swatch[aria-pressed="true"]::after {
+  content: ""; position: absolute; inset: -5px;
+  border: 2px solid var(--accent); border-radius: 50%;
+}
+.swatch svg { width: 18px; height: 18px; margin: auto; opacity: 0; }
+.swatch[aria-pressed="true"] svg { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .swatch:hover { transform: none; } }
+
+.segmented {
+  display: flex; gap: 4px; padding: 4px;
+  background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.segmented button {
+  flex: 1; min-height: 44px; padding: 0 12px;
+  background: transparent; border: 0; border-radius: 2px;
+  font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  color: var(--fg-muted);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.segmented button:hover { color: var(--fg); }
+.segmented button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { padding-block: var(--section-y); }
+.section--alt { background: var(--bg-deep); border-block: 1px solid var(--border-soft); }
+.section__head { margin-bottom: var(--sp-6); }
+.section__head h2 { font-size: var(--step-3); margin-block: var(--sp-2) var(--sp-2); }
+.section__head p { color: var(--fg-muted); }
+
+/* Spec strip */
+.specs {
+  display: grid; gap: 1px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); overflow: hidden;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 768px) { .specs { grid-template-columns: repeat(4, 1fr); } }
+.spec { background: var(--bg); padding: var(--sp-4) var(--sp-3); }
+.spec dt { font-size: var(--step--1); color: var(--fg-muted); margin-bottom: 6px; }
+.spec dd {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700;
+  font-size: var(--step-2); font-variant-numeric: tabular-nums; line-height: 1;
+}
+.spec dd small { font-size: 0.5em; font-weight: 500; color: var(--fg-muted); margin-left: 4px; }
+
+/* Features */
+.features {
+  display: grid; gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+.feature {
+  padding: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  --chamfer: 20px;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.feature:hover { border-color: var(--accent); transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .feature:hover { transform: none; } }
+.feature svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.5; margin-bottom: var(--sp-3); }
+.feature h3 { font-size: var(--step-1); margin-bottom: var(--sp-1); }
+.feature p { font-size: 0.9375rem; color: var(--fg-muted); }
+
+/* Trims */
+.trims { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.trim {
+  position: relative; display: flex; flex-direction: column;
+  padding: var(--sp-4); background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  transition: border-color var(--dur) var(--ease);
+}
+.trim[data-featured] { border-color: var(--accent); }
+.trim__flag {
+  position: absolute; top: -11px; left: var(--sp-4);
+  background: var(--accent); color: var(--on-accent);
+  font-family: "Space Grotesk", sans-serif; font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px;
+}
+.trim h3 { font-size: var(--step-1); }
+.trim__price {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700;
+  font-size: var(--step-2); font-variant-numeric: tabular-nums;
+  margin-block: var(--sp-2) var(--sp-3);
+}
+.trim ul { list-style: none; padding: 0; margin: 0 0 var(--sp-4); display: grid; gap: 10px; }
+.trim li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9375rem; color: var(--fg-muted); }
+.trim li svg { flex: none; width: 16px; height: 16px; margin-top: 4px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.trim .btn { margin-top: auto; }
+/* Selected trim: accent border + label change — state is never color alone */
+.trim-btn[aria-pressed="true"] {
+  border-color: var(--accent); color: var(--accent); font-weight: 500;
+}
+.trim-btn[aria-pressed="true"]:hover { border-color: var(--accent); background: transparent; }
+
+/* Reserve form */
+.reserve { display: grid; gap: var(--sp-6); }
+@media (min-width: 900px) { .reserve { grid-template-columns: 1fr 1fr; align-items: start; gap: var(--sp-7); } }
+.field { display: grid; gap: 6px; margin-bottom: var(--sp-3); }
+.field label { font-size: 0.9375rem; font-weight: 500; }
+.field label .req { color: var(--accent); }
+.field input {
+  min-height: 48px; padding: 0 14px;
+  font-size: 1rem; /* ≥16px — stops iOS zoom */
+  background: var(--bg); color: var(--fg);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: border-color var(--dur) var(--ease);
+}
+.field input::placeholder { color: var(--fg-muted); opacity: 0.7; }
+.field input:hover { border-color: var(--fg-muted); }
+.field input:focus-visible { border-color: var(--accent); outline-offset: 1px; }
+.field input[aria-invalid="true"] { border-color: #FF5C5C; }
+.field .hint { font-size: var(--step--1); color: var(--fg-muted); }
+.field .err {
+  display: none; align-items: center; gap: 6px;
+  font-size: var(--step--1); color: #FF5C5C; font-weight: 500;
+}
+:root[data-theme="light"] .field input[aria-invalid="true"] { border-color: #C62828; }
+:root[data-theme="light"] .field .err { color: #C62828; }
+.field .err svg { flex: none; width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.field input[aria-invalid="true"] ~ .err { display: flex; }  /* error carries an icon, not just red */
+
+.receipt { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: var(--sp-4); }
+.receipt__row { display: flex; justify-content: space-between; gap: var(--sp-2); padding-block: 12px; font-size: 0.9375rem; }
+.receipt__row + .receipt__row { border-top: 1px solid var(--border-soft); }
+.receipt__row span:last-child { font-variant-numeric: tabular-nums; font-weight: 500; }
+.receipt__row--total { border-top: 1px solid var(--border) !important; margin-top: 4px; }
+.receipt__row--total span { font-family: "Space Grotesk", sans-serif; font-size: var(--step-1); font-weight: 700; }
+
+.form-status { margin-top: var(--sp-2); font-size: 0.9375rem; color: var(--accent); font-weight: 500; }
+
+/* ── Sticky order bar ─────────────────────────────────────── */
+.orderbar {
+  position: sticky; bottom: 0; z-index: 30;
+  background: var(--glass); backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+}
+.orderbar__inner {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 72px; padding-block: 12px;
+}
+.orderbar__spec { min-width: 0; }
+.orderbar__title {
+  font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 0.9375rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.orderbar__price {
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: var(--step-1);
+  font-variant-numeric: tabular-nums; line-height: 1.2;
+}
+.orderbar .btn { margin-left: auto; flex: none; }
+@media (max-width: 520px) { .orderbar .btn { padding: 0 20px; } }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.site-footer { border-top: 1px solid var(--border-soft); padding-block: var(--sp-6) var(--sp-4); background: var(--bg-deep); }
+.footer__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.footer__grid h4 { font-family: "Space Grotesk", sans-serif; font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--sp-2); font-weight: 500; }
+.footer__grid ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+.footer__grid a { color: var(--fg); text-decoration: none; font-size: 0.9375rem; padding-block: 2px; }
+.footer__grid a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.footer__base {
+  margin-top: var(--sp-6); padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-soft);
+  display: flex; flex-wrap: wrap; gap: var(--sp-2); justify-content: space-between;
+  font-size: var(--step--1); color: var(--fg-muted);
+}
+
+/* ── Scroll reveal — transform/opacity only.
+   Hidden ONLY once JS has confirmed it can reveal it again. No JS, no hiding. ── */
+:root.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+:root.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="#top">CYBR<span>.</span></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#design">Design</a>
+      <a href="#specs">Specs</a>
+      <a href="#trims">Trims</a>
+      <a href="#reserve">Reserve</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+    </button>
+    <a class="btn btn--primary" href="#reserve">Reserve</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── HERO / CONFIGURATOR ────────────────────────────── -->
+  <section class="hero" id="top">
+    <div class="container hero__grid">
+
+      <div>
+        <p class="eyebrow">Exoskeleton — Rose Edition</p>
+        <h1>Built for Mars.<br>Painted for <em>Miami</em>.</h1>
+        <p class="hero__lede">
+          The same 30X cold-rolled stainless exoskeleton. The same armor glass.
+          Now in four pinks that were never supposed to leave the paint lab.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#reserve">Reserve for $250</a>
+          <a class="btn btn--ghost" href="#design">See the geometry</a>
+        </div>
+        <dl class="hero__proof">
+          <div><dd class="proof__n">2.6s</dd><dt class="proof__l">0–60 mph</dt></div>
+          <div><dd class="proof__n">340mi</dd><dt class="proof__l">Range</dt></div>
+          <div><dd class="proof__n">11,000lb</dd><dt class="proof__l">Towing</dt></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <!-- Faceted exoskeleton, drawn as flat planes. Recolors live. -->
+        <svg class="stage__svg" viewBox="0 0 1200 500" role="img"
+             aria-labelledby="truck-title truck-desc">
+          <title id="truck-title">Pink Cybertruck, side profile</title>
+          <desc id="truck-desc">A Cybertruck in the currently selected paint color, shown from the side with its faceted stainless-steel exoskeleton, wedge roofline and angular wheel arches.</desc>
+
+          <defs>
+            <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-hi)"/>
+              <stop offset="55%" stop-color="var(--paint-mid)"/>
+              <stop offset="100%" stop-color="var(--paint-lo)"/>
+            </linearGradient>
+            <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-hi)"/>
+              <stop offset="100%" stop-color="var(--paint-mid)"/>
+            </linearGradient>
+            <linearGradient id="gBed" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-mid)"/>
+              <stop offset="100%" stop-color="var(--paint-lo)"/>
+            </linearGradient>
+            <linearGradient id="gGlass" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0%"   stop-color="#3A4048"/>
+              <stop offset="45%"  stop-color="#171A20"/>
+              <stop offset="100%" stop-color="#0B0D10"/>
+            </linearGradient>
+            <linearGradient id="gLight" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="var(--paint-hi)"/>
+              <stop offset="100%" stop-color="#FFFFFF"/>
+            </linearGradient>
+            <radialGradient id="gShadow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <ellipse cx="600" cy="440" rx="470" ry="24" fill="url(#gShadow)"/>
+
+          <!-- Body. Upper edge is one unbroken line: bumper → windshield base → apex.
+               Lower edge is the sill. Everything between is one stainless plane. -->
+          <polygon class="paint-body" fill="url(#gBody)"
+                   points="45,252 348,146 366,208 784,208 800,150 1155,208 1155,362 45,362"/>
+
+          <!-- Roof + bed cover: the second plane, catching the sky -->
+          <polygon class="paint-roof" fill="url(#gRoof)"
+                   points="348,146 470,80 1155,208 800,150"/>
+
+          <!-- Bed flank, one stop darker so the cab reads as a separate volume -->
+          <polygon class="paint-panel" fill="url(#gBed)" points="812,190 1155,212 1155,362 812,362"/>
+
+          <!-- Armor glass -->
+          <polygon fill="url(#gGlass)" points="360,150 470,88 790,155 776,206 372,206"/>
+          <!-- B pillar -->
+          <polygon fill="#0B0D10" points="565,108 580,111 580,206 565,206"/>
+
+          <!-- Panel seams — the exoskeleton's fold lines -->
+          <g stroke="#000" stroke-opacity="0.28" stroke-width="1.5">
+            <line x1="366" y1="208" x2="366" y2="362"/>
+            <line x1="580" y1="208" x2="580" y2="362"/>
+            <line x1="784" y1="208" x2="784" y2="362"/>
+            <line x1="812" y1="190" x2="812" y2="362"/>
+          </g>
+          <!-- Light catching the two folds -->
+          <line x1="45" y1="252" x2="470" y2="80" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.85"/>
+          <line x1="470" y1="80" x2="1155" y2="208" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.7"/>
+
+          <!-- Rocker cladding, inset between the arches -->
+          <polygon fill="#15181D" points="60,340 1140,340 1140,362 60,362"/>
+          <!-- Light bars -->
+          <rect x="45" y="246" width="22" height="6" fill="url(#gLight)"/>
+          <rect x="1108" y="216" width="47" height="7" rx="1" fill="#E23B4B"/>
+
+          <!-- Wheel arches: trapezoids. The Cybertruck has no round corners. -->
+          <polygon fill="#0F1216" points="162,362 192,268 308,268 338,362"/>
+          <polygon fill="#0F1216" points="862,362 892,268 1008,268 1038,362"/>
+
+          <!-- Wheels. Kept light enough to hold their edge against a near-black page. -->
+          <g>
+            <circle cx="250" cy="354" r="78" fill="#2A2F37"/>
+            <circle cx="250" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+            <circle cx="250" cy="354" r="51" fill="#151920"/>
+            <circle cx="250" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+            <g fill="#3D4450">
+              <polygon points="250,309 263,330 237,330"/>
+              <polygon points="250,399 237,378 263,378"/>
+              <polygon points="205,354 226,341 226,367"/>
+              <polygon points="295,354 274,367 274,341"/>
+            </g>
+            <circle cx="250" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+          </g>
+          <g>
+            <circle cx="950" cy="354" r="78" fill="#2A2F37"/>
+            <circle cx="950" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+            <circle cx="950" cy="354" r="51" fill="#151920"/>
+            <circle cx="950" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+            <g fill="#3D4450">
+              <polygon points="950,309 963,330 937,330"/>
+              <polygon points="950,399 937,378 963,378"/>
+              <polygon points="905,354 926,341 926,367"/>
+              <polygon points="995,354 974,367 974,341"/>
+            </g>
+            <circle cx="950" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <div class="stage__floor" aria-hidden="true"></div>
+
+        <!-- Configurator: the primary interaction of the fold -->
+        <div class="config">
+          <div>
+            <p class="config__label">
+              <b>Paint</b>
+              <span class="config__value" id="paint-name">Flamingo</span>
+            </p>
+            <div class="swatches" role="group" aria-label="Paint color">
+              <button class="swatch" type="button" data-paint="flamingo" data-cost="0"
+                      style="background:#FF3D8A" aria-pressed="true" aria-label="Flamingo, included">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="blush" data-cost="1500"
+                      style="background:#FFB3D4" aria-pressed="false" aria-label="Blush Chrome, plus $1,500">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#14161A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="magenta" data-cost="2500"
+                      style="background:#A8195A" aria-pressed="false" aria-label="Magenta Void, plus $2,500">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="saltrose" data-cost="1000"
+                      style="background:#C9BAC2" aria-pressed="false" aria-label="Salt Flat Rose, plus $1,000">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#14161A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <p class="config__label">
+              <b>Wheels</b>
+              <span class="config__value" id="wheel-name">20&quot; Cyber</span>
+            </p>
+            <div class="segmented" role="group" aria-label="Wheels">
+              <button type="button" data-wheels="cyber" data-cost="0" aria-pressed="true">20&quot; Cyber</button>
+              <button type="button" data-wheels="core" data-cost="3500" aria-pressed="false">22&quot; Core</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SPECS ──────────────────────────────────────────── -->
+  <section class="section" id="specs" aria-labelledby="specs-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">The numbers</p>
+        <h2 id="specs-h">Nothing was softened but the color.</h2>
+        <p class="prose">Pink is a finish, not a compromise. Every figure below is the standard Dual Motor spec, unchanged.</p>
+      </div>
+      <dl class="specs reveal">
+        <div class="spec"><dt>Acceleration</dt><dd>2.6<small>sec 0–60</small></dd></div>
+        <div class="spec"><dt>Range</dt><dd>340<small>miles</small></dd></div>
+        <div class="spec"><dt>Towing</dt><dd>11,000<small>lbs</small></dd></div>
+        <div class="spec"><dt>Payload</dt><dd>2,500<small>lbs</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ── DESIGN ─────────────────────────────────────────── -->
+  <section class="section section--alt" id="design" aria-labelledby="design-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">Design</p>
+        <h2 id="design-h">Straight lines. One curve.<br>That curve is the color.</h2>
+        <p class="prose">The exoskeleton refuses to bend, so we bent the light instead — a four-stage rose that shifts from chrome to void depending on where the sun is.</p>
+      </div>
+      <div class="features">
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+          <h3>30X Exoskeleton</h3>
+          <p>Cold-rolled stainless, 3mm thick. Dent-resistant, scratch-resistant, and now genuinely difficult to lose in a parking lot.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
+          <h3>Tri-Motor Torque</h3>
+          <p>845 hp across three independent motors. Torque vectoring at each corner, four-wheel steering under 40 mph.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 10h18M9 4v14"/></svg>
+          <h3>Armor Glass</h3>
+          <p>Ultra-hard borosilicate laminate. Rated for a Class 2 impact. We recommend not testing this on camera.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V8l8-4 8 4v10"/><path d="M4 13h16M9 18v-5"/></svg>
+          <h3>Vault Bed</h3>
+          <p>6.5-foot bed with a powered tonneau, 120V and 240V outlets, and 67 cubic feet of lockable storage.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRIMS ──────────────────────────────────────────── -->
+  <section class="section" id="trims" aria-labelledby="trims-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">Choose your drivetrain</p>
+        <h2 id="trims-h">Three ways to be seen.</h2>
+        <p class="prose">Selecting a trim updates your build below. Paint and wheels carry over.</p>
+      </div>
+      <div class="trims" role="group" aria-label="Drivetrain">
+        <article class="trim reveal">
+          <h3>Single Motor</h3>
+          <p class="trim__price">$69,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Rear-wheel drive</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>250 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>6.5s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--ghost btn--wide trim-btn" type="button"
+                  data-trim="Single Motor" data-base="69900" aria-pressed="false">Select</button>
+        </article>
+
+        <article class="trim reveal" data-featured>
+          <span class="trim__flag">Most chosen</span>
+          <h3>Dual Motor AWD</h3>
+          <p class="trim__price">$84,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>All-wheel drive</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>340 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>4.1s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--ghost btn--wide trim-btn" type="button"
+                  data-trim="Dual Motor AWD" data-base="84900" aria-pressed="true">Selected</button>
+        </article>
+
+        <article class="trim reveal">
+          <h3>Cyberbeast</h3>
+          <p class="trim__price">$114,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Tri-motor, 845 hp</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>320 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>2.6s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--ghost btn--wide trim-btn" type="button"
+                  data-trim="Cyberbeast" data-base="114900" aria-pressed="false">Select</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESERVE ────────────────────────────────────────── -->
+  <section class="section section--alt" id="reserve" aria-labelledby="reserve-h">
+    <div class="container reserve">
+
+      <div class="reveal">
+        <p class="eyebrow eyebrow--muted">Reserve</p>
+        <h2 id="reserve-h" style="font-size: var(--step-3); margin-block: var(--sp-2) var(--sp-3);">Hold your place in the rose queue.</h2>
+        <p class="prose" style="color: var(--fg-muted); margin-bottom: var(--sp-4);">
+          $250 secures your build position. Fully refundable until your delivery window opens.
+        </p>
+
+        <form id="reserve-form" novalidate>
+          <div class="field">
+            <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required
+                   aria-describedby="name-err">
+            <p class="err" id="name-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter your full name.</p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required
+                   aria-describedby="email-err">
+            <p class="err" id="email-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a valid email, like you@domain.com.</p>
+          </div>
+
+          <div class="field">
+            <label for="zip">Delivery ZIP <span class="req" aria-hidden="true">*</span></label>
+            <input id="zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric"
+                   maxlength="5" required aria-describedby="zip-hint zip-err">
+            <p class="hint" id="zip-hint">Sets your delivery window. 5 digits.</p>
+            <p class="err" id="zip-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a 5-digit ZIP code.</p>
+          </div>
+
+          <button class="btn btn--primary btn--wide" type="submit" id="submit-btn">Reserve for $250</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <aside class="receipt reveal" aria-label="Your build">
+        <h3 style="font-size: var(--step-1); margin-bottom: var(--sp-2);">Your build</h3>
+        <div class="receipt__row"><span>Drivetrain</span><span id="r-trim">Dual Motor AWD</span></div>
+        <div class="receipt__row"><span>Base price</span><span id="r-base">$84,900</span></div>
+        <div class="receipt__row"><span>Paint</span><span id="r-paint">Flamingo — included</span></div>
+        <div class="receipt__row"><span>Wheels</span><span id="r-wheels">20&quot; Cyber — included</span></div>
+        <div class="receipt__row receipt__row--total"><span>Total</span><span id="r-total">$84,900</span></div>
+        <p style="font-size: var(--step--1); color: var(--fg-muted); margin-top: var(--sp-2);">
+          Excludes taxes, destination and any incentives you may qualify for.
+        </p>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── STICKY ORDER BAR ─────────────────────────────────── -->
+<div class="orderbar">
+  <div class="container orderbar__inner">
+    <div class="orderbar__spec">
+      <p class="orderbar__title" id="bar-title">Dual Motor AWD · Flamingo</p>
+      <p class="orderbar__price" id="bar-price">$84,900</p>
+    </div>
+    <a class="btn btn--primary" href="#reserve">Reserve</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="wordmark" href="#top" style="display:inline-block; margin-bottom: var(--sp-2);">CYBR<span>.</span></a>
+        <p style="font-size: 0.9375rem; color: var(--fg-muted); max-width: 28ch;">The exoskeleton, reissued in rose.</p>
+      </div>
+      <div>
+        <h4>Vehicle</h4>
+        <ul>
+          <li><a href="#design">Design</a></li>
+          <li><a href="#specs">Specs</a></li>
+          <li><a href="#trims">Trims</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ownership</h4>
+        <ul>
+          <li><a href="#reserve">Reserve</a></li>
+          <li><a href="#trims">Financing</a></li>
+          <li><a href="#design">Charging</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#top">About</a></li>
+          <li><a href="#top">Careers</a></li>
+          <li><a href="#top">Press</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <p>&copy; 2026 CYBR Motors. A concept site — not affiliated with Tesla, Inc.</p>
+      <p>Pink is not a phase.</p>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Pink Cybertruck — Rose Edition",
+  "description": "The Cybertruck's 30X cold-rolled stainless exoskeleton, reissued in four pink finishes. 340-mile range, 0–60 in 2.6s, 11,000 lb towing.",
+  "brand": { "@type": "Brand", "name": "CYBR" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "69900",
+    "highPrice": "114900",
+    "offerCount": "3",
+    "availability": "https://schema.org/PreOrder"
+  }
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var money = function (n) { return "$" + n.toLocaleString("en-US"); };
+
+  /* ── Theme ────────────────────────────────────────────── */
+  var toggle = document.getElementById("theme-toggle");
+  var syncToggleLabel = function () {
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    toggle.setAttribute("aria-label", "Switch to " + next + " theme");
+  };
+  syncToggleLabel();
+  toggle.addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("cybr-theme", next); } catch (e) {}
+    syncToggleLabel();
+  });
+
+  /* ── Build state ──────────────────────────────────────── */
+  var build = {
+    trim: "Dual Motor AWD", base: 84900,
+    paint: "Flamingo", paintCost: 0,
+    wheels: '20" Cyber', wheelCost: 0
+  };
+
+  var el = function (id) { return document.getElementById(id); };
+  var optionLabel = function (name, cost) {
+    return name + (cost ? " — +" + money(cost) : " — included");
+  };
+
+  function render() {
+    var total = build.base + build.paintCost + build.wheelCost;
+
+    el("paint-name").textContent = build.paint;
+    el("wheel-name").textContent = build.wheels;
+
+    el("r-trim").textContent = build.trim;
+    el("r-base").textContent = money(build.base);
+    el("r-paint").textContent = optionLabel(build.paint, build.paintCost);
+    el("r-wheels").textContent = optionLabel(build.wheels, build.wheelCost);
+    el("r-total").textContent = money(total);
+
+    el("bar-title").textContent = build.trim + " · " + build.paint;
+    el("bar-price").textContent = money(total);
+  }
+
+  /* Paint — recolors the SVG through the token layer */
+  document.querySelectorAll(".swatch").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".swatch").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      document.documentElement.dataset.paint = btn.dataset.paint;
+      build.paint = btn.getAttribute("aria-label").split(",")[0];
+      build.paintCost = Number(btn.dataset.cost);
+      render();
+    });
+  });
+
+  /* Wheels */
+  document.querySelectorAll(".segmented button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".segmented button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      document.documentElement.dataset.wheels = btn.dataset.wheels;
+      build.wheels = btn.textContent.trim();
+      build.wheelCost = Number(btn.dataset.cost);
+      render();
+    });
+  });
+
+  /* Trim */
+  document.querySelectorAll(".trim-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".trim-btn").forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute("aria-pressed", String(on));
+        b.textContent = on ? "Selected" : "Select";
+        b.classList.toggle("btn--primary", false);
+      });
+      build.trim = btn.dataset.trim;
+      build.base = Number(btn.dataset.base);
+      render();
+    });
+  });
+
+  render();
+
+  /* ── Form: validate on blur, error beside the field ───── */
+  var form = el("reserve-form");
+  var status = el("form-status");
+
+  var rules = {
+    name:  function (v) { return v.trim().length >= 2; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+    zip:   function (v) { return /^\d{5}$/.test(v.trim()); }
+  };
+
+  function validate(input) {
+    var ok = rules[input.name](input.value);
+    input.setAttribute("aria-invalid", String(!ok));
+    return ok;
+  }
+
+  Object.keys(rules).forEach(function (key) {
+    var input = el(key);
+    input.addEventListener("blur", function () { validate(input); });
+    input.addEventListener("input", function () {
+      if (input.getAttribute("aria-invalid") === "true") validate(input);
+    });
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var firstBad = null;
+
+    Object.keys(rules).forEach(function (key) {
+      var input = el(key);
+      if (!validate(input) && !firstBad) firstBad = input;
+    });
+
+    if (firstBad) {
+      status.textContent = "";
+      firstBad.focus();           /* move focus to the first invalid field */
+      return;
+    }
+
+    var btn = el("submit-btn");
+    btn.disabled = true;
+    btn.textContent = "Reserving…";
+    status.textContent = "";
+
+    setTimeout(function () {
+      btn.disabled = false;
+      btn.textContent = "Reserve for $250";
+      status.textContent = "Reserved. Check " + el("email").value.trim() + " for your build confirmation.";
+      form.reset();
+      Object.keys(rules).forEach(function (k) { el(k).removeAttribute("aria-invalid"); });
+    }, 900);
+  });
+
+  /* ── Reveal on scroll — opacity/transform only ─────────── */
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js");   /* only now is it safe to hide */
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transitionDelay = (i * 45) + "ms";
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (n) { io.observe(n); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("in"); });
+  }
+})();
+</script>
+</body>
+</html>

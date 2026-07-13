@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pink cybertruck</title>
+<style>
+/* ============================================================
+   pink cybertruck — design language translated from
+   teenage.engineering (extracted 2026-07-12).
+   one ratio system · thin lowercase type · ink discipline
+   ============================================================ */
+
+:root{
+  --client-width:100vw;
+
+  --white:#fff;
+  --te-white:#f5f5f5;
+  --te-black:#0f0e12;
+  --te-grey-100:#e5e5e5;
+  --te-grey-200:#ccc;
+  --te-grey-300:#b2b2b2;
+  --te-grey-600:#767676;
+  --te-grey-900:#4d4d4d;
+  --te-grey-1000:#272727;
+  --theme-body-bc:#fff;
+
+  /* the accent — factory pink, used like a stamp */
+  --accent:#f0247e;
+
+  --fw-thin:100;
+  --fw-light:300;
+
+  --fs-10:calc(.00918367 * var(--client-width));
+  --fs-15:calc(.0132653 * var(--client-width));
+  --fs-20:calc(.0183673 * var(--client-width));
+  --fs-25:calc(.0234694 * var(--client-width));
+  --fs-30:calc(.027551 * var(--client-width));
+  --fs-40:calc(.0367347 * var(--client-width));
+  --lh-10:calc(.0102041 * var(--client-width));
+  --lh-15:calc(.0153061 * var(--client-width));
+  --lh-20:calc(.0204082 * var(--client-width));
+  --lh-25:calc(.0306122 * var(--client-width));
+  --lh-30:calc(.0306122 * var(--client-width));
+  --lh-40:calc(.0408163 * var(--client-width));
+
+  --space-xs:calc(.00510204 * var(--client-width));
+  --space-sm:calc(.0102041 * var(--client-width));
+  --space-md:calc(.0153061 * var(--client-width));
+  --space-lg:calc(.0229592 * var(--client-width));
+  --space-xl:calc(.0459184 * var(--client-width));
+
+  --header-height:calc(.0816327 * var(--client-width));
+  --button-height-md:calc(.0510204 * var(--client-width));
+  --btn-px:calc(.00816327 * var(--client-width));
+  --btn-min-click-area:48px;
+  --border-width:.75px;
+  --round:9999px;
+  --z-navigation:1000;
+
+  /* source faces (te-20/te-40) are proprietary univers cuts —
+     honest system translation: thin helvetica */
+  --te-20:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --te-40:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{
+  font-family:var(--te-20);
+  font-size:1.63265vw;               /* 16px at the 980px design width */
+  font-weight:var(--fw-light);
+  background-color:var(--theme-body-bc);
+  color:var(--te-black);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizelegibility;
+  scroll-behavior:smooth;
+}
+body{line-height:1.5;text-transform:lowercase}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+
+.fs-10{font-size:var(--fs-10);line-height:var(--lh-10)}
+.fs-15{font-size:var(--fs-15);line-height:var(--lh-15)}
+.fs-20{font-size:var(--fs-20);line-height:var(--lh-20)}
+.fs-30{font-family:var(--te-40);font-size:var(--fs-30);line-height:var(--lh-30);font-weight:var(--fw-light);letter-spacing:-.01em}
+.muted{color:var(--te-grey-600)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:var(--btn-min-click-area);height:var(--button-height-md);
+  padding:0 calc(var(--btn-px) * 3);
+  font:inherit;font-size:var(--fs-15);text-transform:lowercase;
+  background:var(--te-black);color:var(--te-white);
+  border:var(--border-width) solid var(--te-black);border-radius:0;
+  cursor:pointer;transition:background-color .2s ease-in,border-color .2s ease-in,color .2s ease-in;
+}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.btn--ghost{background:transparent;color:var(--te-black)}
+.btn--ghost:hover{background:var(--te-black);border-color:var(--te-black);color:var(--te-white)}
+.btn--light{background:var(--te-white);color:var(--te-black);border-color:var(--te-white)}
+.btn--light:hover{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.arrow-link{font-size:var(--fs-15);border-bottom:var(--border-width) solid currentColor;transition:color .2s ease-in}
+.arrow-link:after{content:" \2192"}
+.arrow-link:hover{color:var(--accent)}
+.badge{
+  display:inline-block;width:fit-content;padding:.1em .6em;
+  font-size:var(--fs-10);letter-spacing:.08em;
+  background:var(--accent);color:var(--white);
+}
+.eyebrow{font-size:var(--fs-10);letter-spacing:.1em;color:var(--te-grey-600)}
+
+section,header.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:var(--space-xl) var(--space-lg);
+}
+
+/* -- 01 nav --------------------------------------------------- */
+.nav{
+  position:sticky;top:0;z-index:var(--z-navigation);
+  height:var(--header-height);min-height:48px;
+  display:flex;align-items:center;gap:var(--space-lg);
+  padding:0 var(--space-lg);
+  background:color-mix(in srgb,var(--theme-body-bc) 85%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:var(--border-width) solid var(--te-grey-100);
+}
+.nav__mark{flex:none;width:1.25em;height:1.25em;background:var(--accent);border-radius:var(--round)}
+.nav__brand{font-size:var(--fs-15);white-space:nowrap}
+.nav__links{display:flex;gap:var(--space-md);margin:0 auto;list-style:none}
+.nav__links a{font-size:var(--fs-15);padding:.25em .75em;border-radius:var(--round);transition:background-color .2s ease-in}
+.nav__links a:hover{background:var(--te-grey-100)}
+
+/* -- 02 hero -------------------------------------------------- */
+.hero{position:relative;align-items:flex-start;text-align:left}
+.hero h1{
+  font-family:var(--te-40);font-weight:var(--fw-thin);
+  font-size:calc(.09 * var(--client-width));
+  line-height:calc(.095 * var(--client-width));
+  letter-spacing:-.02em;max-width:12ch;
+}
+.cursor{display:inline-block;width:.08em;height:.85em;background:var(--accent);animation:blink 1s steps(1) infinite;vertical-align:baseline;margin-left:.05em}
+@keyframes blink{50%{opacity:0}}
+.hero p{font-size:var(--fs-20);line-height:var(--lh-25);max-width:38ch;margin-top:var(--space-md)}
+.hero__ctas{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin-top:var(--space-lg)}
+.hero__play{display:inline-flex;align-items:center;margin-top:var(--space-md);font-size:var(--fs-15)}
+.hero__play .glyph{display:inline-flex;flex:none;width:2em;height:2em;border:var(--border-width) solid var(--te-black);border-radius:var(--round);align-items:center;justify-content:center;margin-right:.5em;font-size:.7em;transition:background-color .2s ease-in}
+.hero__play:hover .glyph{background:var(--te-grey-100)}
+.hero__truck{position:absolute;right:var(--space-lg);bottom:var(--space-xl);width:34%;color:var(--te-black)}
+.hero__spec{position:absolute;right:var(--space-lg);top:calc(var(--header-height) + var(--space-xl));font-size:var(--fs-10);line-height:var(--lh-15);text-align:right}
+.hero__spec div{display:flex;gap:2em;justify-content:space-between;border-bottom:var(--border-width) solid var(--te-black);padding:.2em 0}
+.hero__spec b{font-weight:var(--fw-light);color:var(--accent)}
+
+/* truck line art — selectors target the symbol's original context
+   so they style the <use> shadow clones too */
+.truck-art{width:100%;height:auto}
+#truck .ln{fill:none;stroke:currentColor;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+#truck .pk{fill:var(--accent);stroke:none}
+
+/* -- 03 configurations carousel ------------------------------- */
+.cases__head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-md);margin-bottom:var(--space-lg)}
+.cases__nav{display:flex;gap:var(--space-xs)}
+.cases__nav button{width:48px;height:48px;border:var(--border-width) solid var(--te-black);background:transparent;border-radius:var(--round);cursor:pointer;font-size:1rem;transition:background-color .2s ease-in}
+.cases__nav button:hover{background:var(--te-grey-100)}
+.rail{display:flex;gap:var(--space-sm);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--space-sm);scrollbar-width:thin}
+.card{
+  flex:0 0 380px;scroll-snap-align:start;
+  border:var(--border-width) solid var(--te-grey-200);border-radius:0;
+  padding:var(--space-sm);background:var(--te-white);
+  display:flex;flex-direction:column;align-items:flex-start;
+}
+.card__media{width:100%;aspect-ratio:16/10;background:var(--te-grey-100);margin-bottom:var(--space-sm);display:flex;align-items:center;justify-content:center;padding:8%}
+.card__media .truck-art{opacity:.9}
+.card h3{font-size:var(--fs-20);line-height:var(--lh-20);font-weight:var(--fw-light);margin:var(--space-xs) 0}
+.card p{font-size:var(--fs-15);line-height:var(--lh-15);color:var(--te-grey-900);margin-bottom:var(--space-sm)}
+.card .arrow-link{margin-top:auto}
+
+/* -- 04 two-column showpiece ---------------------------------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo__card{
+  position:relative;overflow:hidden;padding:var(--space-xl) var(--space-lg);
+  background:var(--te-white);border:var(--border-width) solid var(--te-grey-200);
+  min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:var(--space-sm);
+}
+.duo__card h2{font-family:var(--te-40);font-weight:var(--fw-thin);font-size:56px;line-height:1.05;letter-spacing:-.015em}
+.duo__card p{font-size:var(--fs-15);line-height:var(--lh-20);max-width:26ch;color:var(--te-grey-900)}
+.duo__card .swatch{position:absolute;right:calc(-1 * var(--space-xl));bottom:calc(-1 * var(--space-xl));width:45%;aspect-ratio:1;border-radius:var(--round);background:radial-gradient(circle at 30% 30%,var(--accent),transparent 70%);opacity:.22;animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:translate(-8%,-10%) scale(1.15)}}
+.duo__specs{width:100%;max-width:30ch;font-size:var(--fs-10);line-height:var(--lh-15);margin-top:var(--space-xs)}
+.duo__specs div{display:flex;justify-content:space-between;border-bottom:var(--border-width) solid var(--te-grey-200);padding:.25em 0}
+
+/* -- 05 journal slider ---------------------------------------- */
+.journal .card{flex-basis:320px}
+.journal .card__media{aspect-ratio:16/10;padding:12%}
+.meta{font-size:var(--fs-10);color:var(--te-grey-600)}
+
+/* -- 06 dark cta band ------------------------------------------ */
+.cta-band{background:var(--te-grey-1000);color:var(--te-white);align-items:center;text-align:center}
+.cta-band h2{font-family:var(--te-40);font-weight:var(--fw-thin);font-size:var(--fs-40);line-height:var(--lh-40);letter-spacing:-.01em}
+.cta-band .btn{margin-top:var(--space-lg)}
+.cta-band .meta{margin-top:var(--space-sm);color:var(--te-grey-300)}
+
+/* -- 07 footer -------------------------------------------------- */
+footer{padding:var(--space-xl) var(--space-lg) var(--space-lg);border-top:var(--border-width) solid var(--te-grey-100)}
+.footer__cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--space-lg);font-size:var(--fs-15)}
+.footer__cols ul{list-style:none}
+.footer__cols li{padding:.35em 0;border-bottom:var(--border-width) solid var(--te-grey-100)}
+.footer__cols a:hover{color:var(--accent)}
+.footer__wordmark{
+  font-family:var(--te-40);font-weight:var(--fw-thin);
+  font-size:calc(.12 * var(--client-width));line-height:.85;
+  letter-spacing:-.02em;margin:var(--space-xl) 0 var(--space-lg);white-space:nowrap;
+}
+.footer__legal{display:flex;align-items:center;gap:var(--space-md);font-size:var(--fs-10);color:var(--te-grey-600)}
+.footer__legal a:hover{color:var(--accent)}
+
+/* -- mobile ------------------------------------------------------ */
+@media (max-width:767px){
+  html{font-size:16px}
+  :root{--client-width:980px}       /* freeze the ratio system at design width */
+  section,header.hero{min-height:auto}
+  .hero h1{font-size:56px;line-height:1.05}
+  .hero__truck{position:static;width:80%;margin-top:var(--space-lg)}
+  .hero__spec{display:none}
+  .duo{grid-template-columns:1fr}
+  .duo__card{min-height:auto}
+  .duo__card h2{font-size:40px}
+  .footer__cols{grid-template-columns:1fr 1fr}
+  .footer__wordmark{font-size:15vw;white-space:normal}
+  .nav__links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- reusable truck line art -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="truck">
+      <!-- angular cybertruck silhouette, technical-manual style -->
+      <polyline class="ln" points="10,62 30,62 34,50 88,38 152,50 190,58 190,62 178,62"/>
+      <polyline class="ln" points="60,62 148,62"/>
+      <polyline class="ln" points="34,50 88,38 88,50 34,50"/>
+      <line class="ln" x1="88" y1="50" x2="152" y2="50"/>
+      <line class="ln" x1="10" y1="62" x2="10" y2="56"/>
+      <polyline class="ln" points="10,56 30,52 34,50"/>
+      <circle class="ln" cx="46" cy="63" r="9"/>
+      <circle class="ln" cx="162" cy="63" r="9"/>
+      <circle class="pk" cx="46" cy="63" r="2.5"/>
+      <circle class="pk" cx="162" cy="63" r="2.5"/>
+      <line class="ln" x1="120" y1="50" x2="120" y2="62"/>
+      <line class="ln" x1="190" y1="60" x2="182" y2="60"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- 01 · nav -->
+<nav class="nav">
+  <span class="nav__mark" aria-hidden="true"></span>
+  <a class="nav__brand" href="#">pink cybertruck</a>
+  <ul class="nav__links">
+    <li><a href="#configurations">trucks</a></li>
+    <li><a href="#specs">specs</a></li>
+    <li><a href="#journal">journal</a></li>
+    <li><a href="#order">orders</a></li>
+    <li><a href="#footer">support</a></li>
+  </ul>
+  <a class="btn" href="#order">order now</a>
+</nav>
+
+<!-- 02 · hero -->
+<header class="hero">
+  <div class="hero__spec" aria-hidden="true">
+    <div><span>range</span><b>550 km</b></div>
+    <div><span>0–100</span><b>4.1 s</b></div>
+    <div><span>payload</span><b>1,134 kg</b></div>
+    <div><span>finish</span><b>factory pink</b></div>
+  </div>
+  <h1><span data-typed>the beautiful truck.</span><span class="cursor"></span></h1>
+  <p>a stainless pickup in factory pink. engineered like an instrument, finished like nothing else on the road.</p>
+  <div class="hero__ctas">
+    <a class="btn" href="#order">order yours</a>
+    <a class="btn btn--ghost" href="#specs">see specs</a>
+  </div>
+  <a class="hero__play" href="#journal"><span class="glyph">&#9654;</span>play intro</a>
+  <div class="hero__truck" aria-hidden="true">
+    <svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg>
+  </div>
+</header>
+
+<!-- 03 · configurations -->
+<section class="cases" id="configurations">
+  <div class="cases__head">
+    <div>
+      <div class="eyebrow">01 · configurations</div>
+      <h2 class="fs-30">one truck, five ways to use it</h2>
+    </div>
+    <div class="cases__nav">
+      <button aria-label="previous" data-rail-prev>&#8592;</button>
+      <button aria-label="next" data-rail-next>&#8594;</button>
+    </div>
+  </div>
+  <div class="rail" data-rail>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <span class="badge">work</span>
+      <h3>the site truck that outworks the site</h3>
+      <p>1,134 kg payload, a 1.8 m lockable bed and onboard 240 v power. tools charge while you drive.</p>
+      <a class="arrow-link" href="#order">view case</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <span class="badge">travel</span>
+      <h3>overland for a week, off-grid the whole time</h3>
+      <p>550 km of range, air suspension with 43 cm of clearance, and a bed that fits a two-person tent.</p>
+      <a class="arrow-link" href="#order">view case</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <span class="badge">city</span>
+      <h3>the daily driver people photograph</h3>
+      <p>rear-wheel steering shrinks the turning circle to hatchback size. the pink does the rest.</p>
+      <a class="arrow-link" href="#order">view case</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <span class="badge">show</span>
+      <h3>bring one truck, skip the booth</h3>
+      <p>at events, the truck is the display. bed-mounted power runs lights, screens and sound all day.</p>
+      <a class="arrow-link" href="#order">view case</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <span class="badge">fleet</span>
+      <h3>a livery you never have to paint</h3>
+      <p>the finish is the brand. fleet telemetry, service scheduling and per-truck cost reports built in.</p>
+      <a class="arrow-link" href="#order">view case</a>
+    </article>
+  </div>
+</section>
+
+<!-- 04 · two-column showpiece -->
+<section id="specs">
+  <div class="duo">
+    <div class="duo__card">
+      <div class="swatch" aria-hidden="true"></div>
+      <span class="badge">single motor</span>
+      <h2>one motor.<br>every errand.</h2>
+      <p>rear-wheel drive, 402 km of range, and the same stainless body and factory pink as its bigger sibling.</p>
+      <div class="duo__specs">
+        <div><span>range</span><span>402 km</span></div>
+        <div><span>0–100 km/h</span><span>6.7 s</span></div>
+        <div><span>towing</span><span>3,402 kg</span></div>
+        <div><span>from</span><span>$62,900</span></div>
+      </div>
+      <div class="hero__ctas">
+        <a class="btn" href="#order">order single</a>
+        <a class="btn btn--ghost" href="#configurations">compare</a>
+      </div>
+    </div>
+    <div class="duo__card">
+      <div class="swatch" aria-hidden="true"></div>
+      <span class="badge">dual motor</span>
+      <h2>two motors.<br>zero excuses.</h2>
+      <p>all-wheel drive, 550 km of range, adaptive air suspension, and a 4.1 second sprint to 100.</p>
+      <div class="duo__specs">
+        <div><span>range</span><span>550 km</span></div>
+        <div><span>0–100 km/h</span><span>4.1 s</span></div>
+        <div><span>towing</span><span>4,990 kg</span></div>
+        <div><span>from</span><span>$79,900</span></div>
+      </div>
+      <div class="hero__ctas">
+        <a class="btn" href="#order">order dual</a>
+        <a class="btn btn--ghost" href="#configurations">compare</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · journal -->
+<section class="journal" id="journal">
+  <div class="cases__head">
+    <div>
+      <div class="eyebrow">02 · journal</div>
+      <h2 class="fs-30">notes from the pink factory</h2>
+    </div>
+    <div class="cases__nav">
+      <button aria-label="previous" data-rail-prev>&#8592;</button>
+      <button aria-label="next" data-rail-next>&#8594;</button>
+    </div>
+  </div>
+  <div class="rail" data-rail>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-07-02 · process</div>
+      <h3>how we get pink to bond to stainless</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-06-18 · update</div>
+      <h3>software 11.2: rear-steer gets smarter</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-06-03 · field</div>
+      <h3>4,800 km through patagonia, one charge map</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-05-21 · design</div>
+      <h3>why the bed is exactly 1.8 metres</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-05-07 · community</div>
+      <h3>the first hundred owners, photographed</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+    <article class="card">
+      <div class="card__media"><svg class="truck-art" viewBox="0 0 200 80"><use href="#truck"/></svg></div>
+      <div class="meta">2026-04-29 · process</div>
+      <h3>crash-testing a colour that can't chip</h3>
+      <a class="arrow-link" href="#order">read</a>
+    </article>
+  </div>
+</section>
+
+<!-- 06 · dark cta band -->
+<section class="cta-band" id="order">
+  <h2><span data-typed>your truck is ready when you are.</span><span class="cursor"></span></h2>
+  <a class="btn btn--light" href="#">reserve today</a>
+  <div class="meta">$250 refundable deposit · first deliveries q4 2026</div>
+</section>
+
+<!-- 07 · footer -->
+<footer id="footer">
+  <div class="footer__cols">
+    <div class="fs-15">beautiful trucks,<br>built properly.</div>
+    <ul>
+      <li><a href="#configurations">trucks</a></li>
+      <li><a href="#specs">specs</a></li>
+      <li><a href="#order">orders</a></li>
+    </ul>
+    <ul>
+      <li><a href="#journal">journal</a></li>
+      <li><a href="#">manuals</a></li>
+      <li><a href="#">service</a></li>
+    </ul>
+    <ul>
+      <li><a href="#">contact</a></li>
+      <li><a href="#">careers</a></li>
+      <li><a href="#">press</a></li>
+    </ul>
+  </div>
+  <div class="footer__wordmark">pink cybertruck</div>
+  <div class="footer__legal">
+    <span class="nav__mark" style="width:1em;height:1em"></span>
+    <span>&copy; 2026 pink cybertruck</span>
+    <a href="#">privacy</a><a href="#">terms</a>
+  </div>
+</footer>
+
+<script>
+/* typed-letter effect — word-safe (never breaks mid-word on wrap) */
+document.querySelectorAll("[data-typed]").forEach(el=>{
+  const words=el.textContent.split(" ");el.textContent="";
+  const spans=words.map(w=>{const s=document.createElement("span");
+    s.style.whiteSpace="nowrap";s.dataset.word=w;s.textContent="";return s});
+  spans.forEach((s,i)=>{el.appendChild(s);if(i<spans.length-1)el.appendChild(document.createTextNode(" "))});
+  let wi=0,ci=0;
+  new IntersectionObserver((entries,o)=>{if(!entries[0].isIntersecting)return;o.disconnect();
+    (function tick(){if(wi>=spans.length)return;
+      spans[wi].textContent=spans[wi].dataset.word.slice(0,++ci);
+      if(ci>=spans[wi].dataset.word.length){wi++;ci=0}
+      setTimeout(tick,55)})();
+  },{threshold:.4}).observe(el);
+});
+
+/* carousel arrows — scroll one card per press */
+document.querySelectorAll("section").forEach(sec=>{
+  const rail=sec.querySelector("[data-rail]");if(!rail)return;
+  const step=()=> (rail.querySelector(".card")?.offsetWidth||360)+16;
+  sec.querySelector("[data-rail-prev]")?.addEventListener("click",()=>rail.scrollBy({left:-step(),behavior:"smooth"}));
+  sec.querySelector("[data-rail-next]")?.addEventListener("click",()=>rail.scrollBy({left:step(),behavior:"smooth"}));
+});
+</script>
+</body>
+</html>

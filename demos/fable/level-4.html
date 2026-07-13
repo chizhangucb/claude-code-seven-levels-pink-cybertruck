@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cybertruck Rosé — The Pink Cybertruck</title>
+<meta name="description" content="Cybertruck Rosé: the exoskeleton legend, hand-finished in Magnolia Rosé. 845 hp, 340-mile range, 11,000 lb towing. Reserve yours for $100.">
+<meta name="theme-color" content="#0C0A09">
+<meta property="og:title" content="Cybertruck Rosé — The Pink Cybertruck">
+<meta property="og:description" content="The exoskeleton legend, hand-finished in Magnolia Rosé. 845 hp. 340 miles. Utterly unignorable.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rose.example.com/">
+<meta property="og:image" content="https://rose.example.com/og/cybertruck-rose-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='2,20 16,6 30,15 30,22 2,22' fill='%23F27BB6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Cybertruck Rosé — Limited Edition Pink Cybertruck",
+  "description": "Limited-run Cybertruck finished in cerakoted Magnolia Rosé over the stainless exoskeleton. Dual- and tri-motor configurations.",
+  "brand": { "@type": "Brand", "name": "Rosé Motors" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "84990",
+    "highPrice": "121990",
+    "offerCount": "3",
+    "availability": "https://schema.org/PreOrder"
+  },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "312" }
+}
+</script>
+<style>
+/* ---------- Tokens (semantic, OKLCH) ---------- */
+:root{
+  --bg:            oklch(0.16 0.008 40);      /* near-black warm stone */
+  --bg-elevated:   oklch(0.21 0.010 40);
+  --bg-glass:      oklch(0.24 0.012 40 / 0.55);
+  --fg:            oklch(0.96 0.005 40);
+  --muted:         oklch(0.72 0.012 40);
+  --border:        oklch(0.32 0.012 40);
+  --accent:        oklch(0.74 0.16 355);      /* magnolia rosé pink */
+  --accent-strong: oklch(0.80 0.14 355);
+  --accent-soft:   oklch(0.74 0.16 355 / 0.14);
+  --on-accent:     oklch(0.18 0.03 355);
+  --focus:         oklch(0.80 0.14 355);
+
+  --font-display:'Cormorant', Georgia, serif;
+  --font-body:'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* fluid type — Utopia-style clamp() */
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.94rem);
+  --step-0:  clamp(1rem, 0.92rem + 0.4vw, 1.125rem);
+  --step-1:  clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2:  clamp(1.6rem, 1.4rem + 1vw, 2.25rem);
+  --step-3:  clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --step-4:  clamp(2.5rem, 1.4rem + 5.5vw, 5.5rem);
+
+  /* 8-pt spacing scale */
+  --space-1:4px; --space-2:8px; --space-3:16px; --space-4:24px;
+  --space-5:32px; --space-6:48px; --space-7:64px; --space-8:96px; --space-9:128px;
+  --section-pad: clamp(48px, 8vw, 128px);
+
+  --radius-sm:6px; --radius-md:12px; --radius-lg:20px;
+  --shadow-lift: 0 2px 6px oklch(0 0 0 / .25), 0 16px 48px oklch(0 0 0 / .35);
+  --ease-out: cubic-bezier(.22,.8,.35,1);
+}
+
+/* ---------- Reset & base ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-size:var(--step-0);
+  font-weight:300;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.08;letter-spacing:-0.01em;text-wrap:balance}
+p{max-width:65ch}
+a{color:var(--accent-strong)}
+::selection{background:var(--accent);color:var(--on-accent)}
+
+/* focus-visible: keyboard users always get a ring */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:var(--radius-sm)}
+
+.skip-link{
+  position:absolute;left:var(--space-3);top:-100px;z-index:100;
+  background:var(--accent);color:var(--on-accent);font-weight:600;
+  padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);
+  transition:top .2s var(--ease-out);
+}
+.skip-link:focus-visible{top:var(--space-3)}
+
+.container{max-width:1280px;margin-inline:auto;padding-inline:clamp(16px,5vw,64px)}
+
+/* ---------- Buttons: five states ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-height:48px;padding:12px 28px;
+  font-family:var(--font-body);font-size:var(--step-0);font-weight:600;
+  border-radius:999px;border:1px solid transparent;
+  cursor:pointer;text-decoration:none;
+  transition:background-color .2s var(--ease-out), border-color .2s var(--ease-out),
+             color .2s var(--ease-out), transform .15s var(--ease-out), box-shadow .2s var(--ease-out);
+}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-strong);box-shadow:0 6px 24px oklch(0.74 0.16 355 / .35)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent-strong)}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:var(--bg-glass);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font-weight:600;letter-spacing:.16em;font-size:var(--step--1);text-transform:uppercase}
+.logo svg{width:34px;height:22px;flex:none}
+.nav-links{display:none;align-items:center;gap:var(--space-5);list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:var(--step--1);font-weight:500;letter-spacing:.04em;
+  padding:6px 2px;border-bottom:2px solid transparent;
+  transition:color .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a[aria-current="true"]{color:var(--fg);border-color:var(--accent)}
+.nav-cta{display:none}
+.menu-toggle{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  min-width:44px;min-height:44px;padding:8px 14px;
+  background:transparent;border:1px solid var(--border);border-radius:var(--radius-sm);
+  color:var(--fg);font-family:var(--font-body);font-size:var(--step--1);font-weight:500;cursor:pointer;
+  transition:border-color .2s var(--ease-out);
+}
+.menu-toggle:hover{border-color:var(--accent)}
+.mobile-menu{border-top:1px solid var(--border);background:var(--bg-elevated)}
+.mobile-menu[hidden]{display:none}
+.mobile-menu ul{list-style:none;padding:var(--space-3) 0}
+.mobile-menu a{
+  display:block;padding:14px clamp(16px,5vw,64px);
+  color:var(--fg);text-decoration:none;font-weight:500;
+}
+.mobile-menu a:hover{background:var(--accent-soft)}
+@media (min-width:768px){
+  .nav-links{display:flex}
+  .nav-cta{display:inline-flex;min-height:40px;padding:8px 20px;font-size:var(--step--1)}
+  .menu-toggle{display:none}
+  .mobile-menu{display:none}
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;overflow:clip;
+  padding-block:clamp(48px,7vw,96px) 0;
+  background:
+    radial-gradient(115% 70% at 70% 12%, oklch(0.30 0.06 355 / .5) 0%, transparent 60%),
+    radial-gradient(80% 55% at 15% 90%, oklch(0.24 0.04 355 / .45) 0%, transparent 55%),
+    var(--bg);
+}
+.hero-inner{display:grid;gap:var(--space-6);text-align:center;justify-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--step--1);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-strong);
+}
+.eyebrow::before,.eyebrow::after{content:"";width:32px;height:1px;background:var(--accent);opacity:.6}
+.hero h1{font-size:var(--step-4);max-width:16ch}
+.hero h1 em{font-style:italic;color:var(--accent-strong)}
+.hero .lede{font-size:var(--step-1);color:var(--muted);max-width:44ch;font-weight:300}
+.hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center}
+.hero-note{font-size:var(--step--1);color:var(--muted)}
+.hero-visual{width:min(100%,980px);margin-top:var(--space-4);position:relative}
+.hero-visual .glow{
+  position:absolute;inset:auto 8% 6% 8%;height:22%;
+  background:radial-gradient(50% 100% at 50% 100%, oklch(0.74 0.16 355 / .28), transparent 70%);
+  filter:blur(12px);pointer-events:none;
+}
+.truck-svg{width:100%;height:auto}
+
+/* stat strip under hero */
+.stat-strip{
+  border-block:1px solid var(--border);
+  background:var(--bg-elevated);
+}
+.stat-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:var(--space-4);padding-block:var(--space-5);
+}
+.stat{display:grid;gap:2px;justify-items:center;text-align:center}
+.stat b{
+  font-family:var(--font-display);font-weight:500;font-size:var(--step-2);
+  font-variant-numeric:tabular-nums;color:var(--fg);
+}
+.stat span{font-size:var(--step--1);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+@media (min-width:768px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- Sections ---------- */
+.section{padding-block:var(--section-pad)}
+.section-head{display:grid;gap:var(--space-3);max-width:56ch;margin-bottom:var(--space-6)}
+.section-head.center{margin-inline:auto;text-align:center;justify-items:center}
+.kicker{font-size:var(--step--1);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-strong)}
+.section-head h2{font-size:var(--step-3)}
+.section-head p{color:var(--muted)}
+
+/* social proof */
+.proof{padding-block:var(--space-6)}
+.proof-inner{display:grid;gap:var(--space-4);justify-items:center;text-align:center}
+.stars{display:inline-flex;gap:4px;color:var(--accent-strong)}
+.stars svg{width:18px;height:18px}
+.proof-quote{font-family:var(--font-display);font-size:var(--step-2);font-style:italic;max-width:30ch;line-height:1.25}
+.proof-src{font-size:var(--step--1);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+/* story: problem → outcome */
+.story-grid{display:grid;gap:var(--space-5)}
+@media (min-width:1024px){.story-grid{grid-template-columns:1fr 1fr;align-items:center;gap:var(--space-8)}}
+.story-copy{display:grid;gap:var(--space-4)}
+.story-copy p{color:var(--muted)}
+.story-copy strong{color:var(--fg);font-weight:600}
+.swatch-card{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-5);display:grid;gap:var(--space-4);box-shadow:var(--shadow-lift);
+}
+.swatch{
+  height:180px;border-radius:var(--radius-md);
+  background:
+    linear-gradient(160deg, oklch(0.88 0.09 355) 0%, oklch(0.74 0.16 355) 44%, oklch(0.55 0.15 352) 100%);
+  position:relative;overflow:hidden;
+}
+.swatch::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg, transparent 38%, oklch(1 0 0 / .35) 48%, transparent 58%);
+}
+.swatch-meta{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-3);flex-wrap:wrap}
+.swatch-meta h3{font-size:var(--step-1)}
+.swatch-meta span{font-size:var(--step--1);color:var(--muted);font-variant-numeric:tabular-nums}
+.swatch-desc{font-size:var(--step--1);color:var(--muted)}
+
+/* how it works */
+.steps{display:grid;gap:var(--space-4);counter-reset:step}
+@media (min-width:768px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{
+  counter-increment:step;
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-5);display:grid;gap:var(--space-3);align-content:start;
+  transition:border-color .25s var(--ease-out), transform .25s var(--ease-out);
+}
+.step:hover{border-color:oklch(0.74 0.16 355 / .55);transform:translateY(-4px)}
+.step::before{
+  content:"0" counter(step);
+  font-family:var(--font-display);font-size:var(--step-2);font-style:italic;color:var(--accent-strong);
+}
+.step h3{font-size:var(--step-1)}
+.step p{color:var(--muted);font-size:var(--step--1)}
+
+/* features as benefits */
+.features{display:grid;gap:var(--space-4)}
+@media (min-width:640px){.features{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.features{grid-template-columns:repeat(3,1fr)}}
+.feature{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-5);display:grid;gap:var(--space-3);align-content:start;
+  transition:border-color .25s var(--ease-out), transform .25s var(--ease-out);
+}
+.feature:hover{border-color:oklch(0.74 0.16 355 / .55);transform:translateY(-4px)}
+.feature .icon{
+  width:44px;height:44px;border-radius:var(--radius-md);
+  display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-strong);
+}
+.feature .icon svg{width:22px;height:22px}
+.feature h3{font-size:var(--step-1)}
+.feature p{color:var(--muted);font-size:var(--step--1)}
+
+/* testimonial */
+.testimonial{
+  background:
+    radial-gradient(90% 120% at 85% 0%, oklch(0.28 0.05 355 / .5) 0%, transparent 55%),
+    var(--bg-elevated);
+  border-block:1px solid var(--border);
+}
+.testimonial-inner{display:grid;gap:var(--space-5);max-width:760px;margin-inline:auto;text-align:center;justify-items:center}
+.testimonial blockquote{font-family:var(--font-display);font-size:var(--step-2);font-style:italic;line-height:1.3;text-wrap:balance}
+.testimonial blockquote span{color:var(--accent-strong)}
+.avatar-row{display:flex;align-items:center;gap:var(--space-3)}
+.avatar{
+  width:52px;height:52px;border-radius:999px;flex:none;
+  background:linear-gradient(140deg, oklch(0.80 0.12 355), oklch(0.52 0.14 352));
+  display:grid;place-items:center;font-weight:600;color:var(--on-accent);font-size:var(--step--1);
+}
+.avatar-row figcaption{text-align:left;font-size:var(--step--1)}
+.avatar-row b{display:block;font-weight:600}
+.avatar-row span{color:var(--muted)}
+
+/* pricing */
+.tiers{display:grid;gap:var(--space-4);align-items:stretch}
+@media (min-width:1024px){.tiers{grid-template-columns:repeat(3,1fr)}}
+.tier{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-5);display:grid;gap:var(--space-4);align-content:start;position:relative;
+}
+.tier.featured{
+  border-color:var(--accent);
+  background:
+    linear-gradient(180deg, oklch(0.74 0.16 355 / .10) 0%, transparent 45%),
+    var(--bg-elevated);
+  box-shadow:var(--shadow-lift);
+}
+.tier-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:var(--on-accent);font-size:var(--step--1);font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;border-radius:999px;white-space:nowrap;
+}
+.tier h3{font-size:var(--step-1)}
+.tier .price{
+  font-family:var(--font-display);font-size:var(--step-3);font-weight:500;
+  font-variant-numeric:tabular-nums;line-height:1;
+}
+.tier .price small{font-family:var(--font-body);font-size:var(--step--1);color:var(--muted);font-weight:400}
+.tier ul{list-style:none;display:grid;gap:var(--space-2)}
+.tier li{
+  display:flex;gap:10px;align-items:start;
+  font-size:var(--step--1);color:var(--muted);
+}
+.tier li svg{width:16px;height:16px;flex:none;margin-top:4px;color:var(--accent-strong)}
+.tier .btn{width:100%}
+
+/* FAQ */
+.faq{max-width:760px;margin-inline:auto;display:grid;gap:var(--space-3)}
+.faq details{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);
+  transition:border-color .2s var(--ease-out);
+}
+.faq details[open]{border-color:oklch(0.74 0.16 355 / .55)}
+.faq summary{
+  display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);
+  padding:var(--space-4);cursor:pointer;font-weight:500;list-style:none;min-height:44px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";font-family:var(--font-display);font-size:var(--step-1);color:var(--accent-strong);
+  flex:none;transition:transform .2s var(--ease-out);
+}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .answer{padding:0 var(--space-4) var(--space-4);color:var(--muted);font-size:var(--step--1)}
+
+/* final CTA */
+.final-cta{
+  position:relative;overflow:clip;
+  background:
+    radial-gradient(110% 90% at 50% 110%, oklch(0.32 0.08 355 / .6) 0%, transparent 65%),
+    var(--bg);
+  border-top:1px solid var(--border);text-align:center;
+}
+.final-cta .container{position:relative;z-index:1}
+.final-inner{display:grid;gap:var(--space-4);justify-items:center}
+.final-inner h2{font-size:var(--step-3);max-width:20ch}
+.final-inner p{color:var(--muted)}
+.reserve-form{
+  display:flex;flex-wrap:wrap;gap:var(--space-2);justify-content:center;
+  width:min(100%,520px);
+}
+.field{display:grid;gap:6px;flex:1 1 260px;text-align:left}
+.field label{font-size:var(--step--1);font-weight:500}
+.field input{
+  min-height:48px;padding:10px 16px;font-size:1rem;font-family:var(--font-body);
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;color:var(--fg);
+  transition:border-color .2s var(--ease-out);width:100%;
+}
+.field input:hover{border-color:var(--muted)}
+.field input:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-color:var(--accent)}
+.field input[aria-invalid="true"]{border-color:oklch(0.62 0.2 25)}
+.form-msg{font-size:var(--step--1);min-height:1.5em}
+.form-msg.error{color:oklch(0.74 0.16 25)}
+.form-msg.ok{color:var(--accent-strong)}
+.reserve-form .btn{flex:0 0 auto;align-self:end}
+
+/* footer */
+.site-footer{border-top:1px solid var(--border);background:var(--bg-elevated)}
+.footer-inner{
+  display:grid;gap:var(--space-5);padding-block:var(--space-6);
+}
+@media (min-width:768px){.footer-inner{grid-template-columns:2fr 1fr 1fr;gap:var(--space-7)}}
+.footer-brand{display:grid;gap:var(--space-3);align-content:start}
+.footer-brand p{font-size:var(--step--1);color:var(--muted);max-width:36ch}
+.footer-col h3{font-size:var(--step--1);letter-spacing:.16em;text-transform:uppercase;font-family:var(--font-body);font-weight:600;color:var(--muted);margin-bottom:var(--space-3)}
+.footer-col ul{list-style:none;display:grid;gap:var(--space-2)}
+.footer-col a{color:var(--fg);text-decoration:none;font-size:var(--step--1)}
+.footer-col a:hover{color:var(--accent-strong)}
+.footer-legal{
+  border-top:1px solid var(--border);padding-block:var(--space-4);
+  display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:space-between;
+  font-size:var(--step--1);color:var(--muted);
+}
+
+/* ---------- Dotted surface (three.js wave field, always on, bottom of page) ---------- */
+.dotted-surface{
+  position:absolute;inset:0;z-index:0;
+  pointer-events:none;
+}
+.dotted-surface canvas{display:block;width:100%;height:100%}
+
+/* ---------- Scroll reveal (progressive enhancement: only when JS runs) ---------- */
+html.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .5s var(--ease-out), transform .5s var(--ease-out)}
+html.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html.js .reveal{opacity:1;transform:none}
+}
+</style>
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-bar">
+    <a class="logo" href="#top" aria-label="Rosé Motors — home">
+      <svg viewBox="0 0 68 40" aria-hidden="true" fill="none">
+        <polygon points="2,27 34,4 66,20 66,29 2,29" fill="oklch(0.74 0.16 355)"/>
+        <circle cx="17" cy="31" r="6.5" fill="oklch(0.16 0.008 40)" stroke="oklch(0.74 0.16 355)" stroke-width="2.5"/>
+        <circle cx="52" cy="31" r="6.5" fill="oklch(0.16 0.008 40)" stroke="oklch(0.74 0.16 355)" stroke-width="2.5"/>
+      </svg>
+      Rosé Motors
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="#design">Design</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="#reserve">Reserve yours</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+    <ul>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#reserve">Reserve yours</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="container hero-inner">
+      <p class="eyebrow">Limited run · 500 units</p>
+      <h1>The legend, reborn in <em>rosé</em></h1>
+      <p class="lede">The stainless exoskeleton you know. A hand-finished Magnolia Rosé you've never seen. 845&nbsp;horsepower that refuses to blend in.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#reserve">Reserve yours — $100</a>
+        <a class="btn btn-ghost" href="#design">Explore the finish</a>
+      </div>
+      <p class="hero-note">Fully refundable deposit · Deliveries begin Q2 2027</p>
+
+      <div class="hero-visual">
+        <div class="glow" aria-hidden="true"></div>
+        <svg class="truck-svg" viewBox="0 0 960 420" role="img" aria-labelledby="truckTitle">
+          <title id="truckTitle">Side profile of a pink Cybertruck with its signature angular wedge silhouette</title>
+          <defs>
+            <linearGradient id="bodyPink" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="oklch(0.90 0.07 355)"/>
+              <stop offset="0.45" stop-color="oklch(0.76 0.14 355)"/>
+              <stop offset="1" stop-color="oklch(0.58 0.14 352)"/>
+            </linearGradient>
+            <linearGradient id="bedPink" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="oklch(0.70 0.13 355)"/>
+              <stop offset="1" stop-color="oklch(0.50 0.12 352)"/>
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="oklch(0.30 0.02 300)"/>
+              <stop offset="1" stop-color="oklch(0.16 0.02 300)"/>
+            </linearGradient>
+            <radialGradient id="ground" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="oklch(0 0 0 / .5)"/>
+              <stop offset="1" stop-color="oklch(0 0 0 / 0)"/>
+            </radialGradient>
+          </defs>
+
+          <!-- ground shadow -->
+          <ellipse cx="480" cy="372" rx="400" ry="26" fill="url(#ground)"/>
+
+          <!-- lower cladding / rocker -->
+          <polygon points="120,318 862,318 862,352 700,352 700,344 120,344" fill="oklch(0.20 0.01 300)"/>
+
+          <!-- main wedge body -->
+          <polygon points="96,300 118,236 388,88 462,64 878,180 886,236 878,300 96,300"
+                   fill="url(#bodyPink)"/>
+          <!-- roofline highlight facet -->
+          <polygon points="118,236 388,88 462,64 878,180 866,190 470,84 400,102 140,240" fill="oklch(0.94 0.05 355 / .55)"/>
+          <!-- bed / tonneau facet -->
+          <polygon points="462,64 878,180 886,236 878,300 620,300 560,120" fill="url(#bedPink)" opacity="0.55"/>
+
+          <!-- windows -->
+          <polygon points="398,104 456,84 560,116 566,178 402,166" fill="url(#glass)"/>
+          <polygon points="252,168 386,106 388,168 262,166" fill="url(#glass)" opacity="0.9"/>
+          <!-- window trim line -->
+          <polyline points="240,176 566,184" stroke="oklch(0.30 0.02 300)" stroke-width="5" fill="none"/>
+
+          <!-- door seams -->
+          <line x1="392" y1="108" x2="396" y2="296" stroke="oklch(0.48 0.10 352)" stroke-width="2.5"/>
+          <line x1="568" y1="150" x2="574" y2="296" stroke="oklch(0.48 0.10 352)" stroke-width="2.5"/>
+          <!-- door handles hint -->
+          <line x1="420" y1="196" x2="466" y2="198" stroke="oklch(0.92 0.04 355)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="596" y1="200" x2="642" y2="202" stroke="oklch(0.92 0.04 355)" stroke-width="4" stroke-linecap="round"/>
+
+          <!-- rear light bar -->
+          <polygon points="866,192 886,236 880,244 862,200" fill="oklch(0.62 0.23 25)"/>
+          <!-- headlight slash -->
+          <polygon points="98,296 120,240 132,242 112,298" fill="oklch(0.97 0.02 355)"/>
+
+          <!-- wheel arches (angular, dark) -->
+          <polygon points="150,318 176,244 300,244 328,318" fill="oklch(0.14 0.005 300)"/>
+          <polygon points="630,318 656,244 780,244 808,318" fill="oklch(0.14 0.005 300)"/>
+
+          <!-- wheels -->
+          <g>
+            <circle cx="239" cy="318" r="64" fill="oklch(0.13 0.005 300)"/>
+            <circle cx="239" cy="318" r="34" fill="oklch(0.22 0.01 300)"/>
+            <g stroke="oklch(0.40 0.03 355)" stroke-width="7" stroke-linecap="round">
+              <line x1="239" y1="318" x2="239" y2="290"/>
+              <line x1="239" y1="318" x2="263" y2="332"/>
+              <line x1="239" y1="318" x2="215" y2="332"/>
+            </g>
+            <circle cx="239" cy="318" r="8" fill="oklch(0.74 0.16 355)"/>
+          </g>
+          <g>
+            <circle cx="719" cy="318" r="64" fill="oklch(0.13 0.005 300)"/>
+            <circle cx="719" cy="318" r="34" fill="oklch(0.22 0.01 300)"/>
+            <g stroke="oklch(0.40 0.03 355)" stroke-width="7" stroke-linecap="round">
+              <line x1="719" y1="318" x2="719" y2="290"/>
+              <line x1="719" y1="318" x2="743" y2="332"/>
+              <line x1="719" y1="318" x2="695" y2="332"/>
+            </g>
+            <circle cx="719" cy="318" r="8" fill="oklch(0.74 0.16 355)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="stat-strip">
+      <div class="container stat-grid">
+        <p class="stat"><b>845 hp</b><span>Tri-motor</span></p>
+        <p class="stat"><b>2.6 s</b><span>0–60 mph</span></p>
+        <p class="stat"><b>340 mi</b><span>Est. range</span></p>
+        <p class="stat"><b>11,000 lb</b><span>Towing</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF ============ -->
+  <section class="proof" aria-label="Customer rating">
+    <div class="container proof-inner reveal">
+      <p class="stars" aria-label="Rated 4.9 out of 5 stars">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+      </p>
+      <p class="proof-quote">"The only truck that gets photographed more than the sunset it's parked under."</p>
+      <p class="proof-src">4.9 / 5 across 312 first-edition owners</p>
+    </div>
+  </section>
+
+  <!-- ============ DESIGN: PROBLEM → OUTCOME ============ -->
+  <section class="section" id="design">
+    <div class="container story-grid">
+      <div class="story-copy reveal">
+        <p class="kicker">The finish</p>
+        <h2 style="font-size:var(--step-3)">Stainless steel was never meant to stay silver</h2>
+        <p>Every Cybertruck on the road looks like every other Cybertruck on the road. Brutal, brilliant — and <strong>anonymous in a parking lot of its twins</strong>.</p>
+        <p>Cybertruck Rosé ends that. Each exoskeleton is hand-finished in <strong>Magnolia Rosé</strong>, a ceramic-bonded coating developed over 14 months to flex with cold-rolled stainless without a single micro-fracture. It doesn't wrap the armor. It becomes it.</p>
+        <p>Scratch-resistant. UV-stable for a decade. And in low sun, it shifts from soft petal to molten copper-rose.</p>
+      </div>
+      <div class="swatch-card reveal">
+        <div class="swatch" role="img" aria-label="Magnolia Rosé paint swatch shifting from pale petal pink to deep rose"></div>
+        <div class="swatch-meta">
+          <h3>Magnolia Rosé № 001</h3>
+          <span>Ceramic-bond · 120 µm</span>
+        </div>
+        <p class="swatch-desc">Three coats, one robotic pass, 40 hours of hand polishing. No two panels leave the studio with the same serial — yours is etched under the tonneau.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">From deposit to driveway</p>
+        <h2>Three steps. Zero pressure.</h2>
+        <p>A hundred dollars holds your place in a run of five hundred. That's the whole commitment.</p>
+      </div>
+      <ol class="steps">
+        <li class="step reveal">
+          <h3>Reserve your build slot</h3>
+          <p>Place a fully refundable $100 deposit. You'll get your serial number — of 500 — within the hour.</p>
+        </li>
+        <li class="step reveal">
+          <h3>Configure with a specialist</h3>
+          <p>A 30-minute call to lock your motor count, wheels, and interior. Change your mind anytime before coating begins.</p>
+        </li>
+        <li class="step reveal">
+          <h3>Take white-glove delivery</h3>
+          <p>Enclosed transport to your door, a full charge in the pack, and the studio's polishing kit in the frunk.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES AS BENEFITS ============ -->
+  <section class="section" id="performance">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Performance</p>
+        <h2>Soft color. Zero softness.</h2>
+        <p>Every number the standard truck posts, the Rosé matches — then shows up better dressed.</p>
+      </div>
+      <ul class="features" style="list-style:none">
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </span>
+          <h3>Leave anything at the light</h3>
+          <p>Tri-motor torque delivers 0–60 in 2.6 seconds. Supercars will read your light bar more often than your badge.</p>
+        </li>
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </span>
+          <h3>Skip a week of charging</h3>
+          <p>340 miles of range and 250 kW peak charging: 15 minutes on a fast charger buys you 140 miles.</p>
+        </li>
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h3>Armor that argues back</h3>
+          <p>Ultra-hard 30X stainless exoskeleton and shatter-resistant glass — the Rosé coat is rated to the same 9H hardness.</p>
+        </li>
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/></svg>
+          </span>
+          <h3>Tow the weekend, all of it</h3>
+          <p>11,000 pounds of towing and a 6-by-4 powered bed. Boat, bikes, and the espresso machine — bring them.</p>
+        </li>
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 4 18 3-9h6"/></svg>
+          </span>
+          <h3>Power a house from the bed</h3>
+          <p>11.5 kW of onboard outlets. Blackout on your street? Yours is the pink house with the lights on.</p>
+        </li>
+        <li class="feature reveal">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 7l-3 6-3-6c-2-2-4-4-4-7a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </span>
+          <h3>Ride over anything, level</h3>
+          <p>Adaptive air suspension with 17 inches of clearance on demand — and a curbside kneel for the school run.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ DEEP PROOF ============ -->
+  <section class="section testimonial">
+    <div class="container testimonial-inner reveal">
+      <blockquote>
+        "I ordered it as a statement. Eight months in, it's the <span>best vehicle I've ever owned</span> — and my daughter refuses to be dropped off in anything else."
+      </blockquote>
+      <figure class="avatar-row">
+        <span class="avatar" aria-hidden="true">MK</span>
+        <figcaption><b>Mira Kowalski</b><span>First-edition owner № 047 · Austin, TX</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Pricing</p>
+        <h2>Three builds. One unmistakable truck.</h2>
+        <p>Every tier wears the full Magnolia Rosé studio finish. Reserve with $100 — fully refundable until coating begins.</p>
+      </div>
+      <div class="tiers">
+        <article class="tier reveal">
+          <h3>Rosé Dual</h3>
+          <p class="price">$84,990 <small>· est. before incentives</small></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Dual-motor AWD, 600 hp</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>340-mile estimated range</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Magnolia Rosé studio finish</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Charcoal interior, rosé stitching</li>
+          </ul>
+          <a class="btn btn-ghost" href="#reserve">Reserve Dual</a>
+        </article>
+
+        <article class="tier featured reveal">
+          <p class="tier-badge">Most reserved</p>
+          <h3>Rosé Beast</h3>
+          <p class="price">$99,990 <small>· est. before incentives</small></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tri-motor, 845 hp · 0–60 in 2.6 s</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>11,000 lb towing capacity</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Adaptive air suspension</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Rose-anodized 20″ forged wheels</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Serial plaque + studio polish kit</li>
+          </ul>
+          <a class="btn btn-primary" href="#reserve">Reserve Beast</a>
+        </article>
+
+        <article class="tier reveal">
+          <h3>Rosé Atelier</h3>
+          <p class="price">$121,990 <small>· est. before incentives</small></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Everything in Beast, plus:</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bespoke two-tone rosé fade</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Blush Nappa leather interior</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Studio visit during your build</li>
+          </ul>
+          <a class="btn btn-ghost" href="#reserve">Reserve Atelier</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Questions</p>
+        <h2>Asked before you had to</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Is the deposit really refundable?</summary>
+          <p class="answer">Yes — 100%, any time before your truck enters the coating studio. One click in your account, funds back in 3–5 business days. No calls, no retention scripts.</p>
+        </details>
+        <details>
+          <summary>Does the pink finish void the factory warranty?</summary>
+          <p class="answer">No. Magnolia Rosé is applied by a certified body-modification partner and carries its own 10-year finish warranty on top of the vehicle's standard coverage. Powertrain and battery warranties are untouched.</p>
+        </details>
+        <details>
+          <summary>How durable is Magnolia Rosé, honestly?</summary>
+          <p class="answer">It's a ceramic-bonded coating rated 9H hardness — the same rating as the panel it bonds to. Gravel roads, car washes, and ten years of UV are in the test protocol. Deep gouges can be spot-repaired at any partner studio; your serial file stores the exact batch tint.</p>
+        </details>
+        <details>
+          <summary>When will my truck be delivered?</summary>
+          <p class="answer">First deliveries begin Q2 2027, in serial-number order. Reserving today puts you in the low 300s; your configuration call locks a delivery window you'll see before paying anything further.</p>
+        </details>
+        <details>
+          <summary>Only 500 — what happens when they're gone?</summary>
+          <p class="answer">The run closes. Magnolia Rosé № 001 is retired with it — the formula is contractually limited to 500 vehicles, which is precisely why № 047 already trades above sticker.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section final-cta" id="reserve">
+    <!-- three.js animated dot-wave, always on -->
+    <div class="dotted-surface" aria-hidden="true"></div>
+    <div class="container final-inner reveal">
+      <p class="kicker">500 units · 188 remaining</p>
+      <h2>The legend, reborn in rosé. Yours for a $100 hold.</h2>
+      <p>Leave an email, place a refundable deposit, and get your serial number tonight.</p>
+      <form class="reserve-form" novalidate>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="form-msg">
+        </div>
+        <button class="btn btn-primary" type="submit">Reserve yours — $100</button>
+        <p class="form-msg" id="form-msg" aria-live="polite"></p>
+      </form>
+      <p class="hero-note">Fully refundable · No spam, ever · One email at reservation, one at delivery window</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="logo" href="#top" aria-label="Rosé Motors — home">
+        <svg viewBox="0 0 68 40" aria-hidden="true" fill="none">
+          <polygon points="2,27 34,4 66,20 66,29 2,29" fill="oklch(0.74 0.16 355)"/>
+          <circle cx="17" cy="31" r="6.5" fill="oklch(0.21 0.010 40)" stroke="oklch(0.74 0.16 355)" stroke-width="2.5"/>
+          <circle cx="52" cy="31" r="6.5" fill="oklch(0.21 0.010 40)" stroke="oklch(0.74 0.16 355)" stroke-width="2.5"/>
+        </svg>
+        Rosé Motors
+      </a>
+      <p>An independent finishing studio. Cybertruck Rosé is a limited customization program; vehicle specifications are the manufacturer's estimates.</p>
+    </div>
+    <nav class="footer-col" aria-label="Footer — explore">
+      <h3>Explore</h3>
+      <ul>
+        <li><a href="#design">The finish</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Footer — company">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="#top">About the studio</a></li>
+        <li><a href="#reserve">Reserve</a></li>
+        <li><a href="#top">Press kit</a></li>
+        <li><a href="#top">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container footer-legal">
+    <span>© 2026 Rosé Motors. Not affiliated with Tesla, Inc.</span>
+    <span>Magnolia Rosé № 001 — a run of 500, then never again.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Mobile menu */
+  var toggle = document.querySelector(".menu-toggle");
+  var menu = document.getElementById("mobile-menu");
+  toggle.addEventListener("click", function(){
+    var open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+    menu.hidden = open;
+    toggle.textContent = open ? "Menu" : "Close";
+  });
+  menu.addEventListener("click", function(e){
+    if (e.target.closest("a")) {
+      toggle.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+      toggle.textContent = "Menu";
+    }
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && !menu.hidden) {
+      toggle.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+      toggle.textContent = "Menu";
+      toggle.focus();
+    }
+  });
+
+  /* Active nav highlight on scroll */
+  var sections = ["design","performance","pricing","faq"].map(function(id){ return document.getElementById(id); });
+  var navLinks = document.querySelectorAll(".nav-links a");
+  function markActive(){
+    var current = null;
+    sections.forEach(function(s){
+      if (s && s.getBoundingClientRect().top <= 120) current = s.id;
+    });
+    navLinks.forEach(function(a){
+      var on = current && a.getAttribute("href") === "#" + current;
+      if (on) a.setAttribute("aria-current","true"); else a.removeAttribute("aria-current");
+    });
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function(){
+    if (!ticking) { requestAnimationFrame(function(){ markActive(); ticking = false; }); ticking = true; }
+  }, { passive: true });
+  markActive();
+
+  /* Scroll reveal (respects reduced motion via CSS) */
+  var reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* Reserve form: inline validation on blur + submit feedback */
+  var form = document.querySelector(".reserve-form");
+  var email = document.getElementById("email");
+  var msg = document.getElementById("form-msg");
+  function setError(text){
+    email.setAttribute("aria-invalid","true");
+    msg.textContent = text;
+    msg.className = "form-msg error";
+  }
+  function clearError(){
+    email.removeAttribute("aria-invalid");
+    msg.textContent = "";
+    msg.className = "form-msg";
+  }
+  email.addEventListener("blur", function(){
+    if (email.value && !email.checkValidity()) setError("That email doesn't look right — check for a typo like \"gmial.com\".");
+    else clearError();
+  });
+  email.addEventListener("input", function(){ if (email.checkValidity()) clearError(); });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!email.value || !email.checkValidity()) {
+      setError(!email.value ? "Enter your email so we can send your serial number." : "That email doesn't look right — check for a typo.");
+      email.focus();
+      return;
+    }
+    var btn = form.querySelector("button");
+    btn.disabled = true;
+    btn.textContent = "Reserving…";
+    setTimeout(function(){
+      btn.textContent = "Reserved ✓";
+      msg.textContent = "You're in. Serial assignment and deposit link are on the way to " + email.value + ".";
+      msg.className = "form-msg ok";
+      email.value = "";
+    }, 900);
+  });
+})();
+</script>
+
+<!-- ============ DOTTED SURFACE (three.js animated dot-wave, always on) ============ -->
+<script type="module">
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+
+const container = document.querySelector(".dotted-surface");
+if (container) {
+  const SEPARATION = 150;
+  const AMOUNTX = 40;
+  const AMOUNTY = 60;
+
+  // Scene setup
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0xffffff, 2000, 10000);
+
+  const camera = new THREE.PerspectiveCamera(
+    60,
+    container.clientWidth / container.clientHeight,
+    1,
+    10000,
+  );
+  camera.position.set(0, 355, 1220);
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setClearColor(scene.fog.color, 0);
+  container.appendChild(renderer.domElement);
+
+  // Create particle grid
+  const positions = [];
+  const colors = [];
+  const geometry = new THREE.BufferGeometry();
+
+  for (let ix = 0; ix < AMOUNTX; ix++) {
+    for (let iy = 0; iy < AMOUNTY; iy++) {
+      const x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
+      const y = 0; // animated below
+      const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
+      positions.push(x, y, z);
+      colors.push(200, 200, 200); // site is dark-themed → light dots
+    }
+  }
+
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 8,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.8,
+    sizeAttenuation: true,
+  });
+
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let count = 0;
+  let animationId = 0;
+
+  function renderWave() {
+    const positionAttribute = geometry.attributes.position;
+    const pos = positionAttribute.array;
+    let i = 0;
+    for (let ix = 0; ix < AMOUNTX; ix++) {
+      for (let iy = 0; iy < AMOUNTY; iy++) {
+        const index = i * 3;
+        // Animate Y position with sine waves
+        pos[index + 1] =
+          Math.sin((ix + count) * 0.3) * 50 +
+          Math.sin((iy + count) * 0.5) * 50;
+        i++;
+      }
+    }
+    positionAttribute.needsUpdate = true;
+    renderer.render(scene, camera);
+  }
+
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+    renderWave();
+    count += 0.1;
+  }
+
+  window.addEventListener("resize", () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    if (reducedMotion.matches) renderWave();
+  });
+
+  // Reduced motion: draw one static frame instead of looping
+  function start() {
+    if (reducedMotion.matches) {
+      cancelAnimationFrame(animationId);
+      renderWave();
+    } else {
+      animate();
+    }
+  }
+  reducedMotion.addEventListener("change", start);
+  start();
+}
+</script>
+</body>
+</html>

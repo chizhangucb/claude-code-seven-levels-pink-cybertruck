@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{BRAND}} — {{ONE_LINE_DESCRIPTION}}</title>
+<style>
+/* ============================================================
+   {{BRAND}} — scaffold in the key of teenage.engineering
+   The whole page is a 980px poster that scales with the viewport.
+   Every dimension = (px at 980) / 980 x --client-width.
+   ============================================================ */
+:root{
+  --client-width:100vw;
+  --base-design-width:980;
+
+  /* the one unit that generates everything ---------------- */
+  --px:calc(0.0010204081632653062 * var(--client-width)); /* 1px at 980 */
+  --bh:calc(0.010204081632653062  * var(--client-width)); /* 10px baseline */
+
+  /* grid ------------------------------------------------- */
+  --layout-cn:12; --layout-cw:calc(65 * var(--px));
+  --layout-gw:calc(10 * var(--px)); --layout-mw:calc(45 * var(--px));
+
+  /* ink -------------------------------------------------- */
+  --white:#fff;
+  --te-white:#f5f5f5;
+  --te-black:#0f0e12;
+  --te-grey-100:#e5e5e5;
+  --te-grey-300:#b2b2b2;
+  --te-grey-700:#7f7f7f;
+  --te-grey-900:#4d4d4d;
+  --accent:{{ACCENT}};              /* the site's ONE signal colour */
+
+  /* type ------------------------------------------------- */
+  --te-20:"Helvetica Neue",Helvetica,Arial,sans-serif;  /* small cut  */
+  --te-40:"Helvetica Neue",Helvetica,Arial,sans-serif;  /* large cut  */
+  --display:"Helvetica Neue",Arial Black,sans-serif;    /* poster face */
+  --fw-thin:100; --fw-light:300;
+
+  --fs-10:calc(9  * var(--px)); --lh-10:calc(1 * var(--bh));
+  --fs-15:calc(13 * var(--px)); --lh-15:calc(1.5 * var(--bh));
+  --fs-20:calc(18 * var(--px)); --lh-20:calc(2 * var(--bh));
+  --fs-25:calc(23 * var(--px)); --lh-25:calc(3 * var(--bh));
+  --fs-30:calc(27 * var(--px)); --lh-30:calc(3 * var(--bh));
+  --fs-40:calc(36 * var(--px)); --lh-40:calc(4 * var(--bh));
+  --tracking:calc(var(--px) * -0.5);
+
+  /* space ------------------------------------------------ */
+  --space-xs:calc(5  * var(--px));
+  --space-sm:calc(10 * var(--px));
+  --space-md:calc(15 * var(--px));
+  --space-lg:calc(22.5 * var(--px));
+  --space-xl:calc(45 * var(--px));
+
+  /* chrome ----------------------------------------------- */
+  --header-height:calc(80 * var(--px));
+  --footer-height:calc(65 * var(--px));
+  --border-width:0.75px;
+  --grid-divider-color:var(--te-grey-300);
+  --radius:0;
+  --round:9999px;
+}
+/* Mobile does not reflow — it re-scales. Same design, bigger fractions. */
+@media (max-width:768px){
+  :root{
+    --fs-10:calc(18 * var(--px)); --fs-15:calc(26 * var(--px));
+    --fs-20:calc(36 * var(--px)); --fs-25:calc(46 * var(--px));
+    --fs-30:calc(54 * var(--px)); --fs-40:calc(72 * var(--px));
+    --lh-10:calc(2 * var(--bh)); --lh-15:calc(3 * var(--bh));
+    --lh-20:calc(4 * var(--bh)); --lh-25:calc(6 * var(--bh));
+    --lh-30:calc(6 * var(--bh)); --lh-40:calc(8 * var(--bh));
+    --header-height:calc(180 * var(--px));
+  }
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--white); color:var(--te-black);
+  font-family:var(--te-20); font-weight:var(--fw-thin);
+  font-size:var(--fs-20); line-height:var(--lh-20);
+  letter-spacing:var(--tracking);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+.rule{border:0;border-top:var(--border-width) solid var(--grid-divider-color)}
+.container{
+  width:100%; padding-inline:var(--layout-mw);
+  display:grid; grid-template-columns:repeat(12,1fr); gap:var(--layout-gw);
+}
+/* type roles — sizes come only from the scale above */
+.eyebrow{font-size:var(--fs-10);line-height:var(--lh-10);text-transform:uppercase;letter-spacing:.08em;color:var(--te-grey-700)}
+.h2{font-family:var(--te-40);font-weight:var(--fw-light);font-size:var(--fs-30);line-height:var(--lh-30)}
+.h3{font-family:var(--te-40);font-weight:var(--fw-light);font-size:var(--fs-25);line-height:var(--lh-25)}
+.small{font-size:var(--fs-15);line-height:var(--lh-15)}
+.body{max-width:60ch}
+.accent{color:var(--accent)}
+
+/* 01 · NAV — icon-led, flat, no blur, no shadow */
+header.nav{
+  position:sticky;top:0;z-index:1000;background:var(--white);
+  border-bottom:var(--border-width) solid var(--grid-divider-color);
+  min-height:var(--header-height);display:flex;align-items:flex-start;
+  padding:var(--space-md) var(--layout-mw);gap:var(--space-xl);
+}
+.nav .wordmark{font-size:var(--fs-25);line-height:var(--lh-20);font-weight:var(--fw-thin)}
+.nav .group{display:flex;gap:var(--space-sm)}
+.nav .glyph{width:calc(40 * var(--px));height:calc(40 * var(--px));background:var(--te-black);flex:none}
+.nav ul{list-style:none;font-size:var(--fs-15);line-height:var(--lh-15)}
+.nav ul li a:hover{color:var(--accent)}
+.nav .spacer{margin-left:auto}
+.nav .cart{border:var(--border-width) solid var(--te-black);padding:var(--space-xs) var(--space-sm);font-size:var(--fs-15);border-radius:var(--radius)}
+
+/* 02 · HERO — the poster. Type is the image. */
+.hero{
+  min-height:calc(100vh - var(--header-height));
+  display:flex;flex-direction:column;justify-content:center;
+  padding:var(--space-xl) var(--layout-mw);
+}
+.hero h1{
+  font-family:var(--display);font-weight:var(--fw-light);
+  font-size:calc(120 * var(--px));line-height:calc(11 * var(--bh));
+  letter-spacing:calc(var(--px) * -2);text-transform:uppercase;
+}
+.hero .lede{margin-top:var(--space-lg);max-width:38ch;font-size:var(--fs-20);line-height:var(--lh-20)}
+.hero .specs{margin-top:var(--space-lg);display:flex;gap:var(--space-xl);font-size:var(--fs-15)}
+.hero .specs b{font-weight:var(--fw-light);display:block;color:var(--accent)}
+.cta-row{margin-top:var(--space-xl);display:flex;gap:var(--space-sm)}
+.btn{
+  min-height:48px;display:inline-flex;align-items:center;
+  padding:var(--space-sm) var(--space-lg);font-size:var(--fs-15);
+  border:var(--border-width) solid var(--te-black);border-radius:var(--radius);
+  background:var(--te-black);color:var(--te-white);
+}
+.btn.ghost{background:transparent;color:var(--te-black)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--white)}
+
+/* 03 · MODEL GRID — hairline-divided tiles, no cards, no shadows */
+section{padding:var(--space-xl) 0;border-top:var(--border-width) solid var(--grid-divider-color)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-left:var(--border-width) solid var(--grid-divider-color)}
+.tile{
+  border-right:var(--border-width) solid var(--grid-divider-color);
+  border-bottom:var(--border-width) solid var(--grid-divider-color);
+  padding:var(--space-lg);background:var(--te-white);border-radius:var(--radius);
+}
+.tile .shot{aspect-ratio:16/10;background:var(--te-grey-100);margin-bottom:var(--space-md)}
+.tile .badge{display:inline-block;font-size:var(--fs-10);text-transform:uppercase;background:var(--accent);color:var(--white);padding:2px var(--space-xs);border-radius:var(--round)}
+
+/* 04 · SPEC TABLE — the product is data */
+.spec{width:100%;border-collapse:collapse;font-size:var(--fs-15)}
+.spec td{padding:var(--space-sm) 0;border-bottom:var(--border-width) solid var(--grid-divider-color)}
+.spec td:last-child{text-align:right;font-family:var(--te-40)}
+
+/* 05 · MARQUEE — the only motion on the page */
+.marquee{overflow:hidden;white-space:nowrap;border-block:var(--border-width) solid var(--te-black);padding:var(--space-sm) 0}
+.marquee span{display:inline-block;padding-right:40px;font-size:var(--fs-25);text-transform:uppercase;animation:mrq 12s linear infinite}
+@keyframes mrq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee span{animation:none}}
+
+/* 06 · INVERSE BAND */
+.band{background:var(--te-black);color:var(--te-white);text-align:center}
+.band .btn{background:var(--te-white);color:var(--te-black);border-color:var(--te-white)}
+
+/* 07 · FOOTER */
+footer{padding:var(--space-xl) var(--layout-mw) var(--space-lg);border-top:var(--border-width) solid var(--grid-divider-color)}
+footer .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--layout-gw);font-size:var(--fs-15)}
+footer ul{list-style:none}
+footer .mark{font-family:var(--display);font-weight:var(--fw-light);font-size:calc(140 * var(--px));line-height:.85;text-transform:uppercase;margin-top:var(--space-xl)}
+footer .legal{margin-top:var(--space-lg);display:flex;gap:var(--space-md);font-size:var(--fs-10);color:var(--te-grey-700)}
+</style>
+</head>
+<body>
+
+<!-- 01 · NAV -->
+<header class="nav">
+  <div class="wordmark">{{BRAND}}</div>
+  <div class="group"><span class="glyph"></span>
+    <ul><li>{{NAV_1}}</li><li>{{NAV_2}}</li><li>{{NAV_3}}</li></ul>
+  </div>
+  <div class="group"><span class="glyph"></span>
+    <ul><li>{{NAV_4}}</li><li>{{NAV_5}}</li></ul>
+  </div>
+  <div class="spacer"></div>
+  <a class="cart" href="#">{{NAV_CTA}}</a>
+</header>
+
+<!-- 02 · HERO — type as poster -->
+<main class="hero">
+  <h1>{{HERO_HEADLINE}}</h1>
+  <p class="lede">{{HERO_LEDE}}</p>
+  <div class="specs">
+    <div>{{SPEC_1_LABEL}}<b>{{SPEC_1_VALUE}}</b></div>
+    <div>{{SPEC_2_LABEL}}<b>{{SPEC_2_VALUE}}</b></div>
+    <div>{{SPEC_3_LABEL}}<b>{{SPEC_3_VALUE}}</b></div>
+  </div>
+  <div class="cta-row">
+    <a class="btn" href="#">{{HERO_CTA_PRIMARY}}</a>
+    <a class="btn ghost" href="#">{{HERO_CTA_SECONDARY}}</a>
+  </div>
+</main>
+
+<!-- 03 · MODEL GRID -->
+<section>
+  <div style="padding-inline:var(--layout-mw)">
+    <p class="eyebrow">{{GRID_EYEBROW}}</p>
+    <h2 class="h2">{{GRID_HEADLINE}}</h2>
+  </div>
+  <div class="tiles" style="margin-top:var(--space-lg)">
+    <article class="tile"><div class="shot"></div><span class="badge">{{TILE_BADGE}}</span>
+      <h3 class="h3">{{TILE_TITLE}}</h3><p class="small body">{{TILE_BODY}}</p></article>
+    <article class="tile"><div class="shot"></div><span class="badge">{{TILE_BADGE}}</span>
+      <h3 class="h3">{{TILE_TITLE}}</h3><p class="small body">{{TILE_BODY}}</p></article>
+    <article class="tile"><div class="shot"></div><span class="badge">{{TILE_BADGE}}</span>
+      <h3 class="h3">{{TILE_TITLE}}</h3><p class="small body">{{TILE_BODY}}</p></article>
+  </div>
+</section>
+
+<!-- 04 · SPEC TABLE -->
+<section>
+  <div style="padding-inline:var(--layout-mw)">
+    <p class="eyebrow">{{SPEC_EYEBROW}}</p>
+    <h2 class="h2" style="margin-bottom:var(--space-lg)">{{SPEC_HEADLINE}}</h2>
+    <table class="spec">
+      <tr><td>{{SPEC_ROW_LABEL}}</td><td>{{SPEC_ROW_VALUE}}</td></tr>
+      <tr><td>{{SPEC_ROW_LABEL}}</td><td>{{SPEC_ROW_VALUE}}</td></tr>
+      <tr><td>{{SPEC_ROW_LABEL}}</td><td>{{SPEC_ROW_VALUE}}</td></tr>
+      <tr><td>{{SPEC_ROW_LABEL}}</td><td>{{SPEC_ROW_VALUE}}</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 05 · MARQUEE -->
+<section style="padding:0">
+  <div class="marquee"><span>{{MARQUEE_TEXT}} &nbsp; {{MARQUEE_TEXT}} &nbsp; {{MARQUEE_TEXT}} &nbsp; {{MARQUEE_TEXT}} &nbsp;</span></div>
+</section>
+
+<!-- 06 · INVERSE BAND -->
+<section class="band">
+  <div style="padding-inline:var(--layout-mw)">
+    <h2 class="h2">{{BAND_HEADLINE}}</h2>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn" href="#">{{BAND_CTA}}</a>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · FOOTER -->
+<footer>
+  <div class="cols">
+    <p>{{FOOTER_TAGLINE}}</p>
+    <ul><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li></ul>
+    <ul><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li></ul>
+    <ul><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li><li>{{FOOTER_LINK}}</li></ul>
+  </div>
+  <div class="mark">{{BRAND_UPPERCASE}}</div>
+  <div class="legal"><span>{{LEGAL}}</span><span>{{LEGAL}}</span></div>
+</footer>
+
+</body>
+</html>

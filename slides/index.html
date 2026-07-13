@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Levels, Round 2 — the talk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23ff4fa3%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fffbfd; --ink: #1a1216; --muted: #705b66;
+  --accent: #ff4fa3; --accent-ink: #c2185b; --surface: #ffe9f2;
+  --line: rgba(26,18,22,.12); --line-strong: rgba(26,18,22,.28);
+  --display: "Fraunces", Georgia, serif; --text: "Inter", -apple-system, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font: 400 clamp(16px,1.6vw,22px)/1.55 var(--text); overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+.slide {
+  position: absolute; inset: 0; display: none;
+  padding: 7vh 8vw; flex-direction: column; justify-content: center; gap: 2.6vh;
+}
+.slide.active { display: flex; }
+.slide .kicker { font-size: .62em; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.slide h1 { font-family: var(--display); font-weight: 560; font-size: 2.9em; line-height: 1.05; letter-spacing: -.02em; max-width: 20ch; }
+.slide h2 { font-family: var(--display); font-weight: 560; font-size: 2.1em; line-height: 1.08; letter-spacing: -.018em; max-width: 24ch; }
+.slide p.big { font-size: 1.15em; color: var(--muted); max-width: 52ch; }
+.slide p.cost { font-size: .68em; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.slide p.cost b { color: var(--accent-ink); font-weight: 650; }
+.slide ul { list-style: none; display: grid; gap: 1.4vh; max-width: 62ch; }
+.slide ul li { padding-left: 1.4em; position: relative; }
+.slide ul li::before { content: "→"; position: absolute; left: 0; color: var(--accent-ink); font-weight: 600; }
+.slide blockquote {
+  font-family: var(--mono); font-size: .78em; line-height: 1.6; white-space: pre-wrap;
+  background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0;
+  padding: 2.4vh 2vw; max-width: 68ch;
+}
+.slide .demo-callout {
+  display: inline-flex; align-items: center; gap: .6em; align-self: flex-start;
+  background: var(--ink); color: var(--bg); border-radius: 999px;
+  padding: .55em 1.3em; font-weight: 600; font-size: .85em; text-decoration: none;
+}
+.slide .demo-callout .red { width: .6em; height: .6em; border-radius: 50%; background: #ff4b3e; animation: pulse 1.4s infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+.imgrow { display: flex; gap: 2vw; align-items: flex-start; }
+.imgrow figure { flex: 1; min-width: 0; }
+.imgrow img { width: 100%; border-radius: 12px; border: 1px solid var(--line-strong); box-shadow: 0 10px 34px rgba(26,18,22,.12); }
+.imgrow figcaption { font-size: .68em; font-weight: 600; color: var(--muted); margin-top: .8vh; }
+table.cmp { border-collapse: collapse; font-size: .75em; max-width: 90%; }
+table.cmp th, table.cmp td { text-align: left; padding: .55em .9em; border-bottom: 1px solid var(--line); }
+table.cmp th { font-size: .85em; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); }
+table.cmp td:first-child { font-weight: 600; }
+.ladder-mini { display: grid; grid-template-columns: repeat(7, 1fr); gap: .8vw; width: 100%; }
+.ladder-mini a { text-decoration: none; color: inherit; text-align: center; font-size: .6em; font-weight: 600; }
+.ladder-mini img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid var(--line-strong); }
+.ladder-mini .n { display: block; font-family: var(--display); font-size: 1.6em; color: var(--accent-ink); margin-bottom: .3vh; }
+.tools { display: flex; flex-wrap: wrap; gap: .6em; max-width: 62ch; }
+.tools a {
+  display: inline-flex; align-items: center; gap: .45em;
+  font-size: .68em; font-weight: 600; text-decoration: none; color: var(--accent-ink);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: 999px;
+  padding: .45em 1.1em;
+}
+.tools a::after { content: "↗"; font-size: .85em; opacity: .6; }
+.tools a:hover { border-color: var(--accent); background: #ffd9e9; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; width: 100%; }
+.chart h3 { font-family: var(--display); font-weight: 560; font-size: 1em; margin-bottom: 1.6vh; }
+.chart .plot { display: flex; align-items: flex-end; gap: 1.2vw; height: 30vh; border-bottom: 2px solid var(--line-strong); }
+.chart .group { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 100%; }
+.chart .bar { width: 42%; border-radius: 4px 4px 0 0; position: relative; }
+.chart .bar.fable { background: var(--accent); }
+.chart .bar.opus { background: var(--ink); }
+.chart .bar .v { position: absolute; top: -1.7em; left: 50%; transform: translateX(-50%); font-size: .52em; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.chart .xlabels { display: flex; gap: 1.2vw; margin-top: .8vh; }
+.chart .xlabels span { flex: 1; text-align: center; font-size: .6em; font-weight: 600; color: var(--muted); }
+.chart .legend { display: flex; gap: 1.4em; margin-top: 1.2vh; font-size: .62em; font-weight: 600; }
+.chart .legend i { display: inline-block; width: .9em; height: .9em; border-radius: 3px; margin-right: .4em; vertical-align: -0.1em; }
+
+.hud {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: flex; align-items: center; gap: 14px; padding: 12px 24px;
+  font-size: 12.5px; color: var(--muted);
+}
+.hud .bar { flex: 1; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.hud .bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s ease; }
+
+.overview { position: fixed; inset: 0; z-index: 20; background: var(--bg); overflow-y: auto; padding: 4vh 4vw; display: none; }
+.overview.open { display: block; }
+.overview .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.overview button {
+  border: 1px solid var(--line-strong); border-radius: 10px; background: #fff;
+  padding: 14px; text-align: left; cursor: pointer; font: 500 13px/1.4 var(--text); color: var(--ink);
+}
+.overview button:hover { border-color: var(--accent); }
+.overview button .n { font-family: var(--display); color: var(--accent-ink); display: block; font-size: 18px; }
+</style>
+</head>
+<body>
+
+<!-- ============ ACT 1 · Setup (slides 1–5) ============ -->
+
+<section class="slide"><p class="kicker">An internal session · Chi Zhang · built with Claude Code</p>
+<h1>Leveling Up Website Quality in Claude Code — Round 2: the Pink Cybertruck</h1>
+<p class="big">Seven levels · two models · the experiment ran itself.</p></section>
+
+<section class="slide"><p class="kicker">Why this talk</p>
+<h2>Most Claude-built websites look generic — and it isn't the model's fault.</h2>
+<ul><li>No references, no skills, no data — "Mozart with no piano."</li>
+<li>Source of the ladder: Jack Roberts' <em>7 Levels of Building Claude Code Websites</em>.</li>
+<li>Round 1 replicated it with receipts. Round 2 asks: does it replicate <em>again</em>?</li></ul></section>
+
+<section class="slide"><p class="kicker">Round 1 recap</p>
+<h2>The yellow iPhone, in one slide</h2>
+<ul><li>Same seven levels, product: a yellow iPhone. Every artifact checksummed.</li>
+<li>Headline numbers: Fable $102 / ~96 min · Opus $36 / ~61 min across the ladder.</li>
+<li>Round 2's question: <strong>does the ladder replicate on a different product?</strong></li></ul>
+<p class="big">github.com/chizhangucb/claude-code-seven-levels-building-website</p></section>
+
+<section class="slide"><p class="kicker">The experiment</p>
+<h2>One pink Cybertruck. The same prompts, run twice.</h2>
+<ul><li>Fable 5 and Opus 4.8, identical prompts, parallel folders, same references and skills.</li>
+<li>Every level's HTML frozen the moment it was built — SHA-256 checksummed, per-level metrics mined from transcripts.</li>
+<li><strong>New this round: the experiment ran itself.</strong> One orchestrator session drove all 14 level-sessions headlessly (<code>claude -p</code>).</li></ul></section>
+
+<section class="slide"><p class="kicker">Ground rules</p>
+<h2>Treat prompting experiments like experiments.</h2>
+<ul><li>Named output files per level; "keep level-(N−1) untouched" up front in every prompt.</li>
+<li>One variable changed per level; scripted follow-ups only — no improvising.</li>
+<li>Disclosed deviations (a)–(f) in the runbook: new L4 component, symmetric L3/L4 inputs, new L6/L7 targets, orchestrated mode.</li></ul></section>
+
+<!-- ============ ACT 2 · The climb (slides 6–20) ============ -->
+
+<section class="slide"><p class="kicker">Level 1 · Grab and go</p>
+<h2>The prompt everyone writes</h2>
+<blockquote>Claude, I want you to build for me a simple website or just a nice looking website that is cool about Cybertrucks that are pink. Build me one of those website.
+
+name the file as pink-cybertruck-web-level-1.html</blockquote></section>
+
+<section class="slide"><p class="kicker">Level 1 · Result · 🔴 Live demo 1 (~3 min)</p>
+<h2>Two models, one identical page title</h2>
+<a class="demo-callout" href="/compare/?level=1" target="_blank"><span class="red"></span>LIVE DEMO — /compare/?level=1</a>
+<ul><li>Convergence arrived at level 1 this round: both models independently titled their page <strong>"PINKTRUCK — The Cybertruck, but Pink"</strong> — the identical <code>&lt;title&gt;</code> string.</li>
+<li>Then they diverged: Fable "The Cybertruck. But Pink." (pale-rose light theme, frosted-glass nav); Opus "Think Pink" (dark neon magenta/steel, plus a six-swatch live repaint nobody asked for).</li></ul>
+<p class="cost"><b>Fable 5</b> $1.12 · 1.6 min &nbsp;·&nbsp; <b>Opus 4.8</b> $0.57 · 1.7 min</p></section>
+
+<section class="slide"><p class="kicker">Level 2 · Screenshots &amp; references</p>
+<h2>References beat adjectives.</h2>
+<ul><li>One reference image replaces paragraphs of adjectives.</li>
+<li>Hunting grounds: godly.website · Land-book · Awwwards · Dribbble.</li>
+<li>Attach the screenshot, say "use this image as a reference style."</li></ul>
+<div class="tools">
+<a href="https://godly.website" target="_blank">Godly</a>
+<a href="https://land-book.com" target="_blank">Land-book</a>
+<a href="https://www.awwwards.com" target="_blank">Awwwards</a>
+<a href="https://dribbble.com" target="_blank">Dribbble</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 2 · Result</p>
+<h2>Same reference, two work styles</h2>
+<div class="imgrow">
+<figure><img src="/assets/thumbs/fable-2.png" alt=""><figcaption>Fable — re-dressed in 2m11s flat (4 turns): neutral cards, hairline borders, named colorways (Studio Blush, Satin Rose, Desert Mauve, Midnight Rosé)</figcaption></figure>
+<figure><img src="/assets/thumbs/opus-2.png" alt=""><figcaption>Opus — 8m49s and 44 API calls: opened a browser and self-verified the hero fit the fold</figcaption></figure>
+</div>
+<ul><li>Round 1's overwrite bug did <strong>not</strong> recur — the up-front "keep level-1 untouched" line worked; checksums prove it.</li></ul>
+<p class="cost"><b>Fable 5</b> $1.67 · 2.2 min &nbsp;·&nbsp; <b>Opus 4.8</b> $2.68 · 8.8 min</p></section>
+
+<section class="slide"><p class="kicker">Level 3 · Design skills</p>
+<h2>Mozart gets a piano</h2>
+<ul><li>Skills = packaged design expertise: UI styles, palettes, font pairings, UX rules.</li>
+<li>This round: power-design + ui-ux-pro-max — install once, invoke by asking.</li>
+<li>The model stops guessing what "good" looks like.</li></ul>
+<div class="tools">
+<a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank">UI UX Pro Max</a>
+<a href="https://ui.shadcn.com" target="_blank">shadcn/ui</a>
+<a href="https://github.com/bergside/awesome-design-skills" target="_blank">Awesome Design Skills</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 3 · Result</p>
+<h2>The design system arrives — and QA finds a real bug</h2>
+<ul><li>File size jumped 2.4× (Fable, 46.8 KB) and 2.9× (Opus, 50.7 KB) — replicating round 1's doubling. That's the design system arriving.</li>
+<li>Fable's self-QA pass caught a real progressive-enhancement bug: scroll-reveal styles now gated behind a JS-added class, so content survives JS failure.</li>
+<li>Opus invented a fictional <strong>"CYBR"</strong> brand with a footer disclaimer. Remember that name — it comes back at level 7.</li></ul>
+<p class="cost"><b>Fable 5</b> $6.77 · 7.5 min &nbsp;·&nbsp; <b>Opus 4.8</b> $5.69 · 10.3 min</p></section>
+
+<section class="slide"><p class="kicker">Level 4 · UI snipping</p>
+<h2>Don't re-engineer the fireplace — copy it.</h2>
+<ul><li>Production components from 21st.dev, Magic UI, CodePen, Mobbin.</li>
+<li>Paste the code and ask Claude to integrate it.</li>
+<li>Here: <strong>DottedSurface</strong>, a three.js dot-wave — new component this round (round 1 used balloons-js).</li></ul>
+<div class="tools">
+<a href="https://21st.dev" target="_blank">21st.dev</a>
+<a href="https://magicui.design" target="_blank">Magic UI</a>
+<a href="https://codepen.io" target="_blank">CodePen</a>
+<a href="https://mobbin.com" target="_blank">Mobbin</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 4 · Result</p>
+<h2>Opus debugs the component it was handed</h2>
+<ul><li>Opus caught the source's 0–255 vertex-color bug: "three.js reads color buffers as 0–1, so those dots were silently clamped to pure white — I used proper 0–1 values." The round-2 echo of round 1's memory-leak find.</li>
+<li>Both went CDN — but Opus deliberately picked the classic three.js build so the file works when double-clicked from disk (<code>file://</code> blocks module scripts); Fable used a CDN import and added a <code>prefers-reduced-motion</code> static frame.</li>
+<li>Both kept the source's full-viewport <code>fixed inset-0</code> wrapper — exactly as predicted — and both needed the one scripted rescope follow-up.</li></ul>
+<p class="cost"><b>Fable 5</b> $7.82 · 5.9 min &nbsp;·&nbsp; <b>Opus 4.8</b> $4.42 · 8.2 min</p></section>
+
+<section class="slide"><p class="kicker">Level 5 · AI image &amp; video</p>
+<h2>Generate the media you don't have</h2>
+<ul><li>OpenArt workflow: Nano Banana image → pick the product shot → Kling/Seedance video.</li>
+<li>Trick: same start frame and end frame → the rotation loops perfectly.</li>
+<li>Then hand the file to Claude and let it art-direct the placement.</li></ul>
+<div class="tools">
+<a href="https://openart.ai" target="_blank">OpenArt</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 5 · Result · 🔴 Live demo 2 (~4 min)</p>
+<h2>The cheapest level buys the biggest gasp</h2>
+<a class="demo-callout" href="/compare/?level=5" target="_blank"><span class="red"></span>LIVE DEMO — /compare/?level=5</a>
+<ul><li>Cheapest level on the ladder ($3.43 / $2.23, ~3 min each) — the leverage is in the asset, not the tokens.</li>
+<li>Round-1 echo: Opus generated a poster frame unprompted again — base64-inlined this time, plus a film.png on disk.</li></ul>
+<p class="cost"><b>Fable 5</b> $3.43 · 3.4 min &nbsp;·&nbsp; <b>Opus 4.8</b> $2.23 · 3.2 min</p></section>
+
+<section class="slide"><p class="kicker">Level 6 · Data research</p>
+<h2>Research beats invention.</h2>
+<ul><li>Firecrawl scrapes live sites: type scale, palette, spacing, tone — this round, from tesla.com itself.</li>
+<li>The scrape came back clean for both models — no fallback needed.</li>
+<li>Bigger pattern: research what actually converts in your market, then build from evidence.</li></ul>
+<div class="tools">
+<a href="https://firecrawl.dev" target="_blank">Firecrawl</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 6 · Result</p>
+<h2>Evidence in, credibility out</h2>
+<ul><li>Opus matched Tesla's exact dark <code>rgb(23,26,32)</code> and verified 0 console errors.</li>
+<li>Fable's Playwright pass caught a real layout bug — hero CTAs wrapping because flex auto-margins defeated stretch — and shipped a page that "reads convincingly like a tesla.com product page."</li>
+<li>Bonus beat: Opus took a full-page screenshot, saw blank mid-page sections, and correctly diagnosed its own reveal-observer as the cause rather than "fixing" working code.</li></ul>
+<p class="cost"><b>Fable 5</b> $7.20 · 9.4 min &nbsp;·&nbsp; <b>Opus 4.8</b> $4.09 · 7.9 min</p></section>
+
+<section class="slide"><p class="kicker">Level 7 · Design extraction</p>
+<h2>The strongest lever</h2>
+<ul><li>A skill extracts a site's full design <em>language</em>: tokens, type ladder, easing, load-bearing rules.</li>
+<li>Claude rebuilds <em>your</em> product in that language. Translation, not cloning.</li>
+<li>Target this round: <strong>teenage.engineering</strong> — lowercase, type-led, ruthlessly sparse.</li></ul>
+<div class="tools">
+<a href="https://teenage.engineering" target="_blank">teenage.engineering — the source site</a>
+<a href="https://github.com/chizhangucb/claude-code-seven-levels-building-website/tree/main/skill/design-language" target="_blank">design-language skill (verbatim from round 1)</a>
+</div></section>
+
+<section class="slide"><p class="kicker">Level 7 · Result · 🔴 Live demo 3 (~4 min)</p>
+<h2>teenage.engineering's voice, on a truck</h2>
+<a class="demo-callout" href="/compare/?level=7" target="_blank"><span class="red"></span>LIVE DEMO — /compare/?level=7</a>
+<ul><li>Round 1's Lume/LUMA name-twinning didn't repeat — the convergence moved down a layer: both models shipped ~22 KB lowercase, type-led pages in teenage.engineering's voice.</li>
+<li>Fable: unbranded "pink cybertruck — the beautiful truck." Opus: "CYBR — Built for Mars. Painted for Miami." — <strong>reusing the brand it invented at level 3</strong>. Cross-level brand persistence nobody asked for.</li>
+<li>Both delivered an extraction <em>kit</em> first (brief + tokens + structure.css + scaffold) and needed the scripted "where's the website?" follow-up — and Fable had written its kit to <code>~/Desktop</code>.</li></ul>
+<p class="cost"><b>Fable 5</b> $9.40 · 13.3 min &nbsp;·&nbsp; <b>Opus 4.8</b> $4.94 · 10.2 min</p></section>
+
+<section class="slide"><p class="kicker">The whole climb</p>
+<h2>Level 1 vs level 7. Pause here.</h2>
+<div class="imgrow">
+<figure><img src="/assets/thumbs/fable-1.png" alt=""><figcaption>Level 1 — one prompt</figcaption></figure>
+<figure><img src="/assets/thumbs/fable-7.png" alt=""><figcaption>Level 7 — the same model, with a system</figcaption></figure>
+</div></section>
+
+<!-- ============ ACT 3 · What the A/B and the rerun taught us (slides 21–25) ============ -->
+
+<section class="slide"><p class="kicker">Fable 5 vs Opus 4.8 · Round 2</p>
+<h2>Partially replicated, partially flipped</h2>
+<table class="cmp" style="font-size:.68em; width:100%; max-width:100%; table-layout:fixed;">
+<tr><th style="width:16%"></th><th>What we saw</th></tr>
+<tr><td>Held</td><td>Fable's self-QA instinct (real bugs found and fixed at L3 and L6) · Opus's scaffolding instinct (poster frame, hero.png, kit directories, CDN classic builds)</td></tr>
+<tr><td>Flipped</td><td>This round Opus self-verified in a browser at almost every level (44–56 API calls per level vs Fable's 2–47) — round 1's "Fable verifies, Opus one-shots" story did not survive the rerun</td></tr>
+<tr><td>New</td><td>Opus showed brand persistence (CYBR invented at L3, reused at L7); Fable stayed product-literal</td></tr>
+</table></section>
+
+<section class="slide"><p class="kicker">Fable 5 vs Opus 4.8 · The bill</p>
+<h2>What each level cost — and how long it took</h2>
+<div class="charts" id="metrics-charts"></div>
+<p class="big" style="font-size:.72em">Across the ladder: Fable $37.41 / ~43 min of machine time · Opus $24.62 / ~50 min. Round 2 ran ~2.7× cheaper than round 1 for Fable ($102 → $37) on the same ladder — cheaper prompts-per-level (headless one-shot sessions, no interactive drift) and no overwrite-recovery tax. API-equivalent cost at list price; time is machine time only.</p></section>
+
+<section class="slide"><p class="kicker">Replication verdict</p>
+<h2>Same ladder, different product: the ladder held.</h2>
+<ul><li>Replicated: monotonic quality climb · L3 file-size jump · L7 design-language convergence (in voice, not in brand name) · L4's "models keep the fixed-viewport wrapper" prediction hit both models.</li>
+<li>Didn't replicate: round 1's verification asymmetry (both models verify now).</li>
+<li>Didn't recur: the overwrite incident — prevented by design this round.</li></ul></section>
+
+<section class="slide"><p class="kicker">The orchestrated run</p>
+<h2>An agent ran the experiment on two other agents</h2>
+<ul><li>One orchestrator drove 14 level-sessions + 4 scripted follow-up resumes, logged it, checksummed it — and built this deck.</li>
+<li>~1h45m of pipeline wall-clock (23:32–02:08 UTC, minus one ~50-min human pause) · zero recovery prompts · zero clobbered files.</li>
+<li>Interventions: one human resume (a permissions pause on the orchestrator side, not the experiment) and one preflight environment fix (Firecrawl CLI wasn't authenticated — found the key in ~/.zshrc). Every follow-up sent was pre-scripted, fired on its stated condition.</li></ul></section>
+
+<section class="slide"><p class="kicker">Verdict</p>
+<h1>The ladder is the lever. The model is the multiplier.<br>The orchestrator is the flywheel.</h1>
+<p class="big">Held in round 2: both models climbed from the same generic PINKTRUCK baseline to distinct, credible design-language pages. The technique ladder did the lifting; the model chose the style of the climb.</p></section>
+
+<!-- ============ ACT 4 · Takeaways + Q&A (slides 26–30) ============ -->
+
+<section class="slide"><p class="kicker">Meta-lessons</p>
+<h2>Five inequalities to remember</h2>
+<ul><li>References &gt; adjectives</li>
+<li>Skills &gt; instructions</li>
+<li>Research &gt; invention</li>
+<li>Verification &gt; hope</li>
+<li><strong>New this round:</strong> Orchestration &gt; babysitting</li></ul></section>
+
+<section class="slide"><p class="kicker">Tricks &amp; gotchas</p>
+<h2>Field notes, round 2</h2>
+<ul><li>Named outputs + "keep level-(N−1) untouched" up front — it worked: no overwrite this round.</li>
+<li>One live session per directory; log session IDs as you go.</li>
+<li>The stale-frame screenshot artifact bit <em>again</em> — this time the orchestrator's own browser pane while verifying L4; Playwright settled it, same as round 1.</li>
+<li>Models wander: Fable wrote its L7 kit to ~/Desktop instead of the working dir.</li>
+<li>Preflight pays: an unauthenticated Firecrawl CLI was caught before it could stall L6.</li></ul></section>
+
+
+<section class="slide"><p class="kicker">Try it yourself</p>
+<h2>Everything is one link</h2>
+<ul><li>Live site, all 14 demos, the compare view, this deck.</li>
+<li>The prompt pack — the exact prompts, per level, typos included.</li>
+<li>The design-language extraction skill, ready to install.</li></ul>
+<p class="big"><a href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck" target="_blank" rel="noopener">github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck</a></p></section>
+
+<section class="slide"><h1>Q&amp;A</h1>
+<p class="big">Seeded: Which level is the best ROI? (L5 by cost-per-wow — $2.23–$3.43, ~3 min, and it's the level people gasp at; L2 by cost-per-quality-point if you only take one step.) Why did the models converge and diverge? How much babysitting did the orchestrator need? (One resume, zero improvised prompts.)</p></section>
+
+<div class="hud">
+  <span id="pos">1 / 29</span>
+  <div class="bar"><i id="prog"></i></div>
+  <span>← → navigate · Esc overview</span>
+</div>
+
+<div class="overview" id="overview"><div class="grid" id="ovgrid"></div></div>
+
+<script>
+// Metrics slide: grouped bar charts (cost $, time min) per level, Fable vs Opus
+// Round-2 data duplicated inline per deck convention (source: assets/metrics.js / run log). No total rows.
+(function () {
+  const M = {
+    cost: { title: "API-equivalent cost ($)", fable: [1.12, 1.67, 6.77, 7.82, 3.43, 7.20, 9.40], opus: [0.57, 2.68, 5.69, 4.42, 2.23, 4.09, 4.94], fmt: v => "$" + v.toFixed(2) },
+    time: { title: "Machine time (minutes)", fable: [1.6, 2.2, 7.5, 5.9, 3.4, 9.4, 13.3], opus: [1.7, 8.8, 10.3, 8.2, 3.2, 7.9, 10.2], fmt: v => v.toFixed(1) + "m" },
+  };
+  const host = document.getElementById("metrics-charts");
+  if (!host) return;
+  host.innerHTML = Object.values(M).map(c => {
+    const max = Math.max(...c.fable, ...c.opus);
+    const groups = c.fable.map((f, i) => {
+      const o = c.opus[i];
+      return `<div class="group">
+        <div class="bar fable" style="height:${(f / max * 100).toFixed(1)}%"><span class="v">${c.fmt(f)}</span></div>
+        <div class="bar opus" style="height:${(o / max * 100).toFixed(1)}%"><span class="v">${c.fmt(o)}</span></div>
+      </div>`;
+    }).join("");
+    return `<div class="chart"><h3>${c.title}</h3><div class="plot">${groups}</div>
+      <div class="xlabels">${[1,2,3,4,5,6,7].map(n => `<span>L${n}</span>`).join("")}</div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Fable 5</span><span><i style="background:var(--ink)"></i>Opus 4.8</span></div></div>`;
+  }).join("");
+})();
+
+const slides = [...document.querySelectorAll(".slide")];
+const pos = document.getElementById("pos"), prog = document.getElementById("prog");
+const overview = document.getElementById("overview"), ovgrid = document.getElementById("ovgrid");
+let i = Math.min(slides.length - 1, Math.max(0, (parseInt(location.hash.slice(2), 10) || 1) - 1));
+
+function show(n) {
+  i = Math.min(slides.length - 1, Math.max(0, n));
+  slides.forEach((s, k) => s.classList.toggle("active", k === i));
+  pos.textContent = `${i + 1} / ${slides.length}`;
+  prog.style.width = `${((i + 1) / slides.length) * 100}%`;
+  history.replaceState(null, "", `#/${i + 1}`);
+}
+
+slides.forEach((s, k) => {
+  const b = document.createElement("button");
+  const kicker = s.querySelector(".kicker")?.textContent || "";
+  const title = s.querySelector("h1,h2")?.textContent || "";
+  b.innerHTML = `<span class="n">${k + 1}</span>${kicker}<br><strong>${title}</strong>`;
+  b.onclick = () => { overview.classList.remove("open"); show(k); };
+  ovgrid.appendChild(b);
+});
+
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { overview.classList.toggle("open"); return; }
+  if (overview.classList.contains("open")) return;
+  if (["ArrowRight", " ", "PageDown"].includes(e.key)) { e.preventDefault(); show(i + 1); }
+  if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(i - 1); }
+  if (e.key === "Home") show(0);
+  if (e.key === "End") show(slides.length - 1);
+});
+addEventListener("click", (e) => {
+  if (e.target.closest("a, button, .overview, .hud")) return;
+  show(i + 1);
+});
+show(i);
+</script>
+</body>
+</html>

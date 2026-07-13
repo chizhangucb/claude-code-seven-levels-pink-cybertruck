@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en" data-paint="flamingo" data-wheels="cyber">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cybertruck | Pink Exoskeleton | CYBR</title>
+<link rel="preload" as="video" href="pink-cybertruck-video-by-openart.mp4" type="video/mp4">
+<meta name="description" content="The Cybertruck, reissued in four pinks. Stainless exoskeleton, 340-mile range, 0–60 in 2.6s. Configure your paint and reserve for $250.">
+<meta name="theme-color" content="#171A20" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Pink Cybertruck — Exoskeleton in Rose">
+<meta property="og:description" content="Stainless exoskeleton, reissued in four pinks. Configure and reserve.">
+<meta property="og:image" content="https://cybr.example/og-pink-cybertruck-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314161A'/%3E%3Cpath d='M3 22 L15 9 L29 13 L29 22 Z' fill='%23FF3D8A'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tesla ships Gotham SSm, which isn't licensable here. Inter is the closest
+     available geometric grotesque: same tall x-height, same neutral tone. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+
+<script>
+  // Set theme before first paint — no flash.
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('cybr-theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   TOKENS — semantic, OKLCH, one set of names re-themed for light
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Type scale: base 16, ratio 1.25, fluid via clamp */
+  --step--1: clamp(0.82rem, 0.80rem + 0.10vw, 0.875rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.22vw, 1.125rem);
+  --step-1:  clamp(1.25rem, 1.17rem + 0.38vw, 1.5rem);
+  --step-2:  clamp(1.5rem, 1.33rem + 0.85vw, 2rem);
+  --step-3:  clamp(2rem, 1.66rem + 1.70vw, 3rem);
+  --step-4:  clamp(2.75rem, 1.86rem + 4.45vw, 5.5rem);
+
+  /* 8-point spacing */
+  --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --sp-5: 48px; --sp-6: 64px; --sp-7: 96px; --sp-8: 128px;
+  --section-y: clamp(64px, 4rem + 6vw, 128px);
+
+  /* TDS geometry: the UI chrome is a pill, the product is a chamfer.
+     Tesla rounds every control to a full pill and never chamfers an
+     interface — the cut corner belongs to the truck, not the button. */
+  --radius: 4px;          /* inputs and panels — TDS's one square-ish radius */
+  --radius-lg: 8px;
+  --radius-pill: 100px;   /* every button on tesla.com */
+  --chamfer: 14px;        /* reserved for product + media frames only */
+
+  --dur: 330ms;
+  --dur-fast: 180ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shell: 1320px;
+  --cta-w: 265px;         /* TDS paired-CTA width */
+}
+
+/* ─── Tesla brand palette, lifted from tesla.com's own stylesheets ───
+   #171A20 near-black · #F4F4F4 gray field · #5C5E62 secondary text
+   #A2A3A5 tertiary · #3E6AE1 the one blue. Pink stays the paint, not
+   the brand: Tesla's chrome is achromatic and the vehicle carries the
+   only color on the page. ─────────────────────────────────────────── */
+:root {
+  --tesla-black:  #171A20;
+  --tesla-gray:   #F4F4F4;
+  --tesla-text2:  #5C5E62;
+  --tesla-text3:  #A2A3A5;
+  --tesla-blue:   #3E6AE1;
+}
+
+:root[data-theme="dark"] {
+  --bg:        #171A20;                 /* Tesla near-black */
+  --bg-deep:   #000000;                 /* the Cybertruck page's true black */
+  --surface:   #232529;
+  --fg:        #FFFFFF;
+  --fg-muted:  #A2A3A5;
+  --border:    #393C41;
+  --border-soft: #26282D;
+  --accent:    oklch(0.68 0.222 356);   /* the paint */
+  --accent-hi: oklch(0.75 0.190 356);
+  --on-accent: oklch(0.16 0.030 356);
+  --link:      #6F92EA;                 /* Tesla blue, lifted for AA on black */
+  --scrim:     rgb(0 0 0 / 0.72);
+  --glass:     rgb(23 26 32 / 0.80);
+  --grid-line: rgb(255 255 255 / 0.035);
+  --dot:       0.86 0.86 0.90;   /* linear-space RGB fed straight to three.js */
+  --dot-a:     0.72;
+}
+
+:root[data-theme="light"] {
+  --bg:        #FFFFFF;
+  --bg-deep:   #F4F4F4;                 /* Tesla's gray field */
+  --surface:   #F4F4F4;
+  --fg:        #171A20;
+  --fg-muted:  #5C5E62;
+  --border:    #D0D1D2;
+  --border-soft: #E3E3E3;
+  --accent:    oklch(0.55 0.235 356);   /* darkened for 4.5:1 on white */
+  --accent-hi: oklch(0.48 0.230 356);
+  --on-accent: oklch(1 0 0);
+  --link:      #3E6AE1;                 /* Tesla blue as shipped */
+  --scrim:     rgb(23 26 32 / 0.55);
+  --glass:     rgb(255 255 255 / 0.85);
+  --grid-line: rgb(0 0 0 / 0.04);
+  --dot:       0.06 0.07 0.09;
+  --dot-a:     0.55;
+}
+
+/* Paint chips — drive the SVG's gradients. One source of truth per color. */
+:root[data-paint="flamingo"]  { --paint-hi:#FFA8CF; --paint-mid:#FF3D8A; --paint-lo:#A81E56; --paint-name:"Flamingo"; }
+:root[data-paint="blush"]     { --paint-hi:#FFE3EE; --paint-mid:#FFB3D4; --paint-lo:#C9819F; --paint-name:"Blush Chrome"; }
+:root[data-paint="magenta"]   { --paint-hi:#DE5794; --paint-mid:#A8195A; --paint-lo:#560B31; --paint-name:"Magenta Void"; }
+:root[data-paint="saltrose"]  { --paint-hi:#EFE8EC; --paint-mid:#C9BAC2; --paint-lo:#867881; --paint-name:"Salt Flat Rose"; }
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  position: relative;      /* anchors the dot field to the foot of the document */
+  background: var(--bg);
+  color: var(--fg);
+  /* One family, everywhere. Tesla runs a single grotesque across the entire
+     site and separates hierarchy with weight and size alone — never with a
+     second typeface. The display/body font pairing from level 5 is gone. */
+  font-family: "Inter", "Gotham SSm", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+/* Tesla sets headlines at medium, not bold, and lets size carry the weight.
+   Nothing on tesla.com is 700. */
+h1, h2, h3, .display {
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 5vw, 56px);
+}
+
+.prose { max-width: 62ch; }
+
+/* Focus — ≥2px, ≥3:1, never removed */
+:focus-visible {
+  outline: 2px solid var(--link);   /* TDS focus is the Tesla blue */
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute; left: var(--sp-2); top: -100px; z-index: 100;
+  background: var(--fg); color: var(--bg);
+  padding: 12px 20px; border-radius: var(--radius-pill); font-weight: 500;
+  transition: top var(--dur-fast) var(--ease);
+}
+.skip-link:focus { top: var(--sp-2); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Angular geometry — the Cybertruck's whole thesis is the cut corner */
+.chamfer {
+  clip-path: polygon(var(--chamfer) 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%, 0 var(--chamfer));
+}
+
+/* ── Buttons — TDS pills ──────────────────────────────────
+   tesla.com ships exactly two CTA weights and always pairs them:
+   a solid primary and a translucent tertiary that sits on top of the
+   photograph. Both are full pills, both are sentence case (never
+   uppercase), both hold a 265px bed so the pair reads as one unit. ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 44px; padding: 0 28px;
+  font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent; border-radius: var(--radius-pill);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease), opacity var(--dur) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+/* Primary is achromatic — Tesla's solid CTA is ink, not brand color, so the
+   truck stays the only saturated thing on screen. */
+.btn--primary { background: var(--fg); color: var(--bg); }
+.btn--primary:hover { opacity: 0.85; }
+.btn--primary:active { transform: translateY(1px); }
+
+/* Tertiary: the frosted pill that rides over imagery. */
+.btn--ghost {
+  background: rgb(255 255 255 / 0.65);
+  color: var(--tesla-black);
+  border-color: transparent;
+  backdrop-filter: blur(4px);
+}
+.btn--ghost:hover { background: rgb(255 255 255 / 0.85); }
+.btn--ghost:active { transform: translateY(1px); }
+:root[data-theme="light"] .btn--ghost {
+  background: rgb(244 244 244 / 0.9); color: var(--tesla-black);
+}
+:root[data-theme="light"] .btn--ghost:hover { background: var(--border-soft); }
+
+/* TDS secondary: outlined, for controls on opaque surfaces. */
+.btn--outline {
+  background: transparent; color: var(--fg); border-color: var(--border);
+}
+.btn--outline:hover { border-color: var(--fg); background: var(--surface); }
+.btn--outline:active { transform: translateY(1px); }
+
+/* The one place pink is allowed to be a button: the reserve commit. */
+.btn--paint { background: var(--accent); color: var(--on-accent); }
+.btn--paint:hover { background: var(--accent-hi); }
+.btn--paint:active { transform: translateY(1px); }
+
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn--wide { width: 100%; }
+@media (prefers-reduced-motion: reduce) { .btn:active { transform: none; } }
+
+/* Paired CTA row — the tesla.com signature: two pills, centered, equal bed. */
+.cta-pair { display: flex; flex-wrap: wrap; gap: 12px; }
+.cta-pair .btn { flex: 1 1 0; min-width: min(100%, 210px); max-width: var(--cta-w); }
+
+/* Eyebrows lose the wide tracking + pink: TDS labels are quiet gray caps. */
+.eyebrow {
+  font-size: var(--step--1); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.eyebrow--muted { color: var(--fg-muted); }
+
+/* ── Header ───────────────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.site-header__inner {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 68px;
+}
+.wordmark {
+  font-weight: 600;
+  font-size: 1.0625rem; letter-spacing: 0.34em;
+  color: var(--fg); text-decoration: none; margin-right: auto;
+  padding: 6px 2px;
+}
+.wordmark span { color: var(--accent); }
+
+.site-nav { display: none; gap: 4px; }
+@media (min-width: 1024px) { .site-nav { display: flex; } }
+.site-nav a {
+  color: var(--fg); text-decoration: none;
+  font-size: 0.9375rem; font-weight: 500;
+  padding: 10px 16px; border-radius: var(--radius);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.site-nav a:hover { background: var(--surface); color: var(--fg); }
+
+.icon-btn {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 50%; cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.icon-btn:hover { border-color: var(--fg); background: var(--surface); }
+.icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+:root[data-theme="dark"] .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+:root[data-theme="light"] .icon-sun { display: none; }
+:root[data-theme="light"] .icon-moon { display: block; }
+
+/* ── Dotted surface ───────────────────────────────────────
+   A three.js dot wave, always running, anchored to the foot of the
+   document — the floor the site is parked on, not a page-wide backdrop.
+   Purely decorative: no pointer events, no trigger, no scroll dependency. ── */
+#dotted-surface {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 0;
+  height: clamp(360px, 46vh, 620px);
+  pointer-events: none;
+  /* Dissolve into the page at the top edge — no hard seam where the field begins */
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 26%);
+          mask-image: linear-gradient(180deg, transparent, #000 26%);
+}
+#dotted-surface canvas { display: block; }
+
+/* Everything in the flow rides above the field... */
+.site-header, main, .orderbar, .site-footer { position: relative; z-index: 1; }
+/* ...and the footer is the one pane left open, so the wave shows through it. */
+.site-footer { background: transparent; }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding-block: clamp(40px, 3rem + 3vw, 72px) clamp(48px, 3rem + 4vw, 88px);
+  background:
+    linear-gradient(180deg, transparent, var(--bg-deep)),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 88px),
+    var(--bg);
+  overflow: hidden;
+}
+/* Pink horizon glow — the only light source in the room */
+.hero::after {
+  content: ""; position: absolute; inset: auto 0 -30% 0; height: 70%;
+  background: radial-gradient(60% 100% at 50% 100%, var(--accent), transparent 70%);
+  opacity: 0.16; pointer-events: none;
+}
+:root[data-theme="light"] .hero::after { opacity: 0.10; }
+
+.hero__grid { display: grid; gap: var(--sp-5); position: relative; z-index: 1; }
+@media (min-width: 1024px) {
+  .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: center; gap: var(--sp-6); }
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 1.9rem + 2.6vw, 4rem);   /* TDS hero scale */
+  margin-block: var(--sp-2) var(--sp-3);
+}
+.hero h1 em { font-style: normal; color: inherit; }  /* TDS: headlines are one ink */
+.hero__lede { color: var(--fg-muted); max-width: 46ch; margin-bottom: var(--sp-4); }
+.hero__cta { max-width: 560px; }
+
+.hero__proof {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-4);
+  margin-top: var(--sp-5); padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-soft);
+}
+.proof__n {
+  font-weight: 600;
+  font-size: var(--step-1); font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.proof__l { font-size: var(--step--1); color: var(--fg-muted); }
+
+/* ── The truck ────────────────────────────────────────────── */
+.stage { position: relative; }
+.stage__svg {
+  width: 100%; height: auto; aspect-ratio: 1200 / 500;  /* reserve space — CLS 0 */
+  filter: drop-shadow(0 40px 60px oklch(0 0 0 / 0.45));
+}
+:root[data-theme="light"] .stage__svg { filter: drop-shadow(0 30px 44px oklch(0 0 0 / 0.16)); }
+.stage__svg .paint-body,
+.stage__svg .paint-roof,
+.stage__svg .paint-panel { transition: fill var(--dur) var(--ease); }
+.stage__floor {
+  position: absolute; left: 6%; right: 6%; bottom: 4%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+/* ── Configurator ─────────────────────────────────────────── */
+.config {
+  margin-top: var(--sp-4); padding: var(--sp-3);
+  background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  display: grid; gap: var(--sp-3);
+}
+@media (min-width: 640px) { .config { grid-template-columns: 1fr 1fr; } }
+
+.config__label {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-1);
+  font-size: var(--step--1); margin-bottom: 12px;
+}
+.config__label b { font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-muted); }
+.config__value { font-weight: 500; color: var(--fg); }
+
+.swatches { display: flex; gap: 12px; }
+.swatch {
+  width: 44px; height: 44px; padding: 0;
+  border: 1px solid var(--border); border-radius: 50%;
+  cursor: pointer; position: relative;
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur) var(--ease);
+}
+.swatch:hover { transform: scale(1.06); border-color: var(--fg); }
+.swatch[aria-pressed="true"] { border-color: var(--fg); }
+/* Selection is a ring AND a check — never hue alone */
+.swatch[aria-pressed="true"]::after {
+  content: ""; position: absolute; inset: -5px;
+  border: 2px solid var(--accent); border-radius: 50%;
+}
+.swatch svg { width: 18px; height: 18px; margin: auto; opacity: 0; }
+.swatch[aria-pressed="true"] svg { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .swatch:hover { transform: none; } }
+
+.segmented {
+  display: flex; gap: 4px; padding: 4px;
+  background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.segmented button {
+  flex: 1; min-height: 44px; padding: 0 12px;
+  background: transparent; border: 0; border-radius: 2px;
+  font-size: 0.875rem; font-weight: 500; cursor: pointer;
+  color: var(--fg-muted);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.segmented button:hover { color: var(--fg); }
+.segmented button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* ── Film ─────────────────────────────────────────────────
+   The 5-second dusk walkaround. It loops, so it is treated as motion
+   design, not media: no chrome, no timeline, no sound. The only control
+   is stop/start, because looping motion you cannot stop is a trap. ── */
+.film {
+  position: relative;
+  padding-block: var(--section-y);
+  background: var(--bg-deep);
+  border-block: 1px solid var(--border-soft);
+  overflow: hidden;
+}
+.film__head { margin-bottom: var(--sp-5); }
+.film__head h2 { font-size: var(--step-3); margin-block: var(--sp-2) var(--sp-2); }
+.film__head p { color: var(--fg-muted); }
+
+.film__frame {
+  position: relative;
+  --chamfer: 28px;
+  border: 1px solid var(--border);
+  background: var(--bg-deep);
+  aspect-ratio: 16 / 9;      /* the clip's native ratio — reserved up front, CLS 0 */
+  overflow: hidden;
+}
+.film__frame video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* A pink cast over the footage so it belongs to the page, not to a stock library */
+.film__frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 55%, oklch(0.14 0.008 265 / 0.75)),
+    radial-gradient(80% 60% at 50% 100%, var(--accent), transparent 70%);
+  background-blend-mode: normal, soft-light;
+  opacity: 0.5;
+  mix-blend-mode: normal;
+}
+:root[data-theme="light"] .film__frame::after { opacity: 0.28; }
+
+/* Caption sits inside the frame, on the darkened floor of the shot */
+.film__caption {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  display: flex; align-items: flex-end; gap: var(--sp-3);
+  padding: clamp(16px, 3vw, 32px);
+  pointer-events: none;
+}
+.film__caption p {
+  color: #fff;
+  font-size: var(--step-1); font-weight: 500;
+  line-height: 1.25; max-width: 22ch;
+  text-shadow: 0 2px 20px oklch(0 0 0 / 0.6);
+}
+.film__caption p small {
+  display: block; margin-top: 6px;
+  font-weight: 400;
+  font-size: var(--step--1); letter-spacing: 0.02em;
+  color: oklch(1 0 0 / 0.72);
+}
+
+.film__toggle {
+  margin-left: auto; flex: none; pointer-events: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 18px;
+  background: oklch(0.14 0.008 265 / 0.66);
+  backdrop-filter: blur(10px);
+  color: #fff; border: 1px solid oklch(1 0 0 / 0.28);
+  border-radius: var(--radius);
+  font-size: 0.8125rem; font-weight: 500;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.film__toggle:hover { background: #fff; border-color: #fff; color: var(--tesla-black); }
+.film__toggle svg { width: 14px; height: 14px; fill: currentColor; stroke: none; }
+.film__toggle .i-pause { display: none; }
+.film__toggle[data-playing="true"] .i-pause { display: block; }
+.film__toggle[data-playing="true"] .i-play { display: none; }
+
+/* Beats under the film — the three things the shot is actually showing */
+.film__beats {
+  display: grid; gap: 1px; margin-top: 1px;
+  background: var(--border-soft);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .film__beats { grid-template-columns: repeat(3, 1fr); } }
+.beat { background: var(--bg); padding: var(--sp-3); }
+.beat b {
+  display: block;
+  font-size: var(--step--1); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted);
+  margin-bottom: 6px;
+}
+.beat span { font-size: 0.9375rem; color: var(--fg-muted); }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { padding-block: var(--section-y); background: var(--bg); }
+.section--alt { background: var(--bg-deep); border-block: 1px solid var(--border-soft); }
+.section__head { margin-bottom: var(--sp-6); }
+.section__head h2 { font-size: var(--step-3); margin-block: var(--sp-2) var(--sp-2); }
+.section__head p { color: var(--fg-muted); }
+
+/* Spec strip */
+.specs {
+  display: grid; gap: 1px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); overflow: hidden;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 768px) { .specs { grid-template-columns: repeat(4, 1fr); } }
+.spec { background: var(--bg); padding: var(--sp-4) var(--sp-3); }
+.spec dt { font-size: var(--step--1); color: var(--fg-muted); margin-bottom: 6px; }
+.spec dd {
+  font-weight: 600;
+  font-size: var(--step-2); font-variant-numeric: tabular-nums; line-height: 1;
+}
+.spec dd small { font-size: 0.5em; font-weight: 500; color: var(--fg-muted); margin-left: 4px; }
+
+/* Features */
+.features {
+  display: grid; gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+.feature {
+  padding: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  --chamfer: 20px;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.feature:hover { border-color: var(--fg); transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .feature:hover { transform: none; } }
+.feature svg { width: 26px; height: 26px; stroke: var(--fg); fill: none; stroke-width: 1.5; margin-bottom: var(--sp-3); }
+.feature h3 { font-size: var(--step-1); margin-bottom: var(--sp-1); }
+.feature p { font-size: 0.9375rem; color: var(--fg-muted); }
+
+/* Trims */
+.trims { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.trim {
+  position: relative; display: flex; flex-direction: column;
+  padding: var(--sp-4); background: var(--bg);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  transition: border-color var(--dur) var(--ease);
+}
+.trim[data-featured] { border-color: var(--fg); }
+.trim__flag {
+  position: absolute; top: -11px; left: var(--sp-4);
+  background: var(--fg); color: var(--bg);
+  font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px;
+}
+.trim h3 { font-size: var(--step-1); }
+.trim__price {
+  font-weight: 600;
+  font-size: var(--step-2); font-variant-numeric: tabular-nums;
+  margin-block: var(--sp-2) var(--sp-3);
+}
+.trim ul { list-style: none; padding: 0; margin: 0 0 var(--sp-4); display: grid; gap: 10px; }
+.trim li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9375rem; color: var(--fg-muted); }
+.trim li svg { flex: none; width: 16px; height: 16px; margin-top: 4px; stroke: var(--fg); fill: none; stroke-width: 2; }
+.trim .btn { margin-top: auto; }
+/* Selected trim: accent border + label change — state is never color alone */
+.trim-btn[aria-pressed="true"] {
+  border-color: var(--fg); color: var(--fg); font-weight: 500;
+}
+.trim-btn[aria-pressed="true"]:hover { border-color: var(--fg); background: transparent; }
+
+/* Reserve form */
+.reserve { display: grid; gap: var(--sp-6); }
+@media (min-width: 900px) { .reserve { grid-template-columns: 1fr 1fr; align-items: start; gap: var(--sp-7); } }
+.field { display: grid; gap: 6px; margin-bottom: var(--sp-3); }
+.field label { font-size: 0.9375rem; font-weight: 500; }
+.field label .req { color: var(--fg-muted); }
+.field input {
+  min-height: 48px; padding: 0 14px;
+  font-size: 1rem; /* ≥16px — stops iOS zoom */
+  background: var(--bg); color: var(--fg);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: border-color var(--dur) var(--ease);
+}
+.field input::placeholder { color: var(--fg-muted); opacity: 0.7; }
+.field input:hover { border-color: var(--fg-muted); }
+.field input:focus-visible { border-color: var(--link); outline-offset: 1px; }
+.field input[aria-invalid="true"] { border-color: #FF5C5C; }
+.field .hint { font-size: var(--step--1); color: var(--fg-muted); }
+.field .err {
+  display: none; align-items: center; gap: 6px;
+  font-size: var(--step--1); color: #FF5C5C; font-weight: 500;
+}
+:root[data-theme="light"] .field input[aria-invalid="true"] { border-color: #C62828; }
+:root[data-theme="light"] .field .err { color: #C62828; }
+.field .err svg { flex: none; width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.field input[aria-invalid="true"] ~ .err { display: flex; }  /* error carries an icon, not just red */
+
+.receipt { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: var(--sp-4); }
+.receipt__row { display: flex; justify-content: space-between; gap: var(--sp-2); padding-block: 12px; font-size: 0.9375rem; }
+.receipt__row + .receipt__row { border-top: 1px solid var(--border-soft); }
+.receipt__row span:last-child { font-variant-numeric: tabular-nums; font-weight: 500; }
+.receipt__row--total { border-top: 1px solid var(--border) !important; margin-top: 4px; }
+.receipt__row--total span { font-size: var(--step-1); font-weight: 600; }
+
+.form-status { margin-top: var(--sp-2); font-size: 0.9375rem; color: var(--link); font-weight: 500; }
+
+/* ── Sticky order bar ─────────────────────────────────────── */
+.orderbar {
+  position: sticky; bottom: 0; z-index: 30;
+  background: var(--glass); backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+}
+.orderbar__inner {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 72px; padding-block: 12px;
+}
+.orderbar__spec { min-width: 0; }
+.orderbar__title {
+  font-weight: 500; font-size: 0.9375rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.orderbar__price {
+  font-weight: 600; font-size: var(--step-1);
+  font-variant-numeric: tabular-nums; line-height: 1.2;
+}
+.orderbar .btn { margin-left: auto; flex: none; }
+@media (max-width: 520px) { .orderbar .btn { padding: 0 20px; } }
+
+/* ── Footer ───────────────────────────────────────────────── */
+/* TDS footer: 12px, centered, evenly spaced, no border, no columns. */
+.site-footer { padding-block: var(--sp-5) var(--sp-4); }
+.footer__row {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px clamp(16px, 3vw, 34px);
+  font-size: 0.75rem; color: var(--fg-muted);
+}
+.footer__row a {
+  color: var(--fg-muted); text-decoration: none;
+  padding-block: 6px;                       /* keeps the 12px link tappable */
+  transition: color var(--dur) var(--ease);
+}
+.footer__row a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+.footer__note {
+  margin-top: var(--sp-2); text-align: center;
+  font-size: 0.75rem; color: var(--fg-muted); opacity: 0.75;
+}
+
+/* ── Scroll reveal — transform/opacity only.
+   Hidden ONLY once JS has confirmed it can reveal it again. No JS, no hiding. ── */
+:root.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+:root.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+
+<body>
+<div id="dotted-surface" aria-hidden="true"></div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="#top">CYBR<span>.</span></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#film">Film</a>
+      <a href="#design">Design</a>
+      <a href="#specs">Specs</a>
+      <a href="#trims">Trims</a>
+      <a href="#reserve">Reserve</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+    </button>
+    <a class="btn btn--primary" href="#reserve">Order Now</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── HERO / CONFIGURATOR ────────────────────────────── -->
+  <section class="hero" id="top">
+    <div class="container hero__grid">
+
+      <div>
+        <p class="eyebrow">Cybertruck</p>
+        <h1>Built for Mars.<br>Painted for <em>Miami</em>.</h1>
+        <p class="hero__lede">
+          The same 30X cold-rolled stainless exoskeleton. The same armor glass.
+          Now in four pinks that were never supposed to leave the paint lab.
+        </p>
+        <!-- TDS paired CTA: solid primary, frosted tertiary, sentence case. -->
+        <div class="hero__cta cta-pair">
+          <a class="btn btn--primary" href="#reserve">Order Now</a>
+          <a class="btn btn--ghost" href="#design">Learn More</a>
+        </div>
+        <dl class="hero__proof">
+          <div><dd class="proof__n">2.6s</dd><dt class="proof__l">0–60 mph</dt></div>
+          <div><dd class="proof__n">340mi</dd><dt class="proof__l">Range</dt></div>
+          <div><dd class="proof__n">11,000lb</dd><dt class="proof__l">Towing</dt></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <!-- Faceted exoskeleton, drawn as flat planes. Recolors live. -->
+        <svg class="stage__svg" viewBox="0 0 1200 500" role="img"
+             aria-labelledby="truck-title truck-desc">
+          <title id="truck-title">Pink Cybertruck, side profile</title>
+          <desc id="truck-desc">A Cybertruck in the currently selected paint color, shown from the side with its faceted stainless-steel exoskeleton, wedge roofline and angular wheel arches.</desc>
+
+          <defs>
+            <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-hi)"/>
+              <stop offset="55%" stop-color="var(--paint-mid)"/>
+              <stop offset="100%" stop-color="var(--paint-lo)"/>
+            </linearGradient>
+            <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-hi)"/>
+              <stop offset="100%" stop-color="var(--paint-mid)"/>
+            </linearGradient>
+            <linearGradient id="gBed" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="var(--paint-mid)"/>
+              <stop offset="100%" stop-color="var(--paint-lo)"/>
+            </linearGradient>
+            <linearGradient id="gGlass" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0%"   stop-color="#3A4048"/>
+              <stop offset="45%"  stop-color="#171A20"/>
+              <stop offset="100%" stop-color="#0B0D10"/>
+            </linearGradient>
+            <linearGradient id="gLight" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="var(--paint-hi)"/>
+              <stop offset="100%" stop-color="#FFFFFF"/>
+            </linearGradient>
+            <radialGradient id="gShadow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%"   stop-color="#000" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <ellipse cx="600" cy="440" rx="470" ry="24" fill="url(#gShadow)"/>
+
+          <!-- Body. Upper edge is one unbroken line: bumper → windshield base → apex.
+               Lower edge is the sill. Everything between is one stainless plane. -->
+          <polygon class="paint-body" fill="url(#gBody)"
+                   points="45,252 348,146 366,208 784,208 800,150 1155,208 1155,362 45,362"/>
+
+          <!-- Roof + bed cover: the second plane, catching the sky -->
+          <polygon class="paint-roof" fill="url(#gRoof)"
+                   points="348,146 470,80 1155,208 800,150"/>
+
+          <!-- Bed flank, one stop darker so the cab reads as a separate volume -->
+          <polygon class="paint-panel" fill="url(#gBed)" points="812,190 1155,212 1155,362 812,362"/>
+
+          <!-- Armor glass -->
+          <polygon fill="url(#gGlass)" points="360,150 470,88 790,155 776,206 372,206"/>
+          <!-- B pillar -->
+          <polygon fill="#0B0D10" points="565,108 580,111 580,206 565,206"/>
+
+          <!-- Panel seams — the exoskeleton's fold lines -->
+          <g stroke="#000" stroke-opacity="0.28" stroke-width="1.5">
+            <line x1="366" y1="208" x2="366" y2="362"/>
+            <line x1="580" y1="208" x2="580" y2="362"/>
+            <line x1="784" y1="208" x2="784" y2="362"/>
+            <line x1="812" y1="190" x2="812" y2="362"/>
+          </g>
+          <!-- Light catching the two folds -->
+          <line x1="45" y1="252" x2="470" y2="80" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.85"/>
+          <line x1="470" y1="80" x2="1155" y2="208" stroke="var(--paint-hi)" stroke-width="2.5" stroke-opacity="0.7"/>
+
+          <!-- Rocker cladding, inset between the arches -->
+          <polygon fill="#15181D" points="60,340 1140,340 1140,362 60,362"/>
+          <!-- Light bars -->
+          <rect x="45" y="246" width="22" height="6" fill="url(#gLight)"/>
+          <rect x="1108" y="216" width="47" height="7" rx="1" fill="#E23B4B"/>
+
+          <!-- Wheel arches: trapezoids. The Cybertruck has no round corners. -->
+          <polygon fill="#0F1216" points="162,362 192,268 308,268 338,362"/>
+          <polygon fill="#0F1216" points="862,362 892,268 1008,268 1038,362"/>
+
+          <!-- Wheels. Kept light enough to hold their edge against a near-black page. -->
+          <g>
+            <circle cx="250" cy="354" r="78" fill="#2A2F37"/>
+            <circle cx="250" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+            <circle cx="250" cy="354" r="51" fill="#151920"/>
+            <circle cx="250" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+            <g fill="#3D4450">
+              <polygon points="250,309 263,330 237,330"/>
+              <polygon points="250,399 237,378 263,378"/>
+              <polygon points="205,354 226,341 226,367"/>
+              <polygon points="295,354 274,367 274,341"/>
+            </g>
+            <circle cx="250" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+          </g>
+          <g>
+            <circle cx="950" cy="354" r="78" fill="#2A2F37"/>
+            <circle cx="950" cy="354" r="78" fill="none" stroke="#4A515C" stroke-width="1.5"/>
+            <circle cx="950" cy="354" r="51" fill="#151920"/>
+            <circle cx="950" cy="354" r="51" fill="none" stroke="#565E6A" stroke-width="2"/>
+            <g fill="#3D4450">
+              <polygon points="950,309 963,330 937,330"/>
+              <polygon points="950,399 937,378 963,378"/>
+              <polygon points="905,354 926,341 926,367"/>
+              <polygon points="995,354 974,367 974,341"/>
+            </g>
+            <circle cx="950" cy="354" r="16" fill="#0B0D10" stroke="#565E6A" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <div class="stage__floor" aria-hidden="true"></div>
+
+        <!-- Configurator: the primary interaction of the fold -->
+        <div class="config">
+          <div>
+            <p class="config__label">
+              <b>Paint</b>
+              <span class="config__value" id="paint-name">Flamingo</span>
+            </p>
+            <div class="swatches" role="group" aria-label="Paint color">
+              <button class="swatch" type="button" data-paint="flamingo" data-cost="0"
+                      style="background:#FF3D8A" aria-pressed="true" aria-label="Flamingo, included">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="blush" data-cost="1500"
+                      style="background:#FFB3D4" aria-pressed="false" aria-label="Blush Chrome, plus $1,500">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#14161A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="magenta" data-cost="2500"
+                      style="background:#A8195A" aria-pressed="false" aria-label="Magenta Void, plus $2,500">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="swatch" type="button" data-paint="saltrose" data-cost="1000"
+                      style="background:#C9BAC2" aria-pressed="false" aria-label="Salt Flat Rose, plus $1,000">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#14161A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <p class="config__label">
+              <b>Wheels</b>
+              <span class="config__value" id="wheel-name">20&quot; Cyber</span>
+            </p>
+            <div class="segmented" role="group" aria-label="Wheels">
+              <button type="button" data-wheels="cyber" data-cost="0" aria-pressed="true">20&quot; Cyber</button>
+              <button type="button" data-wheels="core" data-cost="3500" aria-pressed="false">22&quot; Core</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FILM ───────────────────────────────────────────── -->
+  <section class="film" id="film" aria-labelledby="film-h">
+    <div class="container">
+      <div class="film__head reveal">
+        <p class="eyebrow eyebrow--muted">The walkaround</p>
+        <h2 id="film-h">Five seconds, one lap,<br>no showroom.</h2>
+        <p class="prose">Shot at dusk on wet concrete, because that is the light pink was built to argue with. The clip loops — the truck never leaves the driveway.</p>
+      </div>
+
+      <div class="film__frame chamfer reveal">
+        <video id="film-video"
+               src="pink-cybertruck-video-by-openart.mp4"
+               poster="data:image/jpeg;base64,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"
+               muted loop playsinline preload="metadata"
+               aria-label="A pink Cybertruck parked on wet concrete outside a concrete-and-glass house at dusk, the camera circling slowly as its front light bar glows and neon reflects off the ground.">
+        </video>
+
+        <div class="film__caption">
+          <p>
+            Flamingo, 8:41&nbsp;pm.
+            <small>Ambient light only. The paint is doing all of the work.</small>
+          </p>
+          <button class="film__toggle" id="film-toggle" type="button"
+                  data-playing="false" aria-pressed="false">
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+            <span id="film-toggle-label">Play</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="film__beats reveal">
+        <div class="beat"><b>0:00</b><span>The light bar wakes before you reach the door. It is the only straight line the truck admits to.</span></div>
+        <div class="beat"><b>0:02</b><span>The camera crosses the fold. Flamingo goes from chrome-bright to deep rose in one pass.</span></div>
+        <div class="beat"><b>0:04</b><span>Rain on the pad, neon in the puddle. Nothing here is subtle, and that is the point.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SPECS ──────────────────────────────────────────── -->
+  <section class="section" id="specs" aria-labelledby="specs-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">The numbers</p>
+        <h2 id="specs-h">Nothing was softened but the color.</h2>
+        <p class="prose">Pink is a finish, not a compromise. Every figure below is the standard Dual Motor spec, unchanged.</p>
+      </div>
+      <dl class="specs reveal">
+        <div class="spec"><dt>Acceleration</dt><dd>2.6<small>sec 0–60</small></dd></div>
+        <div class="spec"><dt>Range</dt><dd>340<small>miles</small></dd></div>
+        <div class="spec"><dt>Towing</dt><dd>11,000<small>lbs</small></dd></div>
+        <div class="spec"><dt>Payload</dt><dd>2,500<small>lbs</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ── DESIGN ─────────────────────────────────────────── -->
+  <section class="section section--alt" id="design" aria-labelledby="design-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">Design</p>
+        <h2 id="design-h">Straight lines. One curve.<br>That curve is the color.</h2>
+        <p class="prose">The exoskeleton refuses to bend, so we bent the light instead — a four-stage rose that shifts from chrome to void depending on where the sun is.</p>
+      </div>
+      <div class="features">
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+          <h3>30X Exoskeleton</h3>
+          <p>Cold-rolled stainless, 3mm thick. Dent-resistant, scratch-resistant, and now genuinely difficult to lose in a parking lot.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
+          <h3>Tri-Motor Torque</h3>
+          <p>845 hp across three independent motors. Torque vectoring at each corner, four-wheel steering under 40 mph.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 10h18M9 4v14"/></svg>
+          <h3>Armor Glass</h3>
+          <p>Ultra-hard borosilicate laminate. Rated for a Class 2 impact. We recommend not testing this on camera.</p>
+        </article>
+        <article class="feature chamfer reveal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V8l8-4 8 4v10"/><path d="M4 13h16M9 18v-5"/></svg>
+          <h3>Vault Bed</h3>
+          <p>6.5-foot bed with a powered tonneau, 120V and 240V outlets, and 67 cubic feet of lockable storage.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRIMS ──────────────────────────────────────────── -->
+  <section class="section" id="trims" aria-labelledby="trims-h">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow eyebrow--muted">Choose your drivetrain</p>
+        <h2 id="trims-h">Three ways to be seen.</h2>
+        <p class="prose">Selecting a trim updates your build below. Paint and wheels carry over.</p>
+      </div>
+      <div class="trims" role="group" aria-label="Drivetrain">
+        <article class="trim reveal">
+          <h3>Single Motor</h3>
+          <p class="trim__price">$69,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Rear-wheel drive</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>250 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>6.5s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--outline btn--wide trim-btn" type="button"
+                  data-trim="Single Motor" data-base="69900" aria-pressed="false">Select</button>
+        </article>
+
+        <article class="trim reveal" data-featured>
+          <span class="trim__flag">Most chosen</span>
+          <h3>Dual Motor AWD</h3>
+          <p class="trim__price">$84,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>All-wheel drive</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>340 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>4.1s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--outline btn--wide trim-btn" type="button"
+                  data-trim="Dual Motor AWD" data-base="84900" aria-pressed="true">Selected</button>
+        </article>
+
+        <article class="trim reveal">
+          <h3>Cyberbeast</h3>
+          <p class="trim__price">$114,900</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Tri-motor, 845 hp</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>320 mile range</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>2.6s 0–60 mph</li>
+          </ul>
+          <button class="btn btn--outline btn--wide trim-btn" type="button"
+                  data-trim="Cyberbeast" data-base="114900" aria-pressed="false">Select</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESERVE ────────────────────────────────────────── -->
+  <section class="section section--alt" id="reserve" aria-labelledby="reserve-h">
+    <div class="container reserve">
+
+      <div class="reveal">
+        <p class="eyebrow eyebrow--muted">Reserve</p>
+        <h2 id="reserve-h" style="font-size: var(--step-3); margin-block: var(--sp-2) var(--sp-3);">Hold your place in the rose queue.</h2>
+        <p class="prose" style="color: var(--fg-muted); margin-bottom: var(--sp-4);">
+          $250 secures your build position. Fully refundable until your delivery window opens.
+        </p>
+
+        <form id="reserve-form" novalidate>
+          <div class="field">
+            <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required
+                   aria-describedby="name-err">
+            <p class="err" id="name-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter your full name.</p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required
+                   aria-describedby="email-err">
+            <p class="err" id="email-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a valid email, like you@domain.com.</p>
+          </div>
+
+          <div class="field">
+            <label for="zip">Delivery ZIP <span class="req" aria-hidden="true">*</span></label>
+            <input id="zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric"
+                   maxlength="5" required aria-describedby="zip-hint zip-err">
+            <p class="hint" id="zip-hint">Sets your delivery window. 5 digits.</p>
+            <p class="err" id="zip-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Enter a 5-digit ZIP code.</p>
+          </div>
+
+          <button class="btn btn--paint btn--wide" type="submit" id="submit-btn">Reserve for $250</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <aside class="receipt reveal" aria-label="Your build">
+        <h3 style="font-size: var(--step-1); margin-bottom: var(--sp-2);">Your build</h3>
+        <div class="receipt__row"><span>Drivetrain</span><span id="r-trim">Dual Motor AWD</span></div>
+        <div class="receipt__row"><span>Base price</span><span id="r-base">$84,900</span></div>
+        <div class="receipt__row"><span>Paint</span><span id="r-paint">Flamingo — included</span></div>
+        <div class="receipt__row"><span>Wheels</span><span id="r-wheels">20&quot; Cyber — included</span></div>
+        <div class="receipt__row receipt__row--total"><span>Total</span><span id="r-total">$84,900</span></div>
+        <p style="font-size: var(--step--1); color: var(--fg-muted); margin-top: var(--sp-2);">
+          Excludes taxes, destination and any incentives you may qualify for.
+        </p>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── STICKY ORDER BAR ─────────────────────────────────── -->
+<div class="orderbar">
+  <div class="container orderbar__inner">
+    <div class="orderbar__spec">
+      <p class="orderbar__title" id="bar-title">Dual Motor AWD · Flamingo</p>
+      <p class="orderbar__price" id="bar-price">$84,900</p>
+    </div>
+    <a class="btn btn--primary" href="#reserve">Order Now</a>
+  </div>
+</div>
+
+<!-- Tesla's footer is one centered row of 12px links and a copyright. No
+     sitemap, no columns, no newsletter box — the page ends where it ends. -->
+<footer class="site-footer">
+  <div class="container">
+    <ul class="footer__row">
+      <li>&copy; 2026 CYBR Motors</li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#specs">Specs</a></li>
+      <li><a href="#trims">Trims</a></li>
+      <li><a href="#reserve">Reserve</a></li>
+      <li><a href="#film">Film</a></li>
+      <li><a href="#top">Privacy &amp; Legal</a></li>
+    </ul>
+    <p class="footer__note">A concept site. Not affiliated with Tesla, Inc.</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Pink Cybertruck — Rose Edition",
+  "description": "The Cybertruck's 30X cold-rolled stainless exoskeleton, reissued in four pink finishes. 340-mile range, 0–60 in 2.6s, 11,000 lb towing.",
+  "brand": { "@type": "Brand", "name": "CYBR" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "69900",
+    "highPrice": "114900",
+    "offerCount": "3",
+    "availability": "https://schema.org/PreOrder"
+  }
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var money = function (n) { return "$" + n.toLocaleString("en-US"); };
+
+  /* ── Theme ────────────────────────────────────────────── */
+  var toggle = document.getElementById("theme-toggle");
+  var syncToggleLabel = function () {
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    toggle.setAttribute("aria-label", "Switch to " + next + " theme");
+  };
+  syncToggleLabel();
+  toggle.addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("cybr-theme", next); } catch (e) {}
+    syncToggleLabel();
+  });
+
+  /* ── Build state ──────────────────────────────────────── */
+  var build = {
+    trim: "Dual Motor AWD", base: 84900,
+    paint: "Flamingo", paintCost: 0,
+    wheels: '20" Cyber', wheelCost: 0
+  };
+
+  var el = function (id) { return document.getElementById(id); };
+  var optionLabel = function (name, cost) {
+    return name + (cost ? " — +" + money(cost) : " — included");
+  };
+
+  function render() {
+    var total = build.base + build.paintCost + build.wheelCost;
+
+    el("paint-name").textContent = build.paint;
+    el("wheel-name").textContent = build.wheels;
+
+    el("r-trim").textContent = build.trim;
+    el("r-base").textContent = money(build.base);
+    el("r-paint").textContent = optionLabel(build.paint, build.paintCost);
+    el("r-wheels").textContent = optionLabel(build.wheels, build.wheelCost);
+    el("r-total").textContent = money(total);
+
+    el("bar-title").textContent = build.trim + " · " + build.paint;
+    el("bar-price").textContent = money(total);
+  }
+
+  /* Paint — recolors the SVG through the token layer */
+  document.querySelectorAll(".swatch").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".swatch").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      document.documentElement.dataset.paint = btn.dataset.paint;
+      build.paint = btn.getAttribute("aria-label").split(",")[0];
+      build.paintCost = Number(btn.dataset.cost);
+      render();
+    });
+  });
+
+  /* Wheels */
+  document.querySelectorAll(".segmented button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".segmented button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      document.documentElement.dataset.wheels = btn.dataset.wheels;
+      build.wheels = btn.textContent.trim();
+      build.wheelCost = Number(btn.dataset.cost);
+      render();
+    });
+  });
+
+  /* Trim */
+  document.querySelectorAll(".trim-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".trim-btn").forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute("aria-pressed", String(on));
+        b.textContent = on ? "Selected" : "Select";
+        b.classList.toggle("btn--primary", false);
+      });
+      build.trim = btn.dataset.trim;
+      build.base = Number(btn.dataset.base);
+      render();
+    });
+  });
+
+  render();
+
+  /* ── Form: validate on blur, error beside the field ───── */
+  var form = el("reserve-form");
+  var status = el("form-status");
+
+  var rules = {
+    name:  function (v) { return v.trim().length >= 2; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+    zip:   function (v) { return /^\d{5}$/.test(v.trim()); }
+  };
+
+  function validate(input) {
+    var ok = rules[input.name](input.value);
+    input.setAttribute("aria-invalid", String(!ok));
+    return ok;
+  }
+
+  Object.keys(rules).forEach(function (key) {
+    var input = el(key);
+    input.addEventListener("blur", function () { validate(input); });
+    input.addEventListener("input", function () {
+      if (input.getAttribute("aria-invalid") === "true") validate(input);
+    });
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var firstBad = null;
+
+    Object.keys(rules).forEach(function (key) {
+      var input = el(key);
+      if (!validate(input) && !firstBad) firstBad = input;
+    });
+
+    if (firstBad) {
+      status.textContent = "";
+      firstBad.focus();           /* move focus to the first invalid field */
+      return;
+    }
+
+    var btn = el("submit-btn");
+    btn.disabled = true;
+    btn.textContent = "Reserving…";
+    status.textContent = "";
+
+    setTimeout(function () {
+      btn.disabled = false;
+      btn.textContent = "Reserve for $250";
+      status.textContent = "Reserved. Check " + el("email").value.trim() + " for your build confirmation.";
+      form.reset();
+      Object.keys(rules).forEach(function (k) { el(k).removeAttribute("aria-invalid"); });
+    }, 900);
+  });
+
+  /* ── Film ─────────────────────────────────────────────────
+     Autoplays muted only while on screen, and only if the visitor hasn't
+     asked for less motion. Off screen it pauses — a looping video nobody
+     is looking at is just a heater. ── */
+  var video = el("film-video");
+  var filmBtn = el("film-toggle");
+  var filmLabel = el("film-toggle-label");
+  var lessMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  var userPaused = lessMotion.matches;   /* reduced motion opens on the poster, paused */
+
+  function syncFilm(playing) {
+    filmBtn.dataset.playing = String(playing);
+    filmBtn.setAttribute("aria-pressed", String(playing));
+    filmLabel.textContent = playing ? "Pause" : "Play";
+  }
+
+  function playFilm() {
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { syncFilm(false); });  /* autoplay refused — the poster stands in */
+  }
+
+  video.addEventListener("play", function () { syncFilm(true); });
+  video.addEventListener("pause", function () { syncFilm(false); });
+
+  filmBtn.addEventListener("click", function () {
+    if (video.paused) { userPaused = false; playFilm(); }
+    else { userPaused = true; video.pause(); }
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !userPaused) playFilm();
+        else if (!entry.isIntersecting) video.pause();
+      });
+    }, { threshold: 0.35 }).observe(video);
+  } else if (!userPaused) {
+    playFilm();
+  }
+
+  /* ── Reveal on scroll — opacity/transform only ─────────── */
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js");   /* only now is it safe to hide */
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transitionDelay = (i * 45) + "ms";
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (n) { io.observe(n); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("in"); });
+  }
+})();
+</script>
+
+<!-- ── Dotted surface: three.js dot wave, always on ──────── -->
+<!-- Classic build, not the ESM one: this page has to run straight off the filesystem,
+     and module scripts are blocked at a file:// origin. -->
+<script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
+<script>
+if (!window.THREE) throw new Error("three.js unavailable — page renders without the dot surface");
+
+const container = document.getElementById("dotted-surface");
+const root = document.documentElement;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+const SEPARATION = 150;
+const AMOUNTX = 40;
+const AMOUNTY = 60;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x000000, 2000, 10000);
+
+/* The band is wide and short, so the camera drops and tilts down onto the
+   wave — otherwise the horizon sits above the crop and you see only dot soup. */
+const camera = new THREE.PerspectiveCamera(60, 1, 1, 10000);
+camera.position.set(0, 300, 1220);
+camera.lookAt(0, -180, 0);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));   /* 2 is plenty; 3 costs a third of the frame */
+renderer.setClearColor(0x000000, 0);
+container.appendChild(renderer.domElement);
+
+function resize() {
+  const { width, height } = container.getBoundingClientRect();
+  if (!width || !height) return;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+resize();
+
+const COUNT = AMOUNTX * AMOUNTY;
+const positions = new Float32Array(COUNT * 3);
+const colors = new Float32Array(COUNT * 3);
+
+let i = 0;
+for (let ix = 0; ix < AMOUNTX; ix++) {
+  for (let iy = 0; iy < AMOUNTY; iy++) {
+    positions[i * 3]     = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
+    positions[i * 3 + 1] = 0;                            /* the wave writes this every frame */
+    positions[i * 3 + 2] = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
+    i++;
+  }
+}
+
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+const material = new THREE.PointsMaterial({
+  size: 8,
+  vertexColors: true,
+  transparent: true,
+  sizeAttenuation: true
+});
+scene.add(new THREE.Points(geometry, material));
+
+/* Dot color and fog come from the theme tokens, so the wave re-themes with the page. */
+function paintDots() {
+  const css = getComputedStyle(root);
+  const [r, g, b] = css.getPropertyValue("--dot").trim().split(/\s+/).map(Number);
+  material.opacity = Number(css.getPropertyValue("--dot-a"));
+  for (let n = 0; n < COUNT; n++) {
+    colors[n * 3] = r; colors[n * 3 + 1] = g; colors[n * 3 + 2] = b;
+  }
+  geometry.attributes.color.needsUpdate = true;
+  scene.fog.color.setRGB(r, g, b);
+}
+paintDots();
+new MutationObserver(paintDots).observe(root, { attributeFilter: ["data-theme"] });
+
+let count = 0;
+function frame() {
+  const pos = geometry.attributes.position;
+  let n = 0;
+  for (let ix = 0; ix < AMOUNTX; ix++) {
+    for (let iy = 0; iy < AMOUNTY; iy++) {
+      pos.array[n * 3 + 1] =
+        Math.sin((ix + count) * 0.3) * 50 +
+        Math.sin((iy + count) * 0.5) * 50;
+      n++;
+    }
+  }
+  pos.needsUpdate = true;
+  renderer.render(scene, camera);
+  count += 0.1;
+}
+
+let raf = 0;
+function start() {
+  if (raf || reduced.matches) return;
+  const loop = () => { frame(); raf = requestAnimationFrame(loop); };
+  raf = requestAnimationFrame(loop);
+}
+function stop() { cancelAnimationFrame(raf); raf = 0; }
+
+frame();                                  /* one frame first: reduced-motion still gets the wave, just still */
+start();
+
+/* Nothing to look at in a background tab — don't burn the GPU on it. */
+document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+reduced.addEventListener("change", () => { stop(); frame(); start(); });
+
+/* The band is sized in vh and the document reflows under it, so watch the box itself. */
+new ResizeObserver(() => { resize(); frame(); }).observe(container);
+</script>
+</body>
+</html>

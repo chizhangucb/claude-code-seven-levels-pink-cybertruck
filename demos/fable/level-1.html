@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PINKTRUCK — The Cybertruck, but Pink</title>
+<style>
+  :root {
+    --pink: #ff5fa2;
+    --pink-hot: #ff2d87;
+    --pink-soft: #ffd3e6;
+    --pink-pale: #fff0f7;
+    --ink: #1c0f16;
+    --ink-soft: #5c4250;
+    --white: #ffffff;
+    --radius: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--pink-pale);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: rgba(255, 240, 247, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 95, 162, 0.15);
+  }
+
+  .logo {
+    font-weight: 900;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--pink-hot); }
+
+  nav ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--pink-hot); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 999px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--pink-hot); transform: translateY(-1px); }
+
+  /* ---------- HERO ---------- */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 60px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 110%, rgba(255, 45, 135, 0.25), transparent),
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(255, 211, 230, 0.8), transparent),
+      var(--pink-pale);
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink-hot);
+    margin-bottom: 18px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  h1 .outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--pink-hot);
+  }
+
+  .hero-sub {
+    max-width: 520px;
+    margin: 24px auto 36px;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 16px 36px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--pink-hot);
+    color: var(--white);
+    box-shadow: 0 10px 30px rgba(255, 45, 135, 0.35);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(255, 45, 135, 0.45);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: var(--white); }
+
+  /* ---------- TRUCK SVG ---------- */
+  .truck-wrap {
+    margin-top: 60px;
+    width: min(820px, 92vw);
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .truck-wrap svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 30px 50px rgba(255, 45, 135, 0.3));
+  }
+  .truck-float { animation: floaty 5s ease-in-out infinite; }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section {
+    padding: 110px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink-hot);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+
+  .section-sub {
+    color: var(--ink-soft);
+    max-width: 560px;
+    font-size: 1.05rem;
+    margin-bottom: 56px;
+  }
+
+  /* ---------- FEATURES GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 34px 28px;
+    border: 1px solid rgba(255, 95, 162, 0.15);
+    box-shadow: 0 6px 24px rgba(255, 95, 162, 0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(255, 45, 135, 0.18);
+  }
+  .card .icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--pink-soft), var(--pink));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  .card p { color: var(--ink-soft); font-size: 0.95rem; }
+
+  /* ---------- STATS ---------- */
+  .stats {
+    background: var(--ink);
+    border-radius: calc(var(--radius) * 1.4);
+    padding: 70px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    text-align: center;
+    color: var(--white);
+  }
+  .stat-num {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 900;
+    color: var(--pink);
+    letter-spacing: -1px;
+  }
+  .stat-label {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ---------- GALLERY / COLORWAYS ---------- */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+  }
+  .swatch {
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s;
+    cursor: default;
+  }
+  .swatch:hover { transform: scale(1.03); }
+  .swatch small {
+    opacity: 0.85;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .swatch strong { font-size: 1.35rem; font-weight: 800; }
+  .sw-1 { background: linear-gradient(160deg, #ffb3d3, #ff5fa2); }
+  .sw-2 { background: linear-gradient(160deg, #ff7ab8, #ff2d87); }
+  .sw-3 { background: linear-gradient(160deg, #ff4d97, #d6006c); }
+  .sw-4 { background: linear-gradient(160deg, #2b1220, #7a1a4b); }
+
+  /* ---------- QUOTE ---------- */
+  .quote {
+    text-align: center;
+    max-width: 760px;
+  }
+  .quote blockquote {
+    font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  .quote blockquote span { color: var(--pink-hot); }
+  .quote cite {
+    display: block;
+    margin-top: 22px;
+    font-style: normal;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .final-cta {
+    text-align: center;
+    background:
+      radial-gradient(ellipse 70% 90% at 50% 120%, rgba(255, 45, 135, 0.35), transparent),
+      var(--ink);
+    border-radius: calc(var(--radius) * 1.4);
+    padding: 90px 30px;
+    color: var(--white);
+  }
+  .final-cta h2 { color: var(--white); }
+  .final-cta p { color: rgba(255,255,255,0.7); max-width: 460px; margin: 0 auto 36px; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    text-align: center;
+    padding: 40px 24px 50px;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+  footer .logo { font-size: 1rem; margin-bottom: 8px; }
+
+  @media (max-width: 640px) {
+    nav ul li:not(:last-child) { display: none; }
+    section { padding: 70px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">PINK<span>TRUCK</span></div>
+  <ul>
+    <li><a href="#features">Why Pink</a></li>
+    <li><a href="#specs">Specs</a></li>
+    <li><a href="#colors">Colorways</a></li>
+    <li><a href="#reserve" class="nav-cta">Reserve</a></li>
+  </ul>
+</nav>
+
+<header>
+  <div class="eyebrow">Stainless steel, but make it fashion</div>
+  <h1>The Cybertruck.<br><span class="outline">But Pink.</span></h1>
+  <p class="hero-sub">
+    A bulletproof exoskeleton wrapped in the boldest color on the road.
+    Zero emissions. Zero apologies. 100% pink.
+  </p>
+  <div class="hero-ctas">
+    <a href="#reserve" class="btn btn-primary">Reserve Yours</a>
+    <a href="#features" class="btn btn-ghost">See Why</a>
+  </div>
+
+  <div class="truck-wrap">
+    <svg class="truck-float" viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pink Cybertruck illustration">
+      <defs>
+        <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffc2dc"/>
+          <stop offset="45%" stop-color="#ff5fa2"/>
+          <stop offset="100%" stop-color="#e6157f"/>
+        </linearGradient>
+        <linearGradient id="windowGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3a1c2c"/>
+          <stop offset="100%" stop-color="#12060d"/>
+        </linearGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(255,45,135,0)"/>
+          <stop offset="50%" stop-color="rgba(255,45,135,0.35)"/>
+          <stop offset="100%" stop-color="rgba(255,45,135,0)"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ground glow -->
+      <ellipse cx="400" cy="290" rx="330" ry="14" fill="url(#ground)"/>
+
+      <!-- body: iconic angular silhouette -->
+      <polygon points="60,210 180,150 360,60 620,140 740,170 740,225 60,225"
+               fill="url(#bodyGrad)" stroke="#c00e6a" stroke-width="2"/>
+      <!-- window -->
+      <polygon points="200,148 355,72 520,122 470,146"
+               fill="url(#windowGrad)"/>
+      <!-- body crease line -->
+      <line x1="60" y1="210" x2="740" y2="172" stroke="#ffffff" stroke-opacity="0.5" stroke-width="2"/>
+      <!-- wheel wells -->
+      <polygon points="130,225 155,190 235,190 260,225" fill="#4d0c31"/>
+      <polygon points="540,225 565,190 645,190 670,225" fill="#4d0c31"/>
+      <!-- wheels -->
+      <circle cx="195" cy="235" r="52" fill="#1c0f16"/>
+      <circle cx="195" cy="235" r="26" fill="#33202a"/>
+      <circle cx="195" cy="235" r="9" fill="#ff5fa2"/>
+      <circle cx="605" cy="235" r="52" fill="#1c0f16"/>
+      <circle cx="605" cy="235" r="26" fill="#33202a"/>
+      <circle cx="605" cy="235" r="9" fill="#ff5fa2"/>
+      <!-- light bar front -->
+      <rect x="726" y="168" width="14" height="6" rx="3" fill="#ffe9f3"/>
+      <!-- tail light -->
+      <rect x="60" y="206" width="10" height="8" rx="3" fill="#ff2d87"/>
+      <!-- sparkles -->
+      <g fill="#ff8fc0">
+        <circle cx="120" cy="80" r="4"/>
+        <circle cx="690" cy="60" r="5"/>
+        <circle cx="750" cy="110" r="3"/>
+        <circle cx="70" cy="140" r="3"/>
+        <path d="M660 30 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 z"/>
+        <path d="M150 40 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<section id="features">
+  <div class="section-label">Why Pink</div>
+  <h2>Tough truck. Soft side.</h2>
+  <p class="section-sub">Everything you love about the angular beast, finished in a color that refuses to blend in.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🛡️</div>
+      <h3>Ultra-Hard Pink Exoskeleton</h3>
+      <p>Cold-rolled stainless steel coated in a nano-ceramic rose finish. Dent-resistant, scratch-resistant, boring-resistant.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>0–60 in 2.9s</h3>
+      <p>Tri-motor all-wheel drive launches you past everything on the road — and they'll all remember the pink blur.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌸</div>
+      <h3>Rose-Tinted Armor Glass</h3>
+      <p>See the world through pink-tinted acoustic glass. Literally. It also shrugs off baseballs.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔋</div>
+      <h3>340+ Mile Range</h3>
+      <p>Enough charge to chase sunsets that finally match your paint job.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🛻</div>
+      <h3>6-Foot Vault Bed</h3>
+      <p>Lockable, powered tonneau over a bed big enough for anything — flamingo pool floats included.</p>
+    </div>
+    <div class="card">
+      <div class="icon">✨</div>
+      <h3>Glow Mode</h3>
+      <p>Underbody LEDs bathe the pavement in rose light. Arrive like a statement, leave like a legend.</p>
+    </div>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="stats">
+    <div>
+      <div class="stat-num">2.9s</div>
+      <div class="stat-label">0–60 mph</div>
+    </div>
+    <div>
+      <div class="stat-num">340mi</div>
+      <div class="stat-label">Est. Range</div>
+    </div>
+    <div>
+      <div class="stat-num">11,000lb</div>
+      <div class="stat-label">Towing</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Pink</div>
+    </div>
+  </div>
+</section>
+
+<section id="colors">
+  <div class="section-label">Colorways</div>
+  <h2>Four shades of fearless.</h2>
+  <p class="section-sub">Every finish is pink. The only question is how loud you want to be.</p>
+  <div class="swatches">
+    <div class="swatch sw-1"><small>01</small><strong>Bubblegum Blush</strong></div>
+    <div class="swatch sw-2"><small>02</small><strong>Hot Magenta</strong></div>
+    <div class="swatch sw-3"><small>03</small><strong>Neon Flamingo</strong></div>
+    <div class="swatch sw-4"><small>04</small><strong>Midnight Rosé</strong></div>
+  </div>
+</section>
+
+<section class="quote">
+  <blockquote>
+    "I ordered it in pink as a joke.<br>
+    Now it's <span>the only thing I drive.</span>"
+  </blockquote>
+  <cite>— Every single owner, apparently</cite>
+</section>
+
+<section id="reserve">
+  <div class="final-cta">
+    <div class="section-label" style="color: var(--pink);">Limited Run</div>
+    <h2>Think pink. Drive pinker.</h2>
+    <p>Reservations are open for the first production run. Fully refundable. Fully unforgettable.</p>
+    <a href="#" class="btn btn-primary">Reserve for $100</a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">PINK<span style="color: var(--pink-hot);">TRUCK</span></div>
+  <p>A concept fan site. Not affiliated with Tesla. Pink is a lifestyle.</p>
+</footer>
+
+</body>
+</html>

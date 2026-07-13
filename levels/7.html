@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 7 — Design extraction · Seven Levels, Round 2</title>
+<meta name="description" content="Seven levels of building beautiful websites with Claude Code — round 2: one pink Cybertruck, the same seven-level ladder, Fable 5 and Opus 4.8 side by side.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23ff4fa3%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650;9..144,560italic&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body><nav class="site-nav"><div class="wrap">
+<a class="brand" href="/"><span class="dot"></span>Seven Levels</a>
+<div class="nav-levels"><a href="/levels/1.html">1</a><a href="/levels/2.html">2</a><a href="/levels/3.html">3</a><a href="/levels/4.html">4</a><a href="/levels/5.html">5</a><a href="/levels/6.html">6</a><a href="/levels/7.html" aria-current="page">7</a></div>
+<a class="nav-link" href="/compare/">Fable 5 vs Opus 4.8</a>
+<a class="nav-link" href="/slides/">Slides</a>
+<a class="nav-link" href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck">GitHub</a>
+</div></nav>
+<header class="level-head"><div class="wrap">
+<p class="kicker">Level 7 of 7</p>
+<h1>Design extraction</h1>
+<p class="thesis">The strongest lever: extract the full design language of a site you love, and rebuild your product in that language. Translation, not cloning.</p>
+</div></header>
+<main class="level-body"><div class="wrap" style="display:grid;gap:44px">
+<section class="prose"><h2>The technique</h2><p>Most people can't articulate why a design is great — 'ample white space' and 'golden ratio' only go so far. A design-extraction skill does it for you: it pulls tokens, typography, easing curves, and load-bearing CSS rules from a target site into a builder brief.</p><p>This round both runs pointed the skill at teenage.engineering (round 1 used antigravity.google) — chosen because it serves a single public root stylesheet with 98 <code>:root</code> custom properties, exactly what the skill's CSS sweep assumes, and its industrial-hardware minimalism rhymes with a Cybertruck. The skill lives in this repo under skill/design-language/, byte-identical to round 1's copy.</p></section>
+<section><h2 class="section-title">The prompts that did it</h2><details class="prompt"><summary>Extract, then rebuild in that language</summary>
+<blockquote>Hi there. I'm going to give you a website. I would like to basically understand the design, and I'd like you to follow all the instructions in this file, Namely go to this website, understand the typography, the design, and get it an extraction blueprint so that I can build a website that levels this up. And our website is going to be on selling beautiful trucks. @design-language-skill.zip
+
+https://teenage.engineering/</blockquote>
+<p class="outcome">Both models delivered an extraction <em>kit</em> first — brief, tokens.json, structure.css, scaffold, preview — not a finished page. <strong>Fable</strong> wrote its kit to ~/Desktop instead of the working directory (agents have habits too); <strong>Opus 4.8</strong> kept its kit in the trial dir and asked how to fill the {{BRAND}} placeholders.</p>
+</details><details class="prompt"><summary>Push from blueprint to deliverable (follow-up, both models)</summary>
+<blockquote>I didn't find the website file, where is it? The scaffold only has the framework, not the real website.</blockquote>
+<p class="outcome">Both promoted the kit to the deliverable — and both landed on ~22 KB, lowercase, teenage.engineering-voice pages. <strong>Fable</strong> stayed unbranded: "the beautiful truck." <strong>Opus 4.8</strong> reused its level-3 brand: "CYBR — Built for Mars. Painted for Miami." A second scripted follow-up (rename the file) never fired; both files were already correctly named.</p>
+</details></section>
+<section class="demo-block" data-level="7">
+<h2 class="section-title">Live result</h2>
+<div class="demo-toolbar">
+<div class="seg" role="group" aria-label="Model">
+<button data-model="fable" aria-pressed="true">Fable 5</button>
+<button data-model="opus" aria-pressed="false">Opus 4.8</button>
+</div>
+<a class="demo-open" href="/demos/fable/level-7.html" target="_blank" rel="noopener">Open full screen ↗</a>
+</div>
+<div class="demo-frame">
+<button class="demo-cover" aria-label="Load the live level 7 demo">
+<img src="/assets/thumbs/fable-7.png" alt="">
+<span class="play"><span>▶ Load live demo</span></span>
+</button>
+</div>
+</section>
+
+<section><h2 class="section-title">Cost &amp; time</h2><div data-metrics-level="7"></div></section>
+
+<section><h2 class="section-title">What changed vs level 6</h2>
+<div class="delta">
+<figure><img src="/assets/thumbs/fable-6.png" alt="Level 6 result" loading="lazy"><figcaption>Level 6 — Data &amp; brand research</figcaption></figure>
+<figure><img src="/assets/thumbs/fable-7.png" alt="Level 7 result" loading="lazy"><figcaption>Level 7 — Design extraction</figcaption></figure>
+</div>
+<ul class="delta-notes"><li>Night and day versus level 1 — a coherent, opinionated design identity with real restraint.</li><li>The convergence beat repeats: round 1 gave Lume/LUMA, round 2 gives twin ~22 KB lowercase pages in the same voice.</li><li>The output is a reusable design system, not just one page.</li></ul>
+</section>
+<section class="prose"><h2>What this level taught</h2><ul class="delta-notes"><li>Design extraction gives Claude the vocabulary of a specific great design — the thing humans struggle to articulate.</li><li>A blueprint is an intermediate artifact; budget one more prompt to promote it to the deliverable (true in both rounds).</li><li>Name the destination directory too — Fable's kit went to ~/Desktop out of habit.</li><li>Convergence is a property of the technique, not the model: same language in, same voice out.</li></ul>
+<p style="margin-top:14px"><a href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck/blob/main/docs/prompt-log/level-7.md">Full prompt log for this level →</a></p></section>
+</div></main>
+<div class="wrap"><div class="pager"><a class="prev" href="/levels/6.html"><div class="dir">← Level 6</div><div class="title">Data &amp; brand research</div></a><a class="next" href="/compare/"><div class="dir">Next →</div><div class="title">Fable 5 vs Opus 4.8</div></a></div></div>
+<footer class="site-footer"><div class="wrap">
+<span>Built with Claude Code — the site, the slides, and all fourteen demos.</span>
+<span>Based on <a href="https://www.youtube.com/watch?v=AFRL9dtUHeI">“7 Levels of Building Claude Code Websites”</a> by Jack Roberts.</span>
+<span>Round 1 — the yellow iPhone — lives at <a href="https://github.com/chizhangucb/claude-code-seven-levels-building-website">claude-code-seven-levels-building-website</a>.</span>
+</div></footer>
+<script src="/assets/metrics.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>

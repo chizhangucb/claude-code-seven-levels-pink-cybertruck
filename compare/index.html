@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fable 5 vs Opus 4.8 — Seven Levels, Round 2</title>
+<meta name="description" content="Seven levels of building beautiful websites with Claude Code — round 2: one pink Cybertruck, the same seven-level ladder, Fable 5 and Opus 4.8 side by side.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23ff4fa3%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650;9..144,560italic&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body><nav class="site-nav"><div class="wrap">
+<a class="brand" href="/"><span class="dot"></span>Seven Levels</a>
+<div class="nav-levels"><a href="/levels/1.html">1</a><a href="/levels/2.html">2</a><a href="/levels/3.html">3</a><a href="/levels/4.html">4</a><a href="/levels/5.html">5</a><a href="/levels/6.html">6</a><a href="/levels/7.html">7</a></div>
+<a class="nav-link" href="/compare/" aria-current="page">Fable 5 vs Opus 4.8</a>
+<a class="nav-link" href="/slides/">Slides</a>
+<a class="nav-link" href="https://github.com/chizhangucb/claude-code-seven-levels-pink-cybertruck">GitHub</a>
+</div></nav>
+<header class="level-head"><div class="wrap">
+<p class="kicker">The parallel run, round 2</p>
+<h1>Fable 5 vs Opus 4.8</h1>
+<p class="thesis">Same prompts, same references, same skills — two models, one pink Cybertruck. Pick a level and scroll either pane; the other follows proportionally.</p>
+</div></header>
+<main data-compare><div class="wrap">
+<div class="compare-controls">
+<span class="label">Level</span>
+<div class="seg" data-role="level" role="group" aria-label="Level"><button data-level="1" aria-pressed="true">1</button><button data-level="2" aria-pressed="false">2</button><button data-level="3" aria-pressed="false">3</button><button data-level="4" aria-pressed="false">4</button><button data-level="5" aria-pressed="false">5</button><button data-level="6" aria-pressed="false">6</button><button data-level="7" aria-pressed="false">7</button></div>
+<label class="toggle-row"><input type="checkbox" id="sync-scroll" checked> Sync scroll</label>
+<label class="toggle-row"><input type="checkbox" id="mobile-width"> 390px mobile</label>
+</div>
+<div data-compare-metrics></div>
+<div class="compare-grid">
+<div class="compare-pane"><h2>Fable 5 <span class="tag">fable-trials</span></h2><div class="compare-frame" id="frame-fable"></div></div>
+<div class="compare-pane"><h2>Opus 4.8 <span class="tag">opus-trials</span></h2><div class="compare-frame" id="frame-opus"></div></div>
+</div>
+<section class="run-summary">
+<h2 class="section-title">Every run, in numbers</h2>
+<p class="section-sub">Per-level totals mined from the raw session transcripts (assistant entries deduplicated by message id). Cost is API-equivalent at list price — Fable 5 $10/$50 per MTok in/out, Opus 4.8 $5/$25; cache reads 0.1× input, cache writes 2× (1-hour TTL). Machine time excludes orchestrator verification between prompts.</p>
+<div class="table-scroll">
+<table class="summary-table">
+<thead><tr><th>Level</th><th>Model</th><th>Prompts</th><th>API calls</th><th>Input tok</th><th>Output tok</th><th>Cache write</th><th>Cache read</th><th>Machine time</th><th>Cost</th></tr></thead>
+<tbody>
+<tr><td rowspan="2">1 · Grab and go</td><td>Fable 5</td><td>1</td><td>2</td><td>4</td><td>8,404</td><td>32,089</td><td>59,141</td><td>1m 38s</td><td>$1.12</td></tr>
+<tr><td>Opus 4.8</td><td>1</td><td>2</td><td>4</td><td>8,990</td><td>31,981</td><td>58,386</td><td>1m 40s</td><td>$0.57</td></tr>
+<tr><td rowspan="2">2 · References</td><td>Fable 5</td><td>1</td><td>3</td><td>6</td><td>11,232</td><td>49,744</td><td>111,559</td><td>2m 11s</td><td>$1.67</td></tr>
+<tr><td>Opus 4.8</td><td>1</td><td>44</td><td>88</td><td>17,300</td><td>68,734</td><td>3,123,683</td><td>8m 49s</td><td>$2.68</td></tr>
+<tr><td rowspan="2">3 · Design skills</td><td>Fable 5</td><td>1</td><td>27</td><td>50</td><td>29,884</td><td>114,373</td><td>2,990,634</td><td>7m 33s</td><td>$6.77</td></tr>
+<tr><td>Opus 4.8</td><td>1</td><td>51</td><td>102</td><td>45,461</td><td>140,213</td><td>6,308,556</td><td>10m 16s</td><td>$5.69</td></tr>
+<tr><td rowspan="2">4 · UI snipping</td><td>Fable 5</td><td>2</td><td>31</td><td>58</td><td>17,214</td><td>196,074</td><td>3,040,626</td><td>5m 56s</td><td>$7.82</td></tr>
+<tr><td>Opus 4.8</td><td>2</td><td>53</td><td>107</td><td>19,336</td><td>164,823</td><td>4,574,567</td><td>8m 11s</td><td>$4.42</td></tr>
+<tr><td rowspan="2">5 · AI video</td><td>Fable 5</td><td>1</td><td>22</td><td>42</td><td>8,912</td><td>68,383</td><td>1,620,335</td><td>3m 24s</td><td>$3.43</td></tr>
+<tr><td>Opus 4.8</td><td>1</td><td>32</td><td>61</td><td>10,687</td><td>73,137</td><td>2,470,413</td><td>3m 10s</td><td>$2.23</td></tr>
+<tr><td rowspan="2">6 · Brand research</td><td>Fable 5</td><td>1</td><td>31</td><td>59</td><td>37,340</td><td>115,780</td><td>3,014,734</td><td>9m 22s</td><td>$7.20</td></tr>
+<tr><td>Opus 4.8</td><td>1</td><td>56</td><td>113</td><td>29,112</td><td>96,595</td><td>4,799,965</td><td>7m 56s</td><td>$4.09</td></tr>
+<tr><td rowspan="2">7 · Design extraction</td><td>Fable 5</td><td>2</td><td>47</td><td>89</td><td>45,710</td><td>120,763</td><td>4,699,475</td><td>13m 18s</td><td>$9.40</td></tr>
+<tr><td>Opus 4.8</td><td>2</td><td>51</td><td>101</td><td>45,112</td><td>122,334</td><td>5,182,738</td><td>10m 14s</td><td>$4.94</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+</div></main>
+<style>
+.run-summary{margin-top:44px}
+.run-summary .table-scroll{overflow-x:auto;border:1px solid var(--line, rgba(26,18,22,.12));border-radius:12px;background:#fff}
+.summary-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:840px}
+.summary-table th,.summary-table td{padding:9px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line, rgba(26,18,22,.08))}
+.summary-table th:first-child,.summary-table td:first-child,.summary-table th:nth-child(2),.summary-table td:nth-child(2){text-align:left}
+.summary-table thead th{font-weight:650;color:var(--accent-ink,#c2185b);background:var(--surface,#ffe9f2);border-bottom:1px solid var(--line, rgba(26,18,22,.15))}
+.summary-table tbody tr:last-child td{border-bottom:none}
+.summary-table td[rowspan]{font-weight:600;vertical-align:top}
+</style>
+<footer class="site-footer"><div class="wrap">
+<span>Built with Claude Code — the site, the slides, and all fourteen demos.</span>
+<span>Based on <a href="https://www.youtube.com/watch?v=AFRL9dtUHeI">“7 Levels of Building Claude Code Websites”</a> by Jack Roberts.</span>
+<span>Round 1 — the yellow iPhone — lives at <a href="https://github.com/chizhangucb/claude-code-seven-levels-building-website">claude-code-seven-levels-building-website</a>.</span>
+</div></footer>
+<script src="/assets/metrics.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>
